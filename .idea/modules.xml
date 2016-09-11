@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/CiCiPayment.iml" filepath="$PROJECT_DIR$/.idea/CiCiPayment.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CiCiPayment.iml" filepath="$PROJECT_DIR$/CiCiPayment.iml" />
     </modules>
   </component>
 </project>
