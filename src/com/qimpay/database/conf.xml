@@ -2,7 +2,8 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <settings>
-    <setting name="logImpl" value="LOG4J"/>
+        <setting name="callSettersOnNulls" value="true"/>
+        <setting name="logImpl" value="LOG4J"/>
     </settings>
     <environments default="development">
         <environment id="development">
@@ -26,5 +27,6 @@
         <mapper resource="com/qimpay/database/mapping/userinfo.xml" />
         <mapper resource="com/qimpay/database/mapping/merchanttemp.xml" />
         <mapper resource="com/qimpay/database/mapping/codeinfo.xml" />
+        <mapper resource="com/qimpay/database/mapping/merchantInfo.xml" />
     </mappers>
 </configuration>

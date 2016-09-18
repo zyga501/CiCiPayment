@@ -29,7 +29,7 @@
         <if test="alirate!=null">   alirate=#{alirate} ,</if>
         <if test="jdrarte!=null">   jdrarte=#{jdrarte} ,</if>
         <if test="bestrate!=null">   bestrate=#{bestrate} ,</if>
-        <if test="accountpc!=null">   accountpc=#{accountpc} ,</if>
+        <if test="city!=null">   city=#{city} ,</if>
         <if test="bank!=null">   bank=#{bank} ,</if>
         <if test="contactnum!=null">   contactnum=#{contactnum} ,</if>
         <if test="acountcode!=null">   acountcode=#{acountcode} ,</if>

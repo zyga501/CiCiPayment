@@ -29,6 +29,6 @@
 </head>
 <body>
 <center>
-    <input id="Message" type="button" value="关闭" onclick="javascript:WeixinJSBridge.call('closeWindow');" />
+    <input id="Message" type="button" value="正在授权中..." onclick="javascript:WeixinJSBridge.call('closeWindow');" />
 </body>
 </html>

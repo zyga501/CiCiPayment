@@ -5,6 +5,12 @@
         "http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
+    <constant name="struts.enable.DynamicMethodInvocation" value="true" />
+    <constant name="struts.devMode" value="false" />
+    <!-- 所允许上传文件的总大小 -->
+    <constant name="struts.multipart.maxSize" value="40000000"/>
+    <!-- 上传过程中临时文件存放目录 -->
+    <constant name="struts.multipart.saveDir" value="/filetemp" />
     <package name="json-default" namespace="/" extends="struts-default">
         <result-types>
             <result-type name="json" class="org.apache.struts2.json.JSONResult" />
@@ -30,7 +36,7 @@
                 <param name="root">ajaxActionResult</param>
             </result>
             <result name="page404">./page404.jsp</result>
-            <result name="wxopenid">User!wxlogin</result>
+            <result name="wxopenid" type="redirectAction" >User!wxlogin</result>
         </global-results>
         <!-- compatible api -->
         <action name="User!*" class="com.framework.action.UserAction" method="{1}">
@@ -42,6 +48,7 @@
             <result name="register1">./reg/register.jsp</result>
             <result name="register2">./reg/register2.jsp</result>
             <result name="register3">./reg/register3.jsp</result>
+            <result name="registerall">./reg/registerall.jsp</result>
             <result name="paypage">./welcome.html</result>
         </action>
         <action name="Mainpage" class="com.framework.action.UserAction" method="Initmainpage">

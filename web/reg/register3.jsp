@@ -32,19 +32,19 @@
     <tr>
         <td>
             <input type="file" class="infile" name="fsfzz" id="fsfzz" style="display:none">
-            <img class="img" style="width: 100px;height: 80px" src="<%=request.getContextPath()%>\img\sfzz.jpg" onclick="openBrowse('fsfzz')"><p>身份证正面</p></td>
+            <img class="img" style="width: 100px;height: 80px" src="Reg!checkinfo?picname=sfzz" onclick="openBrowse('fsfzz')"><p>身份证正面</p></td>
         <td>
             <input type="file" class="infile" name="fsfzf" id="fsfzf" style="display:none">
-            <img class="img" style="width: 100px;height: 80px"src="<%=request.getContextPath()%>\img\sfzf.jpg" onclick="openBrowse('fsfzf')"><p>身份证反面</p>
+            <img class="img" style="width: 100px;height: 80px"src="Reg!checkinfo?picname=sfzf" onclick="openBrowse('fsfzf')"><p>身份证反面</p>
         </td>
     </tr>
     <tr>
         <td>
             <input type="file" class="infile" name="fscsfz" id="fscsfz" style="display:none">
-            <img  class="img" style="width: 80px;height: 80px"src="<%=request.getContextPath()%>\img\scsfz.jpg" onclick="openBrowse('fscsfz')" ><p>手持身份证</p></td>
+            <img  class="img" style="width: 80px;height: 80px"src="Reg!checkinfo?picname=scsfz" onclick="openBrowse('fscsfz')" ><p>手持身份证</p></td>
         <td>
             <input type="file" class="infile" name="fyhk" id="fyhk" style="display:none">
-            <img  class="img" style="width: 100px;height: 80px"src="<%=request.getContextPath()%>\img\yhk.jpg" onclick="openBrowse('fyhk')"><p>银行卡</p></td>
+            <img  class="img" style="width: 100px;height: 80px"src="Reg!checkinfo?picname=yhk" onclick="openBrowse('fyhk')"><p>银行卡</p></td>
     </tr>
     <tr >
         <td colspan="2">
@@ -94,7 +94,7 @@
 
     function uploadinfo(){
       $.ajaxFileUpload({
-          url: "User!uploadpic",
+          url: "Reg!uploadpic",
           secureuri: false,
           fileElementId: ['fsfzf','fsfzz','fscsfz','fyhk'],
           dataType: 'multipart/form-data',
@@ -103,10 +103,12 @@
           success: function (data) {
               data =  $.parseJSON(data.replace(/<.*?>/ig,""));
               var json =  eval("(" + data + ")");
-              if ( json.msgstr !="")
-                  alert (json.msgstr);
-              else{alert('dsf');
-                  layer.confirm("请关注公众号等待审核消息<br><img src='<%=request.getContextPath()%>/img/gzh.jpg'>", {
+              if ( json.msgstr !="") {
+                  alert(json.msgstr);
+                  history.go(-1);
+              }
+              else{
+                  layer.confirm("请关注公众号等待审核消息<br><img style='width:200px;height:200px' src='<%=request.getContextPath()%>/img/gzh.jpg'>", {
                       btn: ['已经关注'] //按钮
                   }, function(){
                       WeixinJSBridge.call('closeWindow');

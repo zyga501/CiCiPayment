@@ -1,6 +1,5 @@
 package com.framework.utils;
 
-import javax.swing.*;
 import java.io.*;
 
 public class PublicFunc {
