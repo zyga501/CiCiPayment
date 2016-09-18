@@ -26,6 +26,10 @@ public class DBmap {
         return Database.Instance().selectList(statement,param);
     }
 
+    public static boolean insertmerchant(Map param) {
+        String statement = "com.qimpay.database.mapping.merchantinfo.insertmerchant";
+        return Database.Instance().insert(statement, param) > 0;
+    }
     public static boolean deleteMerchantLink(List param) {
         String statement = "com.qimpay.database.mapping.allmerchant.deleteMerchantLink";
         return Database.Instance().insert(statement, param) > 0;

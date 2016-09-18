@@ -2,11 +2,15 @@ package com.framework.action;
 
 import com.AjaxActionSupport;
 import com.framework.ProjectSettings;
+import com.framework.utils.HttpPostUrl;
 import com.framework.utils.PublicFunc;
+import com.framework.utils.StringUtils;
 import com.qimpay.database.DBmap;
-import com.qimpay.database.UserInfo;
 
+import javax.servlet.ServletOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.util.*;
 
@@ -19,9 +23,6 @@ public class RegAction extends AjaxActionSupport {
     private String contact ;
     private String tel ;
     private String idcardno ;
-    private String picidcardz ;
-    private String picidcardf ;
-    private String pichandidcard ;
     private String regdate ;
     private String canpay ;
     private String wxpay ;
@@ -32,11 +33,20 @@ public class RegAction extends AjaxActionSupport {
     private String alirate ;
     private String jdrarte ;
     private String bestrate ;
-    private String accountpc ;
+    private String city ;
     private String bank ;
     private String contactnum ;
     private String acountcode ;
     private String acountname ;
+    private String province;
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
 
     public String getCardid() {
         return cardid;
@@ -92,30 +102,6 @@ public class RegAction extends AjaxActionSupport {
 
     public void setIdcardno(String idcardno) {
         this.idcardno = idcardno;
-    }
-
-    public String getPicidcardz() {
-        return picidcardz;
-    }
-
-    public void setPicidcardz(String picidcardz) {
-        this.picidcardz = picidcardz;
-    }
-
-    public String getPicidcardf() {
-        return picidcardf;
-    }
-
-    public void setPicidcardf(String picidcardf) {
-        this.picidcardf = picidcardf;
-    }
-
-    public String getPichandidcard() {
-        return pichandidcard;
-    }
-
-    public void setPichandidcard(String pichandidcard) {
-        this.pichandidcard = pichandidcard;
     }
 
     public String getRegdate() {
@@ -198,12 +184,12 @@ public class RegAction extends AjaxActionSupport {
         this.bestrate = bestrate;
     }
 
-    public String getAccountpc() {
-        return accountpc;
+    public String getCity() {
+        return city;
     }
 
-    public void setAccountpc(String accountpc) {
-        this.accountpc = accountpc;
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getBank() {
@@ -247,59 +233,17 @@ public class RegAction extends AjaxActionSupport {
         return   AjaxActionComplete(map);
     }
 
-//    public void wxlogin() throws IOException {
-//        String appid = "";
-//        MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById((ProjectSettings.getId()));
-//        if (merchantInfo != null) {
-//            appid = merchantInfo.getAppid();
-//        }
-//        else
-//            return;
-//        String redirect_uri =  getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + "/weixin/wxlogin.jsp";
-//        String petOpenidUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
-//                        "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=login#wechat_redirect",
-//                appid, redirect_uri);
-//        getResponse().sendRedirect(petOpenidUri);
-//    }
-//
-//    public String fetchopenid() throws Exception {
-//        MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById((ProjectSettings.getId()));
-//        String appid =  merchantInfo.getAppid();
-//        String appsecret =  merchantInfo.getAppsecret();
-//        OpenId openId = new OpenId(appid, appsecret, getParameter("code").toString());
-//        if (!openId.getRequest()) {
-//            return AjaxActionComplete(false) ;
-//        }
-//        System.out.println("fopenId="+openId.getOpenId());
-//        UserInfo userInfo = UserInfo.getUserInfoByOpenid(openId.getOpenId());
-//        if (null != userInfo) {
-//            if (userInfo.getActive()!=1){
-//                return AjaxActionComplete(false) ;
-//            }
-//            getRequest().getSession().setAttribute("uname", userInfo.getUname());
-//            getRequest().getSession().setAttribute("unick", userInfo.getUnick());
-//            getRequest().getSession().setAttribute("uid", userInfo.getId());
-//            getRequest().getSession().setAttribute("roleval", userInfo.getRole());
-//            getRequest().getSession().setAttribute("role", userInfo.getRole() == 999 ? "管理员" : userInfo.getRole() == 1 ? "机构" : userInfo.getRole() == 2 ? "销售" : userInfo.getRole() == 3 ? "职员" : "未知");
-//
-//            Map<String, String> resultMap = new HashMap<>();
-//            resultMap.put("URL","../Khzlgl!OAkhzlgl");
-//            return AjaxActionComplete(true,resultMap);
-//        } else {
-//            return AjaxActionComplete(false) ;
-//        }
-//    }
-
     public String reg(){
         try {
+            getRequest().getSession().setAttribute("cardid", getParameter("cid").toString());
+            if (null==getAttribute("openid")||getAttribute("openid").equals(""))
+                return AjaxActionComplete("wxopenid");
 //            if (null == getOpenid() || getOpenid().equals("")) {
 //                AjaxActionComplete(false);
 //            }
 //            setOpenid("_ooooiiiuujjhshshsy");
 //            if (null!=getRequest().getSession().getAttribute("openid"))
 //                return "wxopenid";
-            getRequest().getSession().setAttribute("cardid", getParameter("cid").toString());
-            getRequest().getSession().setAttribute("openid","_ooooiiiuujjhshshsy");
 
             Map map = new HashMap<>();
             map.put("cid", getParameter("cid").toString() );
@@ -310,7 +254,7 @@ public class RegAction extends AjaxActionSupport {
             else if ((lc.size()==1) && (!lc.get(0).get("openid").equals("")) ){
                 return "paypage";
             }
-            map.put("openid","_ooooiiiuujjhshshsy");
+            map.put("openid", getRequest().getSession().getAttribute("openid"));
             List<HashMap> lm =  DBmap.getmerchanttemp(map);
             if ( null==lm || lm.size()==0) {
                 DBmap.insertmerchanttemp(map);
@@ -326,6 +270,8 @@ public class RegAction extends AjaxActionSupport {
 
     public String reg1(){
         try {
+            if (null==getAttribute("openid"))
+                return "User!wxlogin";
             Map map = new HashMap<>();
             map.put("openid", getRequest().getSession().getAttribute("openid"));
             map.put("cid", getRequest().getSession().getAttribute("cardid"));
@@ -340,9 +286,6 @@ public class RegAction extends AjaxActionSupport {
             List<HashMap> lm =  DBmap.getmerchanttemp(map);
             getRequest().setAttribute("reginfo",lm.get(0));
             return "register2";
-//            Map map2 = new HashMap<>();
-//            map2.put("url", "../reg/register2.jsp");
-//            return AjaxActionComplete(true, map2);
         }
         catch (Exception e){
             return AjaxActionComplete(false);
@@ -351,9 +294,10 @@ public class RegAction extends AjaxActionSupport {
     public String reg2() {
         try {
             Map map = new HashMap<>();
+            System.out.println(getRequest().getSession().getAttribute("openid"));
             map.put("openid", getRequest().getSession().getAttribute("openid"));
             map.put("cid", getRequest().getSession().getAttribute("cardid"));
-            map.put("accountpc", getParameter("accountpc"));
+            map.put("city", getParameter("city"));
             map.put("acountname", getParameter("acountname"));
             map.put("acountcode", getParameter("acountcode"));
             map.put("bank", getParameter("bank"));
@@ -371,43 +315,44 @@ public class RegAction extends AjaxActionSupport {
 
     public String uploadpic() {
         String msg="";
-        try {
+        try {System.out.println("in");
             File ff = (File) getParameter("fsfzz");//fdphy,fyhkf,fyhkz,fsfzf,fsfzz
+            File fm = new File(ProjectSettings.getPicpath() + String.valueOf(getRequest().getSession().getAttribute("cardid"))
+                    + getRequest().getSession().getAttribute("openid") + "sfzz.jpg");
             if (null != ff && ff.length() > 1000) {
-                File fm = new File(ProjectSettings.getPicpath() + String.valueOf(getRequest().getSession().getAttribute("cardid"))
-                        + getRequest().getSession().getAttribute("openid") + "sfzz.jpg");
-                {
                     PublicFunc.copyFile(ff.getAbsolutePath(), fm.getAbsolutePath(), true);
-                }
-            } else
+            } else if (null == ff || fm.length()<100)
                 msg = "身份证正面照文件不对";
             ff = (File) getParameter("fsfzf");//fdphy,fyhkf,fyhkz,fsfzf,fsfzz
+            fm = new File(ProjectSettings.getPicpath() + String.valueOf(getRequest().getSession().getAttribute("cardid"))
+                    + getRequest().getSession().getAttribute("openid") + "sfzf.jpg");
             if (null != ff && ff.length() > 1000) {
-                File fm = new File(ProjectSettings.getPicpath() + String.valueOf(getRequest().getSession().getAttribute("cardid"))
-                        + getRequest().getSession().getAttribute("openid") + "sfzf.jpg");
                 {
                     PublicFunc.copyFile(ff.getAbsolutePath(), fm.getAbsolutePath(), true);
                 }
-            } else
+            } else  if (null == ff || fm.length()<100)
                 msg = "身份证反面照文件不对";
             ff = (File) getParameter("fscsfz");//fdphy,fyhkf,fyhkz,fsfzf,fsfzz
+            fm = new File(ProjectSettings.getPicpath() + String.valueOf(getRequest().getSession().getAttribute("cardid"))
+                    + getRequest().getSession().getAttribute("openid") + "scsfz.jpg");
             if (null != ff && ff.length() > 1000) {
-                File fm = new File(ProjectSettings.getPicpath() + String.valueOf(getRequest().getSession().getAttribute("cardid"))
-                        + getRequest().getSession().getAttribute("openid") + "fscsfz.jpg");
                 {
                     PublicFunc.copyFile(ff.getAbsolutePath(), fm.getAbsolutePath(), true);
                 }
-            } else
+            } else  if (null == ff || fm.length()<1000)
                 msg = "手持身份证照文件不对";
             ff = (File) getParameter("fyhk");//fdphy,fyhkf,fyhkz,fsfzf,fsfzz
+            fm = new File(ProjectSettings.getPicpath() + String.valueOf(getRequest().getSession().getAttribute("cardid"))
+                    + getRequest().getSession().getAttribute("openid") + "yhk.jpg");
             if (null != ff && ff.length() > 1000) {
-                File fm = new File(ProjectSettings.getPicpath() + String.valueOf(getRequest().getSession().getAttribute("cardid"))
-                        + getRequest().getSession().getAttribute("openid") + "fyhk.jpg");
                 {
                     PublicFunc.copyFile(ff.getAbsolutePath(), fm.getAbsolutePath(), true);
                 }
-            } else
+            } else if (null == ff || fm.length()<1000)
                 msg = "银行卡正面照文件不对";
+        }
+        catch (Exception e){
+            e.printStackTrace();
         }
         finally {
             getResponse().setContentType("text/html");
@@ -417,8 +362,141 @@ public class RegAction extends AjaxActionSupport {
         }
     }
 
-    public String checkinfo(){
-        return "";
+    public void checkinfo(){
+        try {
+            String picname = getParameter("picname").toString();
+            System.out.println(picname);
+            getResponse().setHeader("Pragma", "No-cache");
+            getResponse().setHeader("Cache-Control", "no-cache");
+            getResponse().setDateHeader("Expires", 0);
+            getResponse().setContentType("image/jpeg");
+            ServletOutputStream out = null;
+            String cardidstr = null== getRequest().getSession().getAttribute("cardid")?getParameter("cid").toString():getRequest().getSession().getAttribute("cardid").toString();
+            String openidstr = null== getRequest().getSession().getAttribute("openid")?getParameter("openid").toString():getRequest().getSession().getAttribute("openid").toString();
+            System.out.println("scardstr"+cardidstr);System.out.print("openidstr"+cardidstr);
+            byte[] bt = null;
+            File fm = new File(ProjectSettings.getPicpath() + String.valueOf(cardidstr)
+                    +openidstr + picname+".jpg");
+            System.out.println("picname:"+picname);
+            if (!fm.exists()) {
+                fm = new File(getRequest()
+                        .getServletContext().getRealPath("/")
+                        + "img/"+picname+".jpg");
+            }
+            if (!fm.exists()) {
+                return ;
+            }
+            bt = new byte[(int) fm.length()];
+            FileInputStream fileInputStream = new FileInputStream(fm);
+            int readSize = fileInputStream.read(bt);
+            while (readSize != -1) {
+                try {
+                    getResponse().getOutputStream().write(bt, 0, readSize);
+                    readSize = fileInputStream.read(bt);
+                }
+                catch (Exception ee){
+                    break;
+                }
+            }
+            fileInputStream.close();
+            out = getResponse().getOutputStream();
+            out.write(bt);
+            out.flush();
+            out.close();
+        }
+        catch (Exception e){
+
+        }
+    }
+
+    public String queryCityByProvinceId(){
+        Map<String, String> mapParam = new HashMap<String, String>();
+        mapParam.put("provinceCode",getParameter("provinceCode").toString());
+        String pathUrl = "http://www.zybank.com.cn/zyb/queryCityByProvinceId";
+        String result = HttpPostUrl.sendPost(pathUrl, mapParam);
+        System.out.println(result);
+        List list = new ArrayList<>();
+        list.add(result);
+        return AjaxActionComplete(list);
+    }
+
+    public String queryallrtgsnode(){
+        Map<String, String> mapParam = new HashMap<String, String>();
+        mapParam.put("cityCode",getParameter("cityCode").toString());
+        mapParam.put("clsCode",getParameter("clsCode").toString());
+        String pathUrl = "http://www.zybank.com.cn/zyb/queryallrtgsnode";
+        String result = HttpPostUrl.sendPost(pathUrl, mapParam);
+        List list = new ArrayList<>();
+        list.add(result);
+        return AjaxActionComplete(list);
+    }
+
+    public String Fetchmerchant(){
+        Map<Object, Object> param= new HashMap<>();
+        List<HashMap> allmerchantlist = null;
+        if (null!=getParameter("item").toString() && (!getParameter("item").toString().trim().equals(""))){
+            param.put("item",getParameter("item"));
+        }
+        param.put("status","0");
+        allmerchantlist =DBmap.getmerchanttemp(param);
+        Map map=new HashMap<>();
+        map.put("totalcount",allmerchantlist.size());
+        allmerchantlist.add(0, (HashMap) map);
+        return  AjaxActionComplete(allmerchantlist);
+    }
+
+
+    public String selectone(){
+        try {
+            Map map = new HashMap<>();
+            map.put("openid", getParameter("openid"));
+            map.put("cid", getParameter("cid"));
+            List<HashMap> lm =  DBmap.getmerchanttemp(map);
+            Map mapp = new HashMap<>();
+            getRequest().setAttribute("reginfo",lm.get(0));
+            getRequest().setAttribute("openid", getParameter("openid"));
+            getRequest().setAttribute("cid", getParameter("cid"));
+            return "registerall";
+        }
+        catch (Exception e){
+            return AjaxActionComplete("page404");
+        }
+    }
+
+
+    public String checkone() {
+        try {
+            Map map = new HashMap<>();
+            map.put("cid",getParameter("cid").toString());
+            map.put("openid",getParameter("openid").toString());
+            map.put("status","1");
+            if (null!=getParameter("wxpay"))
+                map.put("wxpay","1");
+            else
+                map.put("wxpay","0");
+            if (null!=getParameter("alipay"))
+                map.put("alipay","1");
+            else
+                map.put("alipay","0");
+            if (null!=getParameter("jdpay"))
+                map.put("jdpay","1");
+            else
+                map.put("jdpay","0");
+            if (null!=getParameter("bestpay"))
+                map.put("bestpay","1");
+            else
+                map.put("bestpay","0");
+            if (null!=getParameter("canpay"))
+                map.put("canpay","1");
+            else
+                map.put("canpay","0");
+            if (DBmap.updmerchanttemp(map)){
+                return AjaxActionComplete(DBmap.insertmerchant(map));
+            };
+        }
+        catch (Exception e){
+        }
+        return AjaxActionComplete(false);
     }
 }
 

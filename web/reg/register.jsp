@@ -17,7 +17,7 @@
 <div class="wrapper wrapper-content  animated fadeInRight">
     <div class="full-height-scroll">
         <div class="ibox-content">
-            <form action="User!reg1" method="post" class="form-horizontal">
+            <form action="Reg!reg1" method="post" class="form-horizontal">
                 <div class="form-group">
                     <div class="form-group">
                     <label class="col-sm-3 control-label">商户名称：</label>
@@ -40,13 +40,13 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">身份证：</label>
                     <div class="col-sm-8">
-                        <input type="text" name="idcardno" placeholder="身份证" class="form-control" value="${reginfo.idcardno}">
+                        <input type="text" name="idcardno" id="idcardno" placeholder="身份证" class="form-control" value="${reginfo.idcardno}">
                     </div>
                 </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">手机号：</label>
                         <div class="col-sm-8">
-                            <input type="text" name="tel" placeholder="手机号" class="form-control" value="${reginfo.tel}">
+                            <input type="text" name="tel" id="tel" placeholder="手机号" class="form-control" value="${reginfo.tel}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -57,7 +57,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-8">
-                            <a class="btn btn-lg btn-primary btn-block" href="#" onclick="$('form').submit()">下一步</a>
+                            <a class="btn btn-lg btn-primary btn-block" href="#" onclick="checkvalidator()">下一步</a>
                         </div>
                     </div>
                 </div>
@@ -67,12 +67,27 @@
 </div>
 <script src="<%=request.getContextPath()%>/js/jquery.min.js"></script>
 <script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
+<script src="<%=request.getContextPath()%>/js/IDValidator.js"></script>
 <script>
-    function nextpage(){
+    function checkvalidator(){
+        var idv = new IDValidator();
+        if (!idv.isValid($("#idcardno").val())){
+            alert("身份证号码不符合要求");
+            $("#idcardno").focus();
+            return;
+        }
+        if (!idv.checkMobile($("#tel").val())){
+            alert("手机号码不符合要求");
+            $("#tel").focus();
+            return;
+        }
+        $('form').submit();
+    }
 
+    function nextpage(){
         $.ajax({
             type: 'post',
-            url: 'User!reg1',
+            url: 'Reg!reg1',
             dataType:"json",
             data:$("form").serialize(),
             success: function (data) {
