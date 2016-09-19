@@ -30,7 +30,8 @@
             </interceptor-stack>
         </interceptors>
     </package>
-    <package name="framework" namespace="/" extends="json-default">
+
+    <package name="default" namespace="/" extends="json-default">
         <global-results>
             <result name="ajaxActionCompleted" type="json">
                 <param name="root">ajaxActionResult</param>
@@ -39,9 +40,9 @@
             <result name="wxopenid" type="redirectAction" >User!wxlogin</result>
         </global-results>
         <!-- compatible api -->
-        <action name="User!*" class="com.framework.action.UserAction" method="{1}">
+        <action name="User!*" class="cc.action.UserAction" method="{1}">
         </action>
-        <action name="Reg!*" class="com.framework.action.RegAction" method="{1}">
+        <action name="Reg!*" class="cc.action.RegAction" method="{1}">
             <result name="gomainpage" type="redirectAction">Mainpage</result>
             <result name="mainpagejsp">./mainpage.jsp</result>
             <result name="loginpage">./login.jsp</result>
@@ -51,9 +52,9 @@
             <result name="registerall">./reg/registerall.jsp</result>
             <result name="paypage">./welcome.html</result>
         </action>
-        <action name="Mainpage" class="com.framework.action.UserAction" method="Initmainpage">
+        <action name="Mainpage" class="cc.action.UserAction" method="Initmainpage">
             <result name="mainpagejsp">./mainpage.jsp</result>
         </action>
     </package>
-    <constant name="struts.custom.i18n.resources" value="com/framework/mui/resources"/>
+    <constant name="struts.custom.i18n.resources" value="cc/mui/resources"/>
 </struts>

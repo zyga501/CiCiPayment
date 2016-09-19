@@ -12,7 +12,7 @@
     </filter>
     <filter>
         <filter-name>login</filter-name>
-        <filter-class>com.framework.filter.LoginFilter</filter-class>
+        <filter-class>cc.filter.LoginFilter</filter-class>
     </filter>
 
     <filter-mapping>
