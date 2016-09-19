@@ -1,6 +1,6 @@
 package cc.utils;
 
-import cc.Logger;
+import cc.ProjectLogger;
 import framework.utils.HttpClient;
 import net.sf.json.JSONObject;
 
@@ -28,8 +28,8 @@ public class OpenId extends HttpClient {
             return true;
         }
 
-        Logger.error(this.getClass().getName() + " Get OpenId Failed!");
-        Logger.error("Request Url:\r\n" + getAPIUri() + "\r\nResponse Data:\r\n" + responseResult);
+        ProjectLogger.error(this.getClass().getName() + " Get OpenId Failed!");
+        ProjectLogger.error("Request Url:\r\n" + getAPIUri() + "\r\nResponse Data:\r\n" + responseResult);
         return false;
     }
 

@@ -235,7 +235,7 @@ public class RegAction extends AjaxActionSupport {
         try {
             getRequest().getSession().setAttribute("cardid", getParameter("cid").toString());
             if (null==getAttribute("openid")||getAttribute("openid").equals(""))
-                return AjaxActionComplete("wxopenid");
+                return "wxopenid";
 //            if (null == getOpenid() || getOpenid().equals("")) {
 //                AjaxActionComplete(false);
 //            }
@@ -457,7 +457,7 @@ public class RegAction extends AjaxActionSupport {
             return "registerall";
         }
         catch (Exception e){
-            return AjaxActionComplete("page404");
+            return "page404";
         }
     }
 
