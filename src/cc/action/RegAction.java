@@ -1,7 +1,7 @@
 package cc.action;
 
 import cc.ProjectSettings;
-import cc.database.DBmap;
+import cc.database.merchant.DBmap;
 import cc.utils.HttpPostUrl;
 import cc.utils.PublicFunc;
 import framework.action.AjaxActionSupport;

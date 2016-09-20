@@ -1,4 +1,4 @@
-package cc.database;
+package cc.database.merchant;
 
 public class Codeinfo {
     private int cid;

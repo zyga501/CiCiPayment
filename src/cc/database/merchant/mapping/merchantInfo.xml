@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cc.database.mapping.merchantInfo">
+<mapper namespace="cc.database.merchant.mapping.merchantInfo">
     <select id="getAllMerchantgzh" parameterType="long" resultMap="merchantInfoResult">
         SELECT * FROM Merchantgzh
     </select>
@@ -17,7 +17,7 @@
           from merchanttemp where cid=#{cid}
          and openid = #{openid}
     </insert>
-<resultMap type="cc.database.MerchantInfo" id="merchantInfoResult">
+<resultMap type="cc.database.merchant.MerchantInfo" id="merchantInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="appid" column="appid" jdbcType="VARCHAR"/>
         <result property="appsecret" column="appsecret" jdbcType="VARCHAR"/>

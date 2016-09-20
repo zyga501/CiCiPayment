@@ -1,23 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cc.database.mapping.merchanttemp">
-    <select id="getmerchanttemp" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-        SELECT * FROM merchanttemp
-        <where> <if  test="openid!=null">openid=#{openid}</if>
-            <if test="cid!=null">and  cardid  =${cid} </if>
-            <if test="item!=null"> and (store like  CONCAT('%','${item}','%' )
-                or   tel like   CONCAT('%','${item}','%' )
-                or cardid  like  CONCAT('%','${item}','%' ))  </if>
-            <if test="status!=null">and status=#{status}</if>
-        </where>
+<mapper namespace="cc.database.merchant.mapping.merchantinfo">
+    <select id="getmerchantinfo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        SELECT * FROM merchantinfo where openid=#{openid} and  cardid=#{cid}
     </select>
 
-    <select id="insertmerchanttemp" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-        insert into  merchanttemp  ( openid,cardid) values (#{openid} ,#{cid})
+    <select id="insertmerchantinfo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        insert into  merchantinfo  ( openid,cardid) values (#{openid} ,#{cid})
     </select>
 
-    <select id="updmerchanttemp" parameterType="java.util.HashMap" >
-        update merchanttemp <set>
+    <select id="updmerchantinfo" parameterType="java.util.HashMap" >
+        update merchantinfo <set>
         <if test="store!=null">   store=#{store} ,</if>
         <if test="address!=null">   address=#{address} ,</if>
         <if test="contact!=null">   contact=#{contact} ,</if>
@@ -41,7 +34,6 @@
         <if test="contactnum!=null">   contactnum=#{contactnum} ,</if>
         <if test="acountcode!=null">   acountcode=#{acountcode} ,</if>
         <if test="acountname!=null">   acountname=#{acountname} ,</if>
-        <if test="status!=null">   status=#{status} ,</if>
     </set>
         where openid=#{openid} and cardid=#{cid}
     </select>

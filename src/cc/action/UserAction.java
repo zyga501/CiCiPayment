@@ -1,7 +1,7 @@
 package cc.action;
 
 import cc.ProjectSettings;
-import cc.database.MerchantInfo;
+import cc.database.merchant.MerchantInfo;
 import cc.utils.OpenId;
 import com.opensymphony.xwork2.ActionContext;
 import framework.action.AjaxActionSupport;

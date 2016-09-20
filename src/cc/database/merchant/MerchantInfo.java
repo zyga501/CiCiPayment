@@ -1,7 +1,5 @@
-package cc.database;
+package cc.database.merchant;
 
-
-import cc.database.Database;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package cc.database;
+package cc.database.merchant;
 
 import framework.database.DatabaseFramework;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -9,7 +9,7 @@ public class Database extends DatabaseFramework {
     }
 
     static {
-        String mybatisConfig = "cc/database/conf.xml";
+        String mybatisConfig = "cc/database/merchant/conf.xml";
         sqlSessionFactory_ = DatabaseFramework.buildSqlSessionFactory(mybatisConfig);
     }
 
