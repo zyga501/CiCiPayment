@@ -2,11 +2,7 @@ package cc.swiftpass.utils;
 
 import framework.utils.ClassUtils;
 import framework.utils.MD5;
-import framework.utils.XMLParser;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,24 +51,5 @@ public class Signature {
         result += "key=" + key;
         result = MD5.MD5Encode(result).toUpperCase();
         return result;
-    }
-
-    public static boolean checkSignValid(String responseString, String key) throws ParserConfigurationException, IOException, SAXException {
-        Map<String,Object> map = XMLParser.convertMapFromXml(responseString);
-        return checkSignValid(map, key);
-    }
-
-    public static boolean checkSignValid(Map<String,Object> map, String key) {
-        String signFromAPIResponse = map.getOrDefault("sign", "").toString();
-        if(signFromAPIResponse=="") {
-            return false;
-        }
-        map.remove("sign");
-        String signForAPIResponse = Signature.generateSign(map, key);
-
-        if(!signForAPIResponse.equals(signFromAPIResponse)){
-            return false;
-        }
-        return true;
     }
 }

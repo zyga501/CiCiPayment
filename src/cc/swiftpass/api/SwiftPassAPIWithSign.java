@@ -2,7 +2,6 @@ package cc.swiftpass.api;
 
 import cc.ProjectLogger;
 import cc.swiftpass.api.RequestBean.RequestData;
-import cc.swiftpass.utils.Signature;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
@@ -59,10 +58,6 @@ public abstract class SwiftPassAPIWithSign extends SwiftPassAPI {
 
     protected boolean parseResponse(String ...args) throws Exception {
         responseResult_ = XMLParser.convertMapFromXml(args[0]);
-        if (!Signature.checkSignValid(responseResult_, args[1])) {
-            ProjectLogger.error(this.getClass().getName() + " CheckSignValid Failed!");
-            return false;
-        }
         return true;
     }
 

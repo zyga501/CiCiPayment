@@ -13,6 +13,23 @@ public class JsPayRequestData extends RequestData {
         out_trade_no = String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
     }
 
+    public boolean checkParameter() {
+        if (!super.checkParameter()) {
+            return false;
+        }
+
+        try {
+            return !body.isEmpty()
+                    && total_fee > 0
+                    && !notify_url.isEmpty();
+        }
+        catch (Exception exception) {
+
+        }
+
+        return false;
+    }
+
     public String service; // 接口类型：pay.weixin.jspay
     public String out_trade_no; // 商户系统内部的订单号
     public String body; // 商品描述
