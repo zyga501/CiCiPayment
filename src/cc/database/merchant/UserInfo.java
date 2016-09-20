@@ -7,37 +7,37 @@ import java.util.Map;
 public class UserInfo {
 
     public static UserInfo getUserInfoById(Long UId) {
-        String statement = "cc.database.mapping.userinfo.getUserInfoById";
+        String statement = "cc.database.merchant.mapping.userinfo.getUserInfoById";
         return Database.Instance().selectOne(statement, UId);
     }
 
     public static UserInfo getUserInfoByOpenid(String Openid) {
-        String statement = "cc.database.mapping.userinfo.getUserInfoByOpenid";
+        String statement = "cc.database.merchant.mapping.userinfo.getUserInfoByOpenid";
         return Database.Instance().selectOne(statement, Openid);
     }
 
     public static UserInfo getUserInfoByAcount(Map param) {
-        String statement = "cc.database.mapping.userinfo.getUserInfoByAcount";
+        String statement = "cc.database.merchant.mapping.userinfo.getUserInfoByAcount";
         return Database.Instance().selectOne(statement,param);
     }
 
     public static List<HashMap> getAllUserInfo(Map  param) {
-        String statement = "cc.database.mapping.userinfo.getAllUserInfo";
+        String statement = "cc.database.merchant.mapping.userinfo.getAllUserInfo";
         return Database.Instance().selectList(statement,param);
     }
 
     public static boolean updateUserInfoPwd(Map param) {
-        String statement = "cc.database.mapping.userinfo.updateUserInfoPwd";
+        String statement = "cc.database.merchant.mapping.userinfo.updateUserInfoPwd";
         return Database.Instance().update(statement, param) == 1;
     }
 
     public static boolean updateUserInfoOpenid(Map param) {
-        String statement = "cc.database.mapping.userinfo.updateUserInfoOpenid";
+        String statement = "cc.database.merchant.mapping.userinfo.updateUserInfoOpenid";
         return Database.Instance().update(statement, param) == 1;
     }
 
     public static List<Long> getsubmchidlist(long uid) {
-        String statement = "cc.database.mapping.submerchant.getsubmchidlist";
+        String statement = "cc.database.merchant.mapping.submerchant.getsubmchidlist";
         return Database.Instance().selectList(statement,uid);
     }
 

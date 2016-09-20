@@ -24,9 +24,9 @@
     </environments>
 
     <mappers>
-        <mapper resource="com/qimpay/database/mapping/userinfo.xml" />
-        <mapper resource="com/qimpay/database/mapping/merchanttemp.xml" />
-        <mapper resource="com/qimpay/database/mapping/codeinfo.xml" />
-        <mapper resource="com/qimpay/database/mapping/merchantInfo.xml" />
+        <mapper resource="cc/database/merchant/mapping/userinfo.xml" />
+        <mapper resource="cc/database/merchant/mapping/merchanttemp.xml" />
+        <mapper resource="cc/database/merchant/mapping/codeinfo.xml" />
+        <mapper resource="cc/database/merchant/mapping/merchantInfo.xml" />
     </mappers>
 </configuration>
