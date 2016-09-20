@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <html>
   <head>
-    <title>Weixin</title>
+    <title>SwiftPass</title>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/qrcode.js"></script>
     <script type="text/javascript">
