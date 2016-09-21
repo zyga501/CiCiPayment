@@ -6,10 +6,21 @@
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/qrcode.js"></script>
     <script type="text/javascript">
-      function jsPay() {
+      function weixinJsPay() {
         $.ajax({
           type: 'post',
-          url: '<%=request.getContextPath()%>/swiftpass/Pay!jsPay',
+          url: '<%=request.getContextPath()%>/swiftpass/Pay!weixinJsPay',
+          dataType:"json",
+          data:$("form").serialize(),
+          success: function (data) {
+          }
+        })
+      }
+
+      function aliJsPay() {
+        $.ajax({
+          type: 'post',
+          url: '<%=request.getContextPath()%>/swiftpass/Pay!aliJsPay',
           dataType:"json",
           data:$("form").serialize(),
           success: function (data) {
@@ -36,7 +47,10 @@
         </tr>
         <tr>
           <td>
-            <input type="button" onclick="jsPay()" value="公众号支付"/>
+            <input type="button" onclick="weixinJsPay()" value="微信公众号支付"/>
+          </td>
+          <td>
+            <input type="button" onclick="aliJsPay()" value="支付宝统一下单"/>
           </td>
         </tr>
       </table>
