@@ -490,9 +490,10 @@ public class RegAction extends AjaxActionSupport {
                 map.put("canpay","0");
             if (DBmap.updmerchanttemp(map)){
                 return AjaxActionComplete(DBmap.insertmerchant(map));
-            };
+            }
         }
         catch (Exception e){
+            e.printStackTrace();
         }
         return AjaxActionComplete(false);
     }

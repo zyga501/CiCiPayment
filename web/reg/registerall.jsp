@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
     <title>上传照片</title>
     <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="<%=request.getContextPath()%>/css/laypage.css" rel="stylesheet" type="text/css"/>
@@ -207,13 +207,13 @@
         }
         $(".img").on("click", function () {
             layer.full(layer.open({
-                type: 2,
+                type: 1,
                 skin: 'layui-layer-demo', //样式类名
                 closeBtn: 1, //不显示关闭按钮
                 shade: 0.8,
                 area: ['100%', '100%'],
                 shadeClose: true, //开启遮罩关闭
-                content:this.src
+                content:'<img  src="'+this.src+'" style="width:90%">'
             }));
         });
     }

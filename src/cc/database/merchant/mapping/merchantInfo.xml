@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cc.database.merchant.mapping.merchantInfo">
+<mapper namespace="cc.database.merchant.mapping.merchantgzh">
     <select id="getAllMerchantgzh" parameterType="long" resultMap="merchantInfoResult">
         SELECT * FROM Merchantgzh
     </select>
@@ -10,14 +10,7 @@
     <select id="getMerchantgzhByAppId" parameterType="String" resultMap="merchantInfoResult">
         SELECT * FROM Merchantgzh WHERE appid=#{appid}
     </select>
-    <insert id="insertmerchant" parameterType="java.util.HashMap" >
-        insert into  merchantinfo (store,address,contact,tel,idcardno,city,bank,contactnum,acountcode,acountname,province,wxpay,jdpay,alipay,bestpay,canpay)
-         select store,address,contact,tel,idcardno,city,bank,contactnum,acountcode,acountname,province,
-          #{"wxpay"},#{"jdpay"},#{"alipay"},#{"bestpay"},#{"canpay"}
-          from merchanttemp where cid=#{cid}
-         and openid = #{openid}
-    </insert>
-<resultMap type="cc.database.merchant.MerchantInfo" id="merchantInfoResult">
+    <resultMap type="cc.database.merchant.MerchantInfo" id="merchantInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="appid" column="appid" jdbcType="VARCHAR"/>
         <result property="appsecret" column="appsecret" jdbcType="VARCHAR"/>
