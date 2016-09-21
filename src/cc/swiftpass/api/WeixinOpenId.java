@@ -1,13 +1,12 @@
-package cc.utils;
+package cc.swiftpass.api;
 
 import cc.ProjectLogger;
-import framework.utils.HttpClient;
 import net.sf.json.JSONObject;
 
-public class OpenId extends HttpClient {
+public class WeixinOpenId extends SwiftPassAPI {
     private final static String OPENID_API = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code";
 
-    public OpenId(String appid, String appSecret , String code) {
+    public WeixinOpenId(String appid, String appSecret , String code) {
         appid_ = appid;
         appSecret_ = appSecret;
         code_ = code;
@@ -21,15 +20,15 @@ public class OpenId extends HttpClient {
     }
 
     @Override
-    protected boolean parseResponse(String responseResult) throws Exception {
-        JSONObject jsonParse = JSONObject.fromObject(responseResult);
+    protected boolean parseResponse(String responseString) throws Exception {
+        JSONObject jsonParse = JSONObject.fromObject(responseString);
         if (jsonParse.get("openid") != null) {
             openid_ = jsonParse.get("openid").toString();
             return true;
         }
 
         ProjectLogger.error(this.getClass().getName() + " Get OpenId Failed!");
-        ProjectLogger.error("Request Url:\r\n" + getAPIUri() + "\r\nResponse Data:\r\n" + responseResult);
+        ProjectLogger.error("Request Url:\r\n" + getAPIUri() + "\r\nResponse Data:\r\n" + responseString);
         return false;
     }
 

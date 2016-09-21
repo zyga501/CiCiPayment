@@ -2,7 +2,7 @@ package cc.action;
 
 import cc.ProjectSettings;
 import cc.database.merchant.MerchantInfo;
-import cc.utils.OpenId;
+import cc.swiftpass.api.WeixinOpenId;
 import com.opensymphony.xwork2.ActionContext;
 import framework.action.AjaxActionSupport;
 
@@ -34,12 +34,12 @@ public class UserAction extends AjaxActionSupport {
         MerchantInfo merchantInfo = MerchantInfo.getMerchantgzhById((ProjectSettings.getId()));
         String appid =  merchantInfo.getAppid();
         String appsecret =  merchantInfo.getAppsecret();
-        OpenId openId = new OpenId(appid, appsecret, getParameter("code").toString());
-        if (!openId.getRequest()) {
+        WeixinOpenId weixinOpenId = new WeixinOpenId(appid, appsecret, getParameter("code").toString());
+        if (!weixinOpenId.getRequest()) {
             return AjaxActionComplete(false) ;
         }
-        System.out.println("fopenId="+openId.getOpenId());
-        getRequest().getSession().setAttribute("openid", openId.getOpenId());
+        System.out.println("fopenId="+ weixinOpenId.getOpenId());
+        getRequest().getSession().setAttribute("openid", weixinOpenId.getOpenId());
         Map map = new HashMap<>();
         map.put("url", getAttribute("acname"));
         return AjaxActionComplete(true,map);

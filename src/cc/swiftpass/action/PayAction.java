@@ -4,6 +4,7 @@ import cc.swiftpass.api.AliJsPay;
 import cc.swiftpass.api.RequestBean.AliJsPayRequestData;
 import cc.swiftpass.api.WeixinJsPay;
 import cc.swiftpass.api.RequestBean.WeixinJsPayRequestData;
+import cc.swiftpass.api.WeixinOpenId;
 import framework.action.AjaxActionSupport;
 import framework.utils.StringUtils;
 
@@ -13,7 +14,11 @@ public class PayAction extends AjaxActionSupport {
         weixinJsPayRequestData.mch_id = "100530020860";
         weixinJsPayRequestData.body = getParameter("body").toString();
         weixinJsPayRequestData.total_fee = (int)Double.parseDouble(getParameter("total_fee").toString());
-        weixinJsPayRequestData.sub_openid = "";
+        WeixinOpenId weixinOpenId = new WeixinOpenId("", "", getParameter("code").toString());
+        if (!weixinOpenId.getRequest()) {
+            return AjaxActionComplete(false) ;
+        }
+        weixinJsPayRequestData.sub_openid = weixinOpenId.getOpenId();
         String requestUrl = getRequest().getRequestURL().toString();
         requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
         requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "swiftpass/"
