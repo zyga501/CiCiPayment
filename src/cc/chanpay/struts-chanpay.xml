@@ -12,7 +12,7 @@
             </result>
         </global-results>
 
-        <action name="Pay!*" class="pf.chanpay.action.PayAction" method="{1}">
+        <action name="Pay!*" class="cc.chanpay.action.PayAction" method="{1}">
         </action>
     </package>
 </struts>
