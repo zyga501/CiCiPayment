@@ -1,6 +1,6 @@
 package cc.database.merchant;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 public class CodeInfo {
@@ -30,15 +30,15 @@ public class CodeInfo {
         this.agentId_ = agentId;
     }
 
-    public Date getMakeDate() {
+    public Timestamp getMakeDate() {
         return makeDate_;
     }
 
-    public void setMakeDate(Date makeDate) {
+    public void setMakeDate(Timestamp makeDate) {
         this.makeDate_ = makeDate;
     }
 
     private int id_;
     private String agentId_;
-    private Date makeDate_;
+    private Timestamp makeDate_;
 }
