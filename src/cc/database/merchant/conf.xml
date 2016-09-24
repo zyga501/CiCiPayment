@@ -24,7 +24,6 @@
     </environments>
 
     <mappers>
-        <mapper resource="cc/database/merchant/mapping/userinfo.xml" />
         <mapper resource="cc/database/merchant/mapping/pendingmarchant.xml" />
         <mapper resource="cc/database/merchant/mapping/CodeInfo.xml" />
         <mapper resource="cc/database/merchant/mapping/merchant.xml" />
