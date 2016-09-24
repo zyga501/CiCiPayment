@@ -41,6 +41,16 @@ public class Signature {
         return "";
     }
 
+    public static  boolean verifySign(String xml) {
+        int beginIndex = xml.indexOf("<SIGNED_MSG>") + "<SIGNED_MSG>".length();
+        int endIndex = xml.indexOf("</SIGNED_MSG>");
+        StringBuilder out = new StringBuilder();
+        out.append(xml, 0, beginIndex).append(xml, endIndex, xml.length());
+        String plain = out.toString();
+        String sign = xml.substring(beginIndex, endIndex);
+        return verifySign(plain, sign);
+    }
+
     public static boolean verifySign(String plain, String signed) {
         try {
             byte[] signedBs = Base64.decode(signed);//pkcs7

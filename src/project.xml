@@ -19,11 +19,5 @@
         <BUSINESS_CODE>09900</BUSINESS_CODE>
         <CORP_ACCT_NO>33001628784053008724</CORP_ACCT_NO>
         <YS_PFX_PASSWD>cGc9KknL5zoC</YS_PFX_PASSWD>
-        <todo>
-            <BANK_GENERAL_NAME>中国工商银行</BANK_GENERAL_NAME>
-            <ACCOUNT_NO>621111111111</ACCOUNT_NO>
-            <ACCOUNT_NAME>代付联调接口专用</ACCOUNT_NAME>
-            <BANK_NAME>中国工商银行</BANK_NAME>
-        </todo>
     </chanPay>
 </project>

@@ -13,7 +13,7 @@ public class SinglePayRequestData extends RequestData {
             trxCode = "G10002";
             businessCode = ((Map<Object, Object>) ProjectSettings.getData("chanPay")).get("BUSINESS_CODE").toString();
             corpAccNo = ((Map<Object, Object>) ProjectSettings.getData("chanPay")).get("CORP_ACCT_NO").toString();
-            productCode = "60020002";
+            productCode = "60020005";
             accountProp = "0";
             accountType = "00";
             currency = "CNY";
