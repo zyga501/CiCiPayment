@@ -233,7 +233,8 @@ public class RegAction extends AjaxActionSupport {
 
     public String reg(){
         try {
-            getRequest().getSession().setAttribute("cardid", getParameter("cid").toString());
+            System.out.println("rparam="+getRequest().getServletPath()+" ** "+getRequest().getQueryString());
+            getRequest().getSession().setAttribute("params","Reg!reg?cardid="+getParameter("cid").toString());
             if (null==getAttribute("openid")||getAttribute("openid").equals(""))
                 return "wxopenid";
 //            if (null == getOpenid() || getOpenid().equals("")) {
@@ -253,15 +254,16 @@ public class RegAction extends AjaxActionSupport {
                 return "paypage";
             }
             map.put("openid", getRequest().getSession().getAttribute("openid"));
-            List<HashMap> lm =  DBmap.getmerchanttemp(map);
+            List<HashMap> lm =  DBmap.getpendingmerchant(map);
             if ( null==lm || lm.size()==0) {
-                DBmap.insertmerchanttemp(map);
+                DBmap.insertpendingmerchant(map);
             }
             else
-            getRequest().setAttribute("reginfo",lm.get(0));
+                getRequest().setAttribute("reginfo",lm.get(0));
             return "register1";
         }
         catch (Exception e){
+            e.printStackTrace();
             return "page404";
         }
     }
@@ -279,9 +281,9 @@ public class RegAction extends AjaxActionSupport {
             map.put("tel", getParameter("tel"));
             map.put("idcardno", getParameter("idcardno"));
             map.put("uname", getParameter("uname"));
-            if (!DBmap.updmerchanttemp(map))
+            if (!DBmap.updpendingmerchant(map))
                 return AjaxActionComplete(false);;
-            List<HashMap> lm =  DBmap.getmerchanttemp(map);
+            List<HashMap> lm =  DBmap.getpendingmerchant(map);
             getRequest().setAttribute("reginfo",lm.get(0));
             return "register2";
         }
@@ -300,9 +302,9 @@ public class RegAction extends AjaxActionSupport {
             map.put("acountcode", getParameter("acountcode"));
             map.put("bank", getParameter("bank"));
             map.put("contactnum", getParameter("contactnum"));
-            if (!DBmap.updmerchanttemp(map))
+            if (!DBmap.updpendingmerchant(map))
                 return AjaxActionComplete(false);
-            List<HashMap> lm = DBmap.getmerchanttemp(map);
+            List<HashMap> lm = DBmap.getpendingmerchant(map);
             getRequest().setAttribute("reginfo", lm.get(0));
             return "register3";
         } catch (Exception e) {
@@ -318,7 +320,7 @@ public class RegAction extends AjaxActionSupport {
             File fm = new File(ProjectSettings.getPicpath() + String.valueOf(getRequest().getSession().getAttribute("cardid"))
                     + getRequest().getSession().getAttribute("openid") + "sfzz.jpg");
             if (null != ff && ff.length() > 1000) {
-                    PublicFunc.copyFile(ff.getAbsolutePath(), fm.getAbsolutePath(), true);
+                PublicFunc.copyFile(ff.getAbsolutePath(), fm.getAbsolutePath(), true);
             } else if (null == ff || fm.length()<100)
                 msg = "身份证正面照文件不对";
             ff = (File) getParameter("fsfzf");//fdphy,fyhkf,fyhkz,fsfzf,fsfzz
@@ -436,7 +438,7 @@ public class RegAction extends AjaxActionSupport {
             param.put("item",getParameter("item"));
         }
         param.put("status","0");
-        allmerchantlist =DBmap.getmerchanttemp(param);
+        allmerchantlist =DBmap.getpendingmerchant(param);
         Map map=new HashMap<>();
         map.put("totalcount",allmerchantlist.size());
         allmerchantlist.add(0, (HashMap) map);
@@ -449,7 +451,7 @@ public class RegAction extends AjaxActionSupport {
             Map map = new HashMap<>();
             map.put("openid", getParameter("openid"));
             map.put("cid", getParameter("cid"));
-            List<HashMap> lm =  DBmap.getmerchanttemp(map);
+            List<HashMap> lm =  DBmap.getpendingmerchant(map);
             Map mapp = new HashMap<>();
             getRequest().setAttribute("reginfo",lm.get(0));
             getRequest().setAttribute("openid", getParameter("openid"));
@@ -488,7 +490,7 @@ public class RegAction extends AjaxActionSupport {
                 map.put("canpay","1");
             else
                 map.put("canpay","0");
-            if (DBmap.updmerchanttemp(map)){
+            if (DBmap.updpendingmerchant(map)){
                 return AjaxActionComplete(DBmap.insertmerchant(map));
             }
         }
@@ -498,4 +500,3 @@ public class RegAction extends AjaxActionSupport {
         return AjaxActionComplete(false);
     }
 }
-

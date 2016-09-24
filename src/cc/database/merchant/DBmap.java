@@ -6,18 +6,18 @@ import java.util.Map;
 
 public class DBmap {
 
-    public static List<HashMap> getmerchanttemp(Map param) {
-        String statement = "cc.database.merchant.mapping.merchanttemp.getmerchanttemp";
+    public static List<HashMap> getpendingmerchant(Map param) {
+        String statement = "cc.database.merchant.mapping.pendingmerchant.getpendingmerchant";
         return Database.Instance().selectList(statement,param);
     }
 
-    public static boolean updmerchanttemp(Map param) {
-        String statement = "cc.database.merchant.mapping.merchanttemp.updmerchanttemp";
+    public static boolean updpendingmerchant(Map param) {
+        String statement = "cc.database.merchant.mapping.pendingmerchant.updpendingmerchant";
         return Database.Instance().update(statement, param) > 0;
     }
 
-    public static boolean insertmerchanttemp(Map param) {
-        String statement = "cc.database.merchant.mapping.merchanttemp.insertmerchanttemp";
+    public static boolean insertpendingmerchant(Map param) {
+        String statement = "cc.database.merchant.mapping.pendingmerchant.insertpendingmerchant";
         return Database.Instance().insert(statement, param) > 0;
     }
 

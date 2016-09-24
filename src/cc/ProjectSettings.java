@@ -65,19 +65,6 @@ public class ProjectSettings {
         return 0;
     }
 
-    public static int getNotifyPort(){
-        try {
-            if (projectSettings_ != null && projectSettings_.containsKey("notifyPort")) {
-                return Integer.parseInt(projectSettings_.get("notifyPort").toString());
-            }
-        }
-        catch (NumberFormatException exception) {
-
-        }
-
-        return 2016;
-    }
-
     public static String getPicpath() {
         try {
             if (projectSettings_ != null && projectSettings_.get("Picpath") != null) {
@@ -97,6 +84,10 @@ public class ProjectSettings {
         }
 
         return  null;
+    }
+
+    public static Map<String, Object> getMapData(String key) {
+        return (Map<String, Object>)getData(key);
     }
 
     private static Map<String, Object> projectSettings_;

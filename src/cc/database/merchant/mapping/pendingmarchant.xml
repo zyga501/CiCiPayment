@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cc.database.merchant.mapping.merchanttemp">
-    <select id="getmerchanttemp" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-        SELECT * FROM merchanttemp
+<mapper namespace="cc.database.merchant.mapping.pendingmerchant">
+    <select id="getpendingmerchant" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        SELECT * FROM pendingmerchant
         <where> <if  test="openid!=null">openid=#{openid}</if>
             <if test="cid!=null">and  cardid  =${cid} </if>
             <if test="item!=null"> and (store like  CONCAT('%','${item}','%' )
@@ -12,12 +12,12 @@
         </where>
     </select>
 
-    <select id="insertmerchanttemp" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-        insert into  merchanttemp  ( openid,cardid) values (#{openid} ,#{cid})
+    <select id="insertpendingmerchant" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        insert into  pendingmerchant  ( openid,cardid) values (#{openid} ,#{cid})
     </select>
 
-    <select id="updmerchanttemp" parameterType="java.util.HashMap" >
-        update merchanttemp <set>
+    <select id="updpendingmerchant" parameterType="java.util.HashMap" >
+        update pendingmerchant <set>
         <if test="store!=null">   store=#{store} ,</if>
         <if test="address!=null">   address=#{address} ,</if>
         <if test="contact!=null">   contact=#{contact} ,</if>

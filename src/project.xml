@@ -6,6 +6,13 @@
     <serverAddress>127.0.0.1</serverAddress>
     <idWorkerSeed>1</idWorkerSeed>
     <Picpath>D:\\QiLian\\</Picpath>
+    <weixinServerInfo>
+        <appid></appid>
+        <appSecret></appSecret>
+        <apiKey></apiKey>
+        <mchId></mchId>
+        <templateId></templateId>
+    </weixinServerInfo>
     <chanPay>
         <CJ_GATEWAY_URL>https://cop-gateway.chanpay.com/crps-gateway/gw01/process01</CJ_GATEWAY_URL>
         <MERCHANT_ID>cp2016091930738</MERCHANT_ID>

@@ -25,9 +25,8 @@
 
     <mappers>
         <mapper resource="cc/database/merchant/mapping/userinfo.xml" />
-        <mapper resource="cc/database/merchant/mapping/merchanttemp.xml" />
+        <mapper resource="cc/database/merchant/mapping/pendingmerchant.xml" />
         <mapper resource="cc/database/merchant/mapping/codeinfo.xml" />
         <mapper resource="cc/database/merchant/mapping/merchant.xml" />
-        <mapper resource="cc/database/merchant/mapping/merchantgzh.xml" />
     </mappers>
 </configuration>

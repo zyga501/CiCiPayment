@@ -13,7 +13,7 @@
         insert into  merchantinfo (store,address,contact,tel,idcardno,city,bank,contactnum,acountcode,acountname,province,wxpay,jdpay,alipay,bestpay,canpay)
         select store,address,contact,tel,idcardno,city,bank,contactnum,acountcode,acountname,province,
         #{wxpay},#{jdpay},#{alipay},#{bestpay},#{canpay}
-        from merchanttemp where cardid=#{cid} and openid = #{openid}
+        from pendingmerchant where cardid=#{cid} and openid = #{openid}
     </select>
 
     <select id="updmerchantinfo" parameterType="java.util.HashMap" >
