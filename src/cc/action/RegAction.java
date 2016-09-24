@@ -1,7 +1,6 @@
 package cc.action;
 
 import cc.ProjectSettings;
-import cc.database.merchant.DBmap;
 import cc.utils.HttpPostUrl;
 import cc.utils.PublicFunc;
 import framework.action.AjaxActionSupport;
@@ -255,12 +254,12 @@ public class RegAction extends AjaxActionSupport {
             //    return "paypage";
             //}
             //map.put("openid", getRequest().getSession().getAttribute("openid"));
-            List<HashMap> lm =  DBmap.getpendingmerchant(map);
-            if ( null==lm || lm.size()==0) {
-                DBmap.insertpendingmerchant(map);
-            }
-            else
-                getRequest().setAttribute("reginfo",lm.get(0));
+            //List<HashMap> lm =  DBmap.getpendingmerchant(map);
+            //if ( null==lm || lm.size()==0) {
+            //    DBmap.insertpendingmerchant(map);
+            //}
+            //else
+            //    getRequest().setAttribute("reginfo",lm.get(0));
             return "register1";
         }
         catch (Exception e){
@@ -282,10 +281,11 @@ public class RegAction extends AjaxActionSupport {
             map.put("tel", getParameter("tel"));
             map.put("idcardno", getParameter("idcardno"));
             map.put("uname", getParameter("uname"));
-            if (!DBmap.updpendingmerchant(map))
-                return AjaxActionComplete(false);;
-            List<HashMap> lm =  DBmap.getpendingmerchant(map);
-            getRequest().setAttribute("reginfo",lm.get(0));
+            // TODO
+            //if (!DBmap.updpendingmerchant(map))
+            //    return AjaxActionComplete(false);;
+            //List<HashMap> lm =  DBmap.getpendingmerchant(map);
+            //getRequest().setAttribute("reginfo",lm.get(0));
             return "register2";
         }
         catch (Exception e){
@@ -303,10 +303,11 @@ public class RegAction extends AjaxActionSupport {
             map.put("acountcode", getParameter("acountcode"));
             map.put("bank", getParameter("bank"));
             map.put("contactnum", getParameter("contactnum"));
-            if (!DBmap.updpendingmerchant(map))
-                return AjaxActionComplete(false);
-            List<HashMap> lm = DBmap.getpendingmerchant(map);
-            getRequest().setAttribute("reginfo", lm.get(0));
+            // TODO
+            //if (!DBmap.updpendingmerchant(map))
+            //    return AjaxActionComplete(false);
+            //List<HashMap> lm = DBmap.getpendingmerchant(map);
+            //getRequest().setAttribute("reginfo", lm.get(0));
             return "register3";
         } catch (Exception e) {
             e.printStackTrace();
@@ -439,7 +440,8 @@ public class RegAction extends AjaxActionSupport {
             param.put("item",getParameter("item"));
         }
         param.put("status","0");
-        allmerchantlist =DBmap.getpendingmerchant(param);
+        // TODO
+        //allmerchantlist =DBmap.getpendingmerchant(param);
         Map map=new HashMap<>();
         map.put("totalcount",allmerchantlist.size());
         allmerchantlist.add(0, (HashMap) map);
@@ -452,9 +454,10 @@ public class RegAction extends AjaxActionSupport {
             Map map = new HashMap<>();
             map.put("openid", getParameter("openid"));
             map.put("cid", getParameter("cid"));
-            List<HashMap> lm =  DBmap.getpendingmerchant(map);
+            // TODO
+            //List<HashMap> lm =  DBmap.getpendingmerchant(map);
             Map mapp = new HashMap<>();
-            getRequest().setAttribute("reginfo",lm.get(0));
+            //getRequest().setAttribute("reginfo",lm.get(0));
             getRequest().setAttribute("openid", getParameter("openid"));
             getRequest().setAttribute("cid", getParameter("cid"));
             return "registerall";
@@ -491,9 +494,10 @@ public class RegAction extends AjaxActionSupport {
                 map.put("canpay","1");
             else
                 map.put("canpay","0");
-            if (DBmap.updpendingmerchant(map)){
-                return AjaxActionComplete(DBmap.insertmerchant(map));
-            }
+            // TODO
+            //if (DBmap.updpendingmerchant(map)){
+            //    return AjaxActionComplete(DBmap.insertmerchant(map));
+            //}
         }
         catch (Exception e){
             e.printStackTrace();
