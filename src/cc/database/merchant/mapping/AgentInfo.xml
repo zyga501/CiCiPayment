@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.database.merchant.mapping.agentInfo">
+    <select id="getAgentInfoById" parameterType="long" resultMap="agentInfoResult">
+        SELECT * FROM agentinfo where id=#{id}
+    </select>
+    <resultMap type="cc.database.merchant.AgentInfo" id="agentInfoResult">
+        <id property="id" column="id" jdbcType="BIGINT" />
+        <result property="name" column="name" jdbcType="VARCHAR" />
+        <result property="contactNo" column="contactNo" jdbcType="VARCHAR" />
+        <result property="bankCity" column="bankCity" jdbcType="VARCHAR" />
+        <result property="bankName" column="bankName" jdbcType="VARCHAR" />
+        <result property="bankCode" column="bankCode" jdbcType="VARCHAR" />
+        <result property="accountNo" column="accountNo" jdbcType="VARCHAR" />
+        <result property="accountName" column="accountName" jdbcType="VARCHAR" />
+        <result property="wxProfit" column="wxProfit" jdbcType="FLOAT" />
+        <result property="wxCost" column="wxCost" jdbcType="FLOAT" />
+        <result property="aliProfit" column="aliProfit" jdbcType="FLOAT" />
+        <result property="aliCost" column="aliCost" jdbcType="FLOAT" />
+        <result property="jdProfit" column="jdProfit" jdbcType="FLOAT" />
+        <result property="jdCost" column="jdCost" jdbcType="FLOAT" />
+        <result property="bestProfit" column="bestProfit" jdbcType="FLOAT" />
+        <result property="bestCost" column="bestCost" jdbcType="FLOAT" />
+    </resultMap>
+</mapper>
