@@ -245,15 +245,16 @@ public class RegAction extends AjaxActionSupport {
 //                return "wxopenid";
 
             Map map = new HashMap<>();
-            map.put("cid", getParameter("cid").toString() );
-            List<HashMap> lc =DBmap.getcodeinfo(map);
-            if (null==lc || (lc.size()==0)){
-                return "page404";//goto pay page; 根据支付类型跳转
-            }
-            else if ((lc.size()==1) && (!lc.get(0).get("openid").equals("")) ){
-                return "paypage";
-            }
-            map.put("openid", getRequest().getSession().getAttribute("openid"));
+            // TODO
+            //map.put("cid", getParameter("cid").toString() );
+            //List<HashMap> lc =DBmap.getcodeinfo(map);
+            //if (null==lc || (lc.size()==0)){
+            //    return "page404";//goto pay page; 根据支付类型跳转
+            //}
+            //else if ((lc.size()==1) && (!lc.get(0).get("openid").equals("")) ){
+            //    return "paypage";
+            //}
+            //map.put("openid", getRequest().getSession().getAttribute("openid"));
             List<HashMap> lm =  DBmap.getpendingmerchant(map);
             if ( null==lm || lm.size()==0) {
                 DBmap.insertpendingmerchant(map);

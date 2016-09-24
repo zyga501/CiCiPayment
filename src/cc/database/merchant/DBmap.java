@@ -21,11 +21,6 @@ public class DBmap {
         return Database.Instance().insert(statement, param) > 0;
     }
 
-    public static List<HashMap> getcodeinfo(Map param) {
-        String statement = "cc.database.merchant.mapping.codeinfo.getcodeinfo";
-        return Database.Instance().selectList(statement,param);
-    }
-
     public static boolean insertmerchant(Map param) {
         String statement = "cc.database.merchant.mapping.merchantinfo.insertmerchant";
         return Database.Instance().insert(statement, param) > 0;

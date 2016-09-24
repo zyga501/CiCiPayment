@@ -1,59 +1,44 @@
 package cc.database.merchant;
 
-public class Codeinfo {
-    private int cid;
-    private String  uname="" ;
-    private String saleorder="" ;
-    private String  makedate="" ;
-    private int merchantid;
-    private String openid="" ;
+import java.util.Date;
+import java.util.List;
 
-    public int getCid() {
-        return cid;
+public class CodeInfo {
+    public static void main(String[] args) throws Exception {
+        List<CodeInfo> codeInfoList = getCodeInfo(12332100);
+        System.exit(0);
     }
 
-    public void setCid(int cid) {
-        this.cid = cid;
+    public static List<CodeInfo> getCodeInfo(long id) {
+        String statement = "cc.database.merchant.mapping.codeInfo.getCodeInfoById";
+        return Database.Instance().selectList(statement, id);
     }
 
-    public String getUname() {
-        return uname;
+    public int getId() {
+        return id_;
     }
 
-    public void setUname(String uname) {
-        this.uname = uname;
+    public void setId(int id) {
+        this.id_ = id;
     }
 
-    public String getSaleorder() {
-        return saleorder;
+    public String getAgentId() {
+        return agentId_;
     }
 
-    public void setSaleorder(String saleorder) {
-        this.saleorder = saleorder;
+    public void setAgentId(String agentId) {
+        this.agentId_ = agentId;
     }
 
-    public String getMakedate() {
-        return makedate;
+    public Date getMakeDate() {
+        return makeDate_;
     }
 
-    public void setMakedate(String makedate) {
-        this.makedate = makedate;
+    public void setMakeDate(Date makeDate) {
+        this.makeDate_ = makeDate;
     }
 
-    public int getMerchantid() {
-        return merchantid;
-    }
-
-    public void setMerchantid(int merchantid) {
-        this.merchantid = merchantid;
-    }
-
-    public String getOpenid() {
-        return openid;
-    }
-
-    public void setOpenid(String openid) {
-        this.openid = openid;
-    }
-
+    private int id_;
+    private String agentId_;
+    private Date makeDate_;
 }
