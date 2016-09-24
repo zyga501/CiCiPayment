@@ -7,12 +7,13 @@
     <resultMap type="cc.database.merchant.AgentInfo" id="agentInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="name" column="name" jdbcType="VARCHAR" />
-        <result property="contactNo" column="contactNo" jdbcType="VARCHAR" />
+        <result property="contactPhone" column="contactPhone" jdbcType="VARCHAR" />
         <result property="bankCity" column="bankCity" jdbcType="VARCHAR" />
         <result property="bankName" column="bankName" jdbcType="VARCHAR" />
         <result property="bankCode" column="bankCode" jdbcType="VARCHAR" />
         <result property="accountNo" column="accountNo" jdbcType="VARCHAR" />
         <result property="accountName" column="accountName" jdbcType="VARCHAR" />
+        <result property="accountPhone" column="accountPhone" jdbcType="VARCHAR" />
         <result property="wxProfit" column="wxProfit" jdbcType="FLOAT" />
         <result property="wxCost" column="wxCost" jdbcType="FLOAT" />
         <result property="aliProfit" column="aliProfit" jdbcType="FLOAT" />

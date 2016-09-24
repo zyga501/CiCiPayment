@@ -5,11 +5,11 @@ import java.util.List;
 
 public class CodeInfo {
     public static void main(String[] args) throws Exception {
-        List<CodeInfo> codeInfoList = getCodeInfo(12332100);
+        List<CodeInfo> codeInfoList = getCodeInfoById(12332100);
         System.exit(0);
     }
 
-    public static List<CodeInfo> getCodeInfo(long id) {
+    public static List<CodeInfo> getCodeInfoById(long id) {
         String statement = "cc.database.merchant.mapping.codeInfo.getCodeInfoById";
         return Database.Instance().selectList(statement, id);
     }
