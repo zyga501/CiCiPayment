@@ -5,7 +5,7 @@ import java.util.List;
 
 public class MerchantInfo {
     public static void main(String[] args) throws Exception {
-        List<MerchantInfo> codeInfoList = getMerchantInfoById(123);
+        List<MerchantInfo> merchantInfoList = getMerchantInfoById(123);
         System.exit(0);
     }
 
