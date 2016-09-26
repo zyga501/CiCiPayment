@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cc.database.merchant.mapping.pendingMerchant">
-    <select id="getPendingMerchantById" resultMap="pendingMerchantResult">
-        SELECT * FROM pendingmerchant where id=#{0} <if test="openid!=null"> and openid=#{1}</if>
+    <select id="getPendingMerchantById" parameterType="java.util.HashMap" resultMap="pendingMerchantResult">
+        SELECT * FROM pendingmerchant where id=#{id} <if test="openid!=null"> and openid=#{openid}</if>
     </select>
 
     <insert id="insertPendingMerchant" parameterType="cc.database.merchant.PendingMerchant">
