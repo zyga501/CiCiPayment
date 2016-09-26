@@ -10,7 +10,7 @@ public class VerifiedRequestData extends RequestData {
     public VerifiedRequestData() {
         trxCode = "G60001";
         accountType = "00";
-        sn = String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed()));
+        sn = String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
     }
 
     public boolean checkParameter() {
