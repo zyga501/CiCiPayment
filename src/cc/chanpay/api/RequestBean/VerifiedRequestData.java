@@ -10,6 +10,7 @@ public class VerifiedRequestData extends RequestData {
     public VerifiedRequestData() {
         trxCode = "G60001";
         accountType = "00";
+        validateMode = "V002";
         sn = String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
     }
 
@@ -39,6 +40,8 @@ public class VerifiedRequestData extends RequestData {
         message.add(super.buildElement());
 
         Element body = message.addElement("BODY");
+        Element batch = body.addElement("BATCH");
+        batch.addElement("VALIDATE_MODE").setText(validateMode);
         Element details = body.addElement("TRANS_DETAILS");
         Element dtl = details.addElement("DTL");
         dtl.addElement("SN").setText(sn);
@@ -61,6 +64,7 @@ public class VerifiedRequestData extends RequestData {
         return doc.getRootElement();
     }
 
+    public String validateMode;
     public String sn;//明细号
     public String bankGeneralName;//银行通用名称
     public String bankName;//开户行名称
