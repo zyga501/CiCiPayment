@@ -13,6 +13,11 @@ public class AgentInfo {
         return Database.Instance().selectList(statement, id);
     }
 
+    public static List<AgentInfo> getAgentInfoByName(String  uname) {
+        String statement = "cc.database.merchant.mapping.agentInfo.getAgentInfoByName";
+        return Database.Instance().selectList(statement, uname);
+    }
+
     public long getId() {
         return id_;
     }

@@ -20,7 +20,8 @@
     </update>
 
     <resultMap type="cc.database.merchant.MerchantInfo" id="merchantInfoResult">
-        <id property="id" column="id" jdbcType="BIGINT" />
+        <id property="mid" column="mid" jdbcType="BIGINT" />
+        <result property="id" column="id" jdbcType="BIGINT" />
         <result property="name" column="name" jdbcType="VARCHAR" />
         <result property="address" column="address" jdbcType="VARCHAR" />
         <result property="contactPhone" column="contactPhone" jdbcType="VARCHAR" />
