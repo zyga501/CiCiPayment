@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cc.database.merchant.mapping.pendingMerchant">
-    <select id="getPendingMerchantById" parameterType="long" resultMap="pendingMerchantResult">
-        SELECT * FROM pendingmerchant where id=#{id}
+    <select id="getPendingMerchantById" parameterType="java.util.HashMap" resultMap="pendingMerchantResult">
+        SELECT * FROM pendingmerchant where id=#{id} <if test="openid!=null"> and openid=#{openid}</if>
     </select>
 
+    <insert id="insertPendingMerchant" parameterType="cc.database.merchant.PendingMerchant">
+        INSERT INTO pendingmerchant(id,name,address,contactName,contactPhone,idCard,idCardPF,idCardPB,idCardPC,registerDate,paymentStatus,
+        wxStatus,wxRate,aliStatus,aliRate,jdStatus,jdRate,bestStatus,bestRate,bankCity,bankName,accountNo,accountName,accountPhone)
+        VALUE (#{id},#{name},#{address},#{contactName},#{contactPhone},#{idCard},#{idCardPF},#{idCardPB},#{idCardPC},#{registerDate},#{paymentStatus},
+        #{wxStatus},#{wxRate},#{aliStatus},#{aliRate},#{jdStatus},#{jdRate},#{bestStatus},#{bestRate},#{bankCity},#{bankName},#{accountNo},#{accountName},#{accountPhone})
+    </insert>
+
+    <update id="updatePendingMerchant" parameterType="cc.database.merchant.PendingMerchant">
+        UPDATE pendingmerchant
+        SET id = #{id},name=#{name},address=#{address},contactName=#{contactName},contactPhone=#{contactPhone},idCard=#{idCard},idCardPF=#{idCardPF},idCardPB=#{idCardPB},idCardPC=#{idCardPC},registerDate=#{registerDate},
+        paymentStatus=#{paymentStatus},wxStatus=#{wxStatus},wxRate=#{wxRate},aliStatus=#{aliStatus},aliRate=#{aliRate},jdStatus=#{jdStatus},jdRate=#{jdRate},bestStatus=#{bestStatus},bestRate=#{bestRate},
+        bankCity=#{bankCity},bankName=#{bankName},accountNo=#{accountNo},accountName=#{accountName},accountPhone=#{accountPhone}
+    </update>
     <resultMap type="cc.database.merchant.PendingMerchant" id="pendingMerchantResult">
-        <id property="id" column="id" jdbcType="BIGINT" />
+        <id property="pid" column="pid" jdbcType="BIGINT" />
+        <result property="id" column="id" jdbcType="BIGINT" />
         <result property="name" column="name" jdbcType="VARCHAR" />
         <result property="address" column="address" jdbcType="VARCHAR" />
         <result property="contactPhone" column="contactPhone" jdbcType="VARCHAR" />

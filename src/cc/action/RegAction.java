@@ -1,6 +1,10 @@
 package cc.action;
 
 import cc.ProjectSettings;
+import cc.database.merchant.AgentInfo;
+import cc.database.merchant.CodeInfo;
+import cc.database.merchant.MerchantInfo;
+import cc.database.merchant.PendingMerchant;
 import cc.utils.HttpPostUrl;
 import cc.utils.PublicFunc;
 import framework.action.AjaxActionSupport;
@@ -243,23 +247,26 @@ public class RegAction extends AjaxActionSupport {
 //            if (null!=getRequest().getSession().getAttribute("openid"))
 //                return "wxopenid";
 
-            Map map = new HashMap<>();
             // TODO
-            //map.put("cid", getParameter("cid").toString() );
-            //List<HashMap> lc =DBmap.getcodeinfo(map);
-            //if (null==lc || (lc.size()==0)){
-            //    return "page404";//goto pay page; 根据支付类型跳转
-            //}
-            //else if ((lc.size()==1) && (!lc.get(0).get("openid").equals("")) ){
-            //    return "paypage";
-            //}
-            //map.put("openid", getRequest().getSession().getAttribute("openid"));
-            //List<HashMap> lm =  DBmap.getpendingmerchant(map);
-            //if ( null==lm || lm.size()==0) {
-            //    DBmap.insertpendingmerchant(map);
-            //}
-            //else
-            //    getRequest().setAttribute("reginfo",lm.get(0));
+            List<CodeInfo> lc = CodeInfo.getCodeInfoById(Long.parseLong(getParameter("cid").toString()));
+            List<MerchantInfo> lm = MerchantInfo.getMerchantInfoById(Long.parseLong(getParameter("cid").toString()));
+            if (null==lc || (lc.size()==0)){
+                return "page404";//goto pay page; 根据支付类型跳转
+            }
+            else if ((lm.size()==1)){
+                return "paypage";
+            }
+            Map map = new HashMap<>();
+            map.put("openid", getRequest().getSession().getAttribute("openid"));
+            map.put("cid",Long.parseLong(getParameter("cid").toString()));
+            List<PendingMerchant> lp =  PendingMerchant.getPendingMerchantById(map);
+            if ( null==lp || lp.size()==0) {
+                PendingMerchant pendingMerchant = new PendingMerchant();
+                pendingMerchant.setOpenid(getParameter("openid").toString());
+                PendingMerchant.insertPendingMerchant(pendingMerchant);
+            }
+            else
+                getRequest().setAttribute("reginfo",lp.get(0));
             return "register1";
         }
         catch (Exception e){
@@ -272,20 +279,28 @@ public class RegAction extends AjaxActionSupport {
         try {
             if (null==getAttribute("openid"))
                 return "User!wxlogin";
+
+            List<CodeInfo> lc = CodeInfo.getCodeInfoById(Long.parseLong(getParameter("cid").toString()));
+            List<AgentInfo> la = AgentInfo.getAgentInfoByName((getParameter("uname").toString()));
+            if (! lc.get(0).getAgentId().equals(getParameter("uname").toString())) {
+                return "register1";
+            }
+            PendingMerchant pendingMerchant =new PendingMerchant();
+            pendingMerchant.setOpenid(getRequest().getSession().getAttribute("openid").toString());
+            pendingMerchant.setId(Long.parseLong(getRequest().getSession().getAttribute("cardid").toString()));
+            pendingMerchant.setName(getParameter("store").toString());
+            pendingMerchant.setAddress(getParameter("address").toString());
+            pendingMerchant.setContactName(getParameter("contact").toString());
+            pendingMerchant.setContactPhone(getParameter("tel").toString());
+            pendingMerchant.setIdCard(getParameter("idcardno").toString());
+            // TODO
+            if (!PendingMerchant.updatePendingMerchant(pendingMerchant))
+                return AjaxActionComplete(false);
             Map map = new HashMap<>();
             map.put("openid", getRequest().getSession().getAttribute("openid"));
-            map.put("cid", getRequest().getSession().getAttribute("cardid"));
-            map.put("store", getParameter("store"));
-            map.put("address", getParameter("address"));
-            map.put("contact", getParameter("contact"));
-            map.put("tel", getParameter("tel"));
-            map.put("idcardno", getParameter("idcardno"));
-            map.put("uname", getParameter("uname"));
-            // TODO
-            //if (!DBmap.updpendingmerchant(map))
-            //    return AjaxActionComplete(false);;
-            //List<HashMap> lm =  DBmap.getpendingmerchant(map);
-            //getRequest().setAttribute("reginfo",lm.get(0));
+            map.put("cid",Long.parseLong(getParameter("cid").toString()));
+            List<PendingMerchant> lp =  PendingMerchant.getPendingMerchantById(map);
+            getRequest().setAttribute("reginfo",lp.get(0));
             return "register2";
         }
         catch (Exception e){
@@ -294,20 +309,30 @@ public class RegAction extends AjaxActionSupport {
     }
     public String reg2() {
         try {
-            Map map = new HashMap<>();
-            System.out.println(getRequest().getSession().getAttribute("openid"));
-            map.put("openid", getRequest().getSession().getAttribute("openid"));
-            map.put("cid", getRequest().getSession().getAttribute("cardid"));
-            map.put("city", getParameter("city"));
-            map.put("acountname", getParameter("acountname"));
-            map.put("acountcode", getParameter("acountcode"));
-            map.put("bank", getParameter("bank"));
-            map.put("contactnum", getParameter("contactnum"));
+//            System.out.println(getRequest().getSession().getAttribute("openid"));
+//            map.put("openid", getRequest().getSession().getAttribute("openid"));
+//            map.put("cid", getRequest().getSession().getAttribute("cardid"));
+//            map.put("city", getParameter("city"));
+//            map.put("acountname", getParameter("acountname"));
+//            map.put("acountcode", getParameter("acountcode"));
+//            map.put("bank", getParameter("bank"));
+//            map.put("contactnum", getParameter("contactnum"));
+            PendingMerchant pendingMerchant =new PendingMerchant();
+            pendingMerchant.setOpenid(getRequest().getSession().getAttribute("openid").toString());
+            pendingMerchant.setId(Long.parseLong(getRequest().getSession().getAttribute("cardid").toString()));
+            pendingMerchant.setBankCity(getParameter("city").toString());
+            pendingMerchant.setAccountName(getParameter("acountname").toString());
+            pendingMerchant.setAccountNo(getParameter("acountcode").toString());
+            pendingMerchant.setBankName(getParameter("bank").toString());
+            pendingMerchant.setBankCode(getParameter("contactnum").toString());
             // TODO
-            //if (!DBmap.updpendingmerchant(map))
-            //    return AjaxActionComplete(false);
-            //List<HashMap> lm = DBmap.getpendingmerchant(map);
-            //getRequest().setAttribute("reginfo", lm.get(0));
+            if (!PendingMerchant.updatePendingMerchant(pendingMerchant))
+                return AjaxActionComplete(false);
+            Map map = new HashMap<>();
+            map.put("openid", getRequest().getSession().getAttribute("openid"));
+            map.put("cid",Long.parseLong(getParameter("cid").toString()));
+            List<PendingMerchant> lp =  PendingMerchant.getPendingMerchantById(map);
+            getRequest().setAttribute("reginfo",lp.get(0));
             return "register3";
         } catch (Exception e) {
             e.printStackTrace();

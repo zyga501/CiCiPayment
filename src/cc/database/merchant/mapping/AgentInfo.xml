@@ -4,6 +4,9 @@
     <select id="getAgentInfoById" parameterType="long" resultMap="agentInfoResult">
         SELECT * FROM agentinfo where id=#{id}
     </select>
+    <select id="getAgentInfoByName" parameterType="String" resultMap="agentInfoResult">
+        SELECT * FROM agentinfo where name=#{uname}
+    </select>
     <resultMap type="cc.database.merchant.AgentInfo" id="agentInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="name" column="name" jdbcType="VARCHAR" />
