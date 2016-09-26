@@ -214,22 +214,6 @@ public class MerchantInfo {
         this.accountPhone_ = accountPhone;
     }
 
-    public long getMid() {
-        return mid_;
-    }
-
-    public void setMid(long mid_) {
-        this.mid_ = mid_;
-    }
-
-    public long getPid() {
-        return pid_;
-    }
-
-    public void setPid(long pid_) {
-        this.pid_ = pid_;
-    }
-
     public String getOpenid() {
         return openid_;
     }
@@ -238,8 +222,6 @@ public class MerchantInfo {
         this.openid_ = openid_;
     }
 
-    private long mid_;
-    private long pid_;
     private long id_;
     private String name_;
     private String address_;

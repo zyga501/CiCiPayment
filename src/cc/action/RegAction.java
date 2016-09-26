@@ -240,14 +240,7 @@ public class RegAction extends AjaxActionSupport {
             getRequest().getSession().setAttribute("params","Reg!reg?cardid="+getParameter("cid").toString());
             if (null==getAttribute("openid")||getAttribute("openid").equals(""))
                 return "wxopenid";
-//            if (null == getOpenid() || getOpenid().equals("")) {
-//                AjaxActionComplete(false);
-//            }
-//            setOpenid("_ooooiiiuujjhshshsy");
-//            if (null!=getRequest().getSession().getAttribute("openid"))
-//                return "wxopenid";
 
-            // TODO
             List<CodeInfo> lc = CodeInfo.getCodeInfoById(Long.parseLong(getParameter("cid").toString()));
             List<MerchantInfo> lm = MerchantInfo.getMerchantInfoById(Long.parseLong(getParameter("cid").toString()));
             if (null==lc || (lc.size()==0)){
@@ -256,10 +249,8 @@ public class RegAction extends AjaxActionSupport {
             else if ((lm.size()==1)){
                 return "paypage";
             }
-            Map map = new HashMap<>();
-            map.put("openid", getRequest().getSession().getAttribute("openid"));
-            map.put("cid",Long.parseLong(getParameter("cid").toString()));
-            List<PendingMerchant> lp =  PendingMerchant.getPendingMerchantById(map);
+
+            List<PendingMerchant> lp =  PendingMerchant.getPendingMerchantById(Long.parseLong(getParameter("cid").toString()), getRequest().getSession().getAttribute("openid").toString());
             if ( null==lp || lp.size()==0) {
                 PendingMerchant pendingMerchant = new PendingMerchant();
                 pendingMerchant.setOpenid(getParameter("openid").toString());
@@ -293,13 +284,10 @@ public class RegAction extends AjaxActionSupport {
             pendingMerchant.setContactName(getParameter("contact").toString());
             pendingMerchant.setContactPhone(getParameter("tel").toString());
             pendingMerchant.setIdCard(getParameter("idcardno").toString());
-            // TODO
             if (!PendingMerchant.updatePendingMerchant(pendingMerchant))
                 return AjaxActionComplete(false);
-            Map map = new HashMap<>();
-            map.put("openid", getRequest().getSession().getAttribute("openid"));
-            map.put("cid",Long.parseLong(getParameter("cid").toString()));
-            List<PendingMerchant> lp =  PendingMerchant.getPendingMerchantById(map);
+
+            List<PendingMerchant> lp =  PendingMerchant.getPendingMerchantById(Long.parseLong(getParameter("cid").toString()), getRequest().getSession().getAttribute("openid").toString());
             getRequest().setAttribute("reginfo",lp.get(0));
             return "register2";
         }
@@ -309,14 +297,6 @@ public class RegAction extends AjaxActionSupport {
     }
     public String reg2() {
         try {
-//            System.out.println(getRequest().getSession().getAttribute("openid"));
-//            map.put("openid", getRequest().getSession().getAttribute("openid"));
-//            map.put("cid", getRequest().getSession().getAttribute("cardid"));
-//            map.put("city", getParameter("city"));
-//            map.put("acountname", getParameter("acountname"));
-//            map.put("acountcode", getParameter("acountcode"));
-//            map.put("bank", getParameter("bank"));
-//            map.put("contactnum", getParameter("contactnum"));
             PendingMerchant pendingMerchant =new PendingMerchant();
             pendingMerchant.setOpenid(getRequest().getSession().getAttribute("openid").toString());
             pendingMerchant.setId(Long.parseLong(getRequest().getSession().getAttribute("cardid").toString()));
@@ -328,10 +308,8 @@ public class RegAction extends AjaxActionSupport {
             // TODO
             if (!PendingMerchant.updatePendingMerchant(pendingMerchant))
                 return AjaxActionComplete(false);
-            Map map = new HashMap<>();
-            map.put("openid", getRequest().getSession().getAttribute("openid"));
-            map.put("cid",Long.parseLong(getParameter("cid").toString()));
-            List<PendingMerchant> lp =  PendingMerchant.getPendingMerchantById(map);
+
+            List<PendingMerchant> lp =  PendingMerchant.getPendingMerchantById(Long.parseLong(getParameter("cid").toString()), getRequest().getSession().getAttribute("openid").toString());
             getRequest().setAttribute("reginfo",lp.get(0));
             return "register3";
         } catch (Exception e) {

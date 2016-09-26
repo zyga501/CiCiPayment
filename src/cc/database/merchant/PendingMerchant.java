@@ -1,15 +1,15 @@
 package cc.database.merchant;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class PendingMerchant extends MerchantInfo {
     public static void main(String[] args) throws Exception {
     }
 
-    public static List<PendingMerchant> getPendingMerchantById(Map map) {
+    public static List<PendingMerchant> getPendingMerchantById(long id, String openid) {
         String statement = "cc.database.merchant.mapping.pendingMerchant.getPendingMerchantById";
-        return Database.Instance().selectList(statement, map);
+        return Database.Instance().selectList(statement, (Arrays.asList(id, openid)));
     }
 
     public static boolean insertPendingMerchant(PendingMerchant pendingMerchant) {
