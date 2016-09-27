@@ -19,8 +19,7 @@
         bankCity=#{bankCity},bankName=#{bankName},accountNo=#{accountNo},accountName=#{accountName},accountPhone=#{accountPhone}
     </update>
     <resultMap type="cc.database.merchant.PendingMerchant" id="pendingMerchantResult">
-        <id property="pid" column="pid" jdbcType="BIGINT" />
-        <result property="id" column="id" jdbcType="BIGINT" />
+        <id property="id" column="id" jdbcType="BIGINT" />
         <result property="name" column="name" jdbcType="VARCHAR" />
         <result property="address" column="address" jdbcType="VARCHAR" />
         <result property="contactPhone" column="contactPhone" jdbcType="VARCHAR" />
