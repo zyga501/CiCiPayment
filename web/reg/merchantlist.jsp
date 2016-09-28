@@ -79,7 +79,7 @@
                                             for (var i = 1, l = json.length; i < l; i++) {
                                                 htmlStr += "<tr shh='" + json[i]['cardid'] +"' sh='"+json[i]['openid']+"'>";
                                                 htmlStr += "<td>" + json[i]['cardid'] + "</td>"
-                                                htmlStr += "<td>" + nulltoempty(json[i]['store']) + "</td>"
+                                                htmlStr += "<td>" + nulltoempty(json[i]['name']) + "</td>"
                                                 htmlStr += "<td>" + nulltoempty(json[i]['tel']) + "</td>"
                                                 htmlStr += "</tr>";
                                             }
@@ -101,7 +101,7 @@
                     for (var i = 1, l = json.length; i < l; i++) {
                         htmlStr += "<tr shh='" + json[i]['cardid'] +"' sh='"+json[i]['openid']+"'>";
                         htmlStr += "<td>" + json[i]['cardid'] + "</td>"
-                        htmlStr += "<td>" + nulltoempty(json[i]['store']) + "</td>"
+                        htmlStr += "<td>" + nulltoempty(json[i]['name']) + "</td>"
                         htmlStr += "<td>" + nulltoempty(json[i]['tel']) + "</td>"
                         htmlStr += "</tr>";
                     }

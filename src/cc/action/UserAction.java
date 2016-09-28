@@ -12,10 +12,9 @@ import java.util.Map;
 public class UserAction extends AjaxActionSupport {
 
     public void wxlogin() throws IOException {
-        String  acname =  ActionContext.getContext().getName()+"?"+getRequest().getQueryString();
-        getRequest().getSession().setAttribute("acname",acname);
-        System.out.println("acname:"+acname);
         String appid = ProjectSettings.getMapData("weixinServerInfo").get("appid").toString();
+        System.out.println("URI ="+getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath());
+        System.out.println("appid ="+appid);
         String redirect_uri =  getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + "/wxlogin.jsp";
         String petOpenidUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
                         "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=login#wechat_redirect",
@@ -33,7 +32,7 @@ public class UserAction extends AjaxActionSupport {
         System.out.println("fopenId="+ weixinOpenId.getOpenId());
         getRequest().getSession().setAttribute("openid", weixinOpenId.getOpenId());
         Map map = new HashMap<>();
-        map.put("url", getAttribute("acname"));
+        map.put("url", getAttribute("params"));
         return AjaxActionComplete(true,map);
     }
 }

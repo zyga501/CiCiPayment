@@ -27,6 +27,8 @@
     </script>
 </head>
 <body>
+<form>
+    <input type="hidden" name="cid" value="${cid}">
 <table class="table table-bordered" >
     <tbody>
     <tr>
@@ -57,6 +59,7 @@
     </tr>
     </tbody>
 </table>
+</form>
 <script src="<%=request.getContextPath()%>/js/ajaxfileupload.js"></script>
 <script>
     jQuery.prototype.serializeObject=function(){

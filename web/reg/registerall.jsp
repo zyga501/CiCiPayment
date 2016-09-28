@@ -34,7 +34,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">商户名称：</label>
                         <div class="col-sm-8">
-                            <input type="text" name="store" placeholder="商户名称" class="form-control" value="${reginfo.store}">
+                            <input type="text" name="name" placeholder="商户名称" class="form-control" value="${reginfo.name}">
                         </div>
                     </div>
                     <div class="form-group">
