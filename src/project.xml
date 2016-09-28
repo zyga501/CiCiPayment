@@ -7,11 +7,11 @@
     <idWorkerSeed>1</idWorkerSeed>
     <Picpath>D:\\QiLian\\</Picpath>
     <weixinServerInfo>
-        <appid></appid>
-        <appSecret></appSecret>
+        <appid>wx866bca62844d900f</appid>
+        <appSecret>9e23e7b99fddf616c5413cbe57db3a0f</appSecret>
         <apiKey></apiKey>
         <mchId></mchId>
-        <templateId></templateId>
+        <templateId>lNqsp_tYXKMQ2MULI9_ORrhrZ3dRSsGPsp4JJyrE8PE</templateId>
     </weixinServerInfo>
     <chanPay>
         <CJ_GATEWAY_URL>https://cop-gateway.chanpay.com/crps-gateway/gw01/process01</CJ_GATEWAY_URL>

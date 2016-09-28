@@ -19,7 +19,6 @@ public class RegAction extends AjaxActionSupport {
 
     private String cardid ;
     private String openid ;
-    private String store ;
     private String address ;
     private String contact ;
     private String tel ;
@@ -63,14 +62,6 @@ public class RegAction extends AjaxActionSupport {
 
     public void setOpenid(String openid) {
         this.openid = openid;
-    }
-
-    public String getStore() {
-        return store;
-    }
-
-    public void setStore(String store) {
-        this.store = store;
     }
 
     public String getAddress() {
@@ -237,11 +228,18 @@ public class RegAction extends AjaxActionSupport {
     public String reg(){
         try {
             System.out.println("rparam="+getRequest().getServletPath()+" ** "+getRequest().getQueryString());
-            getRequest().getSession().setAttribute("params","Reg!reg?cardid="+getParameter("cid").toString());
+            getRequest().getSession().setAttribute("params","Reg!reg?cid="+getParameter("cid").toString());
             if (null==getAttribute("openid")||getAttribute("openid").equals(""))
                 return "wxopenid";
-
-            List<CodeInfo> lc = CodeInfo.getCodeInfoById(Long.parseLong(getParameter("cid").toString()));
+            getRequest().getSession().removeAttribute("params");
+            List<CodeInfo> lc = null;
+            try {
+                lc= CodeInfo.getCodeInfoById(Long.parseLong(getParameter("cid").toString()));
+            }
+            catch (Exception e){
+                e.printStackTrace();
+                System.out.println("cid="+getParameter("cid").toString());
+            }
             List<MerchantInfo> lm = MerchantInfo.getMerchantInfoById(Long.parseLong(getParameter("cid").toString()));
             if (null==lc || (lc.size()==0)){
                 return "page404";//goto pay page; 根据支付类型跳转
@@ -253,7 +251,8 @@ public class RegAction extends AjaxActionSupport {
             List<PendingMerchant> lp =  PendingMerchant.getPendingMerchantById(Long.parseLong(getParameter("cid").toString()), getRequest().getSession().getAttribute("openid").toString());
             if ( null==lp || lp.size()==0) {
                 PendingMerchant pendingMerchant = new PendingMerchant();
-                pendingMerchant.setOpenid(getParameter("openid").toString());
+                pendingMerchant.setId(Long.parseLong(getParameter("cid").toString()));
+                pendingMerchant.setOpenid(getAttribute("openid").toString());
                 PendingMerchant.insertPendingMerchant(pendingMerchant);
             }
             else
@@ -278,12 +277,12 @@ public class RegAction extends AjaxActionSupport {
             }
             PendingMerchant pendingMerchant =new PendingMerchant();
             pendingMerchant.setOpenid(getRequest().getSession().getAttribute("openid").toString());
-            pendingMerchant.setId(Long.parseLong(getRequest().getSession().getAttribute("cardid").toString()));
-            pendingMerchant.setName(getParameter("store").toString());
+            pendingMerchant.setId(Long.parseLong(getParameter("cid").toString()));
+            pendingMerchant.setName(getParameter("name").toString());
             pendingMerchant.setAddress(getParameter("address").toString());
-            pendingMerchant.setContactName(getParameter("contact").toString());
+            pendingMerchant.setContactName(getParameter("contactname").toString());
             pendingMerchant.setContactPhone(getParameter("tel").toString());
-            pendingMerchant.setIdCard(getParameter("idcardno").toString());
+            pendingMerchant.setIdCard(getParameter("idcard").toString());
             if (!PendingMerchant.updatePendingMerchant(pendingMerchant))
                 return AjaxActionComplete(false);
 
@@ -292,6 +291,7 @@ public class RegAction extends AjaxActionSupport {
             return "register2";
         }
         catch (Exception e){
+            e.printStackTrace();
             return AjaxActionComplete(false);
         }
     }
@@ -299,12 +299,12 @@ public class RegAction extends AjaxActionSupport {
         try {
             PendingMerchant pendingMerchant =new PendingMerchant();
             pendingMerchant.setOpenid(getRequest().getSession().getAttribute("openid").toString());
-            pendingMerchant.setId(Long.parseLong(getRequest().getSession().getAttribute("cardid").toString()));
+            pendingMerchant.setId(Long.parseLong(getParameter("cid").toString()));
             pendingMerchant.setBankCity(getParameter("city").toString());
             pendingMerchant.setAccountName(getParameter("acountname").toString());
-            pendingMerchant.setAccountNo(getParameter("acountcode").toString());
-            pendingMerchant.setBankName(getParameter("bank").toString());
-            pendingMerchant.setBankCode(getParameter("contactnum").toString());
+            pendingMerchant.setAccountNo(getParameter("acountNo").toString());
+            pendingMerchant.setBankName(getParameter("bankname").toString());
+            pendingMerchant.setBankCode(getParameter("bankcode").toString());
             // TODO
             if (!PendingMerchant.updatePendingMerchant(pendingMerchant))
                 return AjaxActionComplete(false);

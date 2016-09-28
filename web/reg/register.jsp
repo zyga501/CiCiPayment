@@ -18,11 +18,13 @@
     <div class="full-height-scroll">
         <div class="ibox-content">
             <form action="Reg!reg1" method="post" class="form-horizontal">
+                <input type="hidden" name="cid" value="${reginfo.id}">
+                <input type="text"  value="${reginfo.id}">
                 <div class="form-group">
                     <div class="form-group">
                     <label class="col-sm-3 control-label">商户名称：</label>
                     <div class="col-sm-8">
-                        <input type="text" name="store" placeholder="商户名称" class="form-control" value="${reginfo.store}">
+                        <input type="text" name="name" placeholder="商户名称" class="form-control" value="${reginfo.name}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -34,25 +36,25 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">联系人：</label>
                     <div class="col-sm-8">
-                        <input type="text" placeholder="联系人" name="contact" class="form-control" value="${reginfo.contact}">
+                        <input type="text" placeholder="联系人" name="contactName" class="form-control" value="${reginfo.contactName}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">身份证：</label>
                     <div class="col-sm-8">
-                        <input type="text" name="idcardno" id="idcardno" placeholder="身份证" class="form-control" value="${reginfo.idcardno}">
+                        <input type="text" name="idcardno" id="idCard" placeholder="身份证" class="form-control" value="${reginfo.idCard}">
                     </div>
                 </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">手机号：</label>
                         <div class="col-sm-8">
-                            <input type="text" name="tel" id="tel" placeholder="手机号" class="form-control" value="${reginfo.tel}">
+                            <input type="text" name="contactPhone" id="contactPhone" placeholder="手机号" class="form-control" value="${reginfo.contactPhone}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">推广号：</label>
                         <div class="col-sm-8">
-                            <input type="text" name="uname" placeholder="推广号" class="form-control"value="${reginfo.uname}">
+                            <input type="text" name="uname" placeholder="推广号" class="form-control"value="${uname}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -71,14 +73,14 @@
 <script>
     function checkvalidator(){
         var idv = new IDValidator();
-        if (!idv.isValid($("#idcardno").val())){
+        if (!idv.isValid($("#idCard").val())){
             alert("身份证号码不符合要求");
-            $("#idcardno").focus();
+            $("#idCard").focus();
             return;
         }
-        if (!idv.checkMobile($("#tel").val())){
+        if (!idv.checkMobile($("#contactPhone").val())){
             alert("手机号码不符合要求");
-            $("#tel").focus();
+            $("#contactPhone").focus();
             return;
         }
         $('form').submit();

@@ -22,12 +22,13 @@
     <div class="full-height-scroll">
         <div class="ibox-content">
             <form action="Reg!reg2" method="post" class="form-horizontal">
+                <input type="hidden" name="cid" value="${reginfo.id}">
                 <div class="form-group">
                     <label class="col-sm-3 control-label">开户名：</label>
 
                     <div class="col-sm-8">
-                        <input type="text" placeholder="开户名" name="acountname" class="form-control"
-                               value="${reginfo.acountname}">
+                        <input type="text" placeholder="开户名" name="acountName" class="form-control"
+                               value="${reginfo.acountName}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -81,7 +82,7 @@
                     <label class="col-sm-3 control-label">银行：</label>
 
                     <div class="col-sm-8">
-                        <select   name="bank" id="bank" placeholder="银行" class="form-control" value="${reginfo.bank}">
+                        <select   name="bank" id="bankname" placeholder="银行" class="form-control" value="${reginfo.bankname}">
                             <option value="">==请选择银行==</option>
                             <option value="100">中原银行</option>
                             <option value="102">中国工商银行</option>
@@ -177,14 +178,14 @@
                     <label class="col-sm-3 control-label">银行卡号：</label>
 
                     <div class="col-sm-8">
-                        <input type="text" name="acountcode" placeholder="银行卡号" class="form-control"
-                               value="${reginfo.acountcode}">
+                        <input type="text" name="acountno" placeholder="银行卡号" class="form-control"
+                               value="${reginfo.acountno}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">开户行：</label>
                     <div class="col-sm-5">
-                        <select   name="openbank" id="openbank"  class="form-control" onchange="fetchnum()" ></select>
+                        <select   name="accountname" id="accountname"  class="form-control" onchange="fetchnum()" ></select>
                     </div>
                     <div class="col-sm-3">
                         <button class=" btn btn-sm btn-primary btn-block" type="button" onclick="getnum();">获_取
