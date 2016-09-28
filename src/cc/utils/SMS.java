@@ -6,9 +6,9 @@ import com.taobao.api.TaobaoClient;
 import com.taobao.api.request.AlibabaAliqinFcSmsNumSendRequest;
 import com.taobao.api.response.AlibabaAliqinFcSmsNumSendResponse;
 
-public class SMSSend {
+public class SMS {
     public static void main(String[] args) throws Exception {
-        boolean result = SMSSend.SendMessage("13867433895", "6842");
+        boolean result = SMS.SendMessage("13867433895", "6842");
         System.exit(0);
     }
 
