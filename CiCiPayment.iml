@@ -37,5 +37,6 @@
     <orderEntry type="library" exported="" name="Struts 2-2.3.20.1" level="project" />
     <orderEntry type="library" exported="" name="XStream 1.4.9" level="project" />
     <orderEntry type="library" exported="" scope="PROVIDED" name="Tomcat 7.0.65" level="application_server_libraries" />
+    <orderEntry type="library" name="Taobao" level="project" />
   </component>
 </module>

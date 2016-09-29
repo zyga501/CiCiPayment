@@ -20,4 +20,11 @@
         <CORP_ACCT_NO>33001628784053008724</CORP_ACCT_NO>
         <YS_PFX_PASSWD>cGc9KknL5zoC</YS_PFX_PASSWD>
     </chanPay>
+    <SMSInfo>
+        <Name>CiCi_System</Name>
+        <AppKey>23464006</AppKey>
+        <AppSecret>3cabd9bdd3d90e2997e8e23f2619decd</AppSecret>
+        <FreeSignName>云支付平台</FreeSignName>
+        <TemplateCode>SMS_15540606</TemplateCode>
+    </SMSInfo>
 </project>
