@@ -42,7 +42,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">身份证：</label>
                     <div class="col-sm-8">
-                        <input type="text" name="idcardno" id="idCard" placeholder="身份证" class="form-control" value="${reginfo.idCard}">
+                        <input type="text" name="idCard" id="idCard" placeholder="身份证" class="form-control" value="${reginfo.idCard}">
                     </div>
                 </div>
                     <div class="form-group">

@@ -77,10 +77,10 @@
                                             htmlStr += "<th>CC卡号</th><th>店名</th><th>联系电话</th>";
                                             htmlStr += "</thead><tbody>";
                                             for (var i = 1, l = json.length; i < l; i++) {
-                                                htmlStr += "<tr shh='" + json[i]['cardid'] +"' sh='"+json[i]['openid']+"'>";
-                                                htmlStr += "<td>" + json[i]['cardid'] + "</td>"
+                                                htmlStr += "<tr shh='" + json[i]['id'] +"' sh='"+json[i]['openid']+"'>";
+                                                htmlStr += "<td>" + json[i]['id'] + "</td>"
                                                 htmlStr += "<td>" + nulltoempty(json[i]['name']) + "</td>"
-                                                htmlStr += "<td>" + nulltoempty(json[i]['tel']) + "</td>"
+                                                htmlStr += "<td>" + nulltoempty(json[i]['contactPhone']) + "</td>"
                                                 htmlStr += "</tr>";
                                             }
                                             htmlStr += "</tobdy></table>";
@@ -99,10 +99,10 @@
                     htmlStr += "<th>CC卡号</th><th>店名</th><th>联系电话</th>";
                     htmlStr += "</thead><tbody>";
                     for (var i = 1, l = json.length; i < l; i++) {
-                        htmlStr += "<tr shh='" + json[i]['cardid'] +"' sh='"+json[i]['openid']+"'>";
-                        htmlStr += "<td>" + json[i]['cardid'] + "</td>"
+                        htmlStr += "<tr shh='" + json[i]['id'] +"' sh='"+json[i]['openid']+"'>";
+                        htmlStr += "<td>" + json[i]['id'] + "</td>"
                         htmlStr += "<td>" + nulltoempty(json[i]['name']) + "</td>"
-                        htmlStr += "<td>" + nulltoempty(json[i]['tel']) + "</td>"
+                        htmlStr += "<td>" + nulltoempty(json[i]['contactPhone']) + "</td>"
                         htmlStr += "</tr>";
                     }
                     htmlStr += "</tobdy></table>";

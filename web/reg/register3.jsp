@@ -28,25 +28,25 @@
 </head>
 <body>
 <form>
-    <input type="hidden" name="cid" value="${cid}">
+    <input type="hidden" name="cid" value="${reginfo.id}">
 <table class="table table-bordered" >
     <tbody>
     <tr>
         <td>
             <input type="file" class="infile" name="fsfzz" id="fsfzz" style="display:none">
-            <img class="img" style="width: 100px;height: 80px" src="Reg!checkinfo?picname=sfzz" onclick="openBrowse('fsfzz')"><p>身份证正面</p></td>
+            <img class="img" style="width: 100px;height: 80px" src="Reg!checkinfo?picname=sfzz&cid=${reginfo.id}" onclick="openBrowse('fsfzz')"><p>身份证正面</p></td>
         <td>
             <input type="file" class="infile" name="fsfzf" id="fsfzf" style="display:none">
-            <img class="img" style="width: 100px;height: 80px"src="Reg!checkinfo?picname=sfzf" onclick="openBrowse('fsfzf')"><p>身份证反面</p>
+            <img class="img" style="width: 100px;height: 80px"src="Reg!checkinfo?picname=sfzf&cid=${reginfo.id}" onclick="openBrowse('fsfzf')"><p>身份证反面</p>
         </td>
     </tr>
     <tr>
         <td>
             <input type="file" class="infile" name="fscsfz" id="fscsfz" style="display:none">
-            <img  class="img" style="width: 80px;height: 80px"src="Reg!checkinfo?picname=scsfz" onclick="openBrowse('fscsfz')" ><p>手持身份证</p></td>
+            <img  class="img" style="width: 80px;height: 80px"src="Reg!checkinfo?picname=scsfz&cid=${reginfo.id}" onclick="openBrowse('fscsfz')" ><p>手持身份证</p></td>
         <td>
             <input type="file" class="infile" name="fyhk" id="fyhk" style="display:none">
-            <img  class="img" style="width: 100px;height: 80px"src="Reg!checkinfo?picname=yhk" onclick="openBrowse('fyhk')"><p>银行卡</p></td>
+            <img  class="img" style="width: 100px;height: 80px"src="Reg!checkinfo?picname=yhk&cid=${reginfo.id}" onclick="openBrowse('fyhk')"><p>银行卡</p></td>
     </tr>
     <tr >
         <td colspan="2">

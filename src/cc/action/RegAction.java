@@ -229,6 +229,7 @@ public class RegAction extends AjaxActionSupport {
         try {
             System.out.println("rparam="+getRequest().getServletPath()+" ** "+getRequest().getQueryString());
             getRequest().getSession().setAttribute("params","Reg!reg?cid="+getParameter("cid").toString());
+//            getRequest().getSession().setAttribute("openid","123123123123sss");
             if (null==getAttribute("openid")||getAttribute("openid").equals(""))
                 return "wxopenid";
             getRequest().getSession().removeAttribute("params");
@@ -275,18 +276,16 @@ public class RegAction extends AjaxActionSupport {
             if (! lc.get(0).getAgentId().equals(getParameter("uname").toString())) {
                 return "register1";
             }
-            PendingMerchant pendingMerchant =new PendingMerchant();
-            pendingMerchant.setOpenid(getRequest().getSession().getAttribute("openid").toString());
-            pendingMerchant.setId(Long.parseLong(getParameter("cid").toString()));
+            List<PendingMerchant> lp =  PendingMerchant.getPendingMerchantById(Long.parseLong(getParameter("cid").toString()), getRequest().getSession().getAttribute("openid").toString());
+            PendingMerchant pendingMerchant =lp.get(0);
             pendingMerchant.setName(getParameter("name").toString());
             pendingMerchant.setAddress(getParameter("address").toString());
-            pendingMerchant.setContactName(getParameter("contactname").toString());
-            pendingMerchant.setContactPhone(getParameter("tel").toString());
-            pendingMerchant.setIdCard(getParameter("idcard").toString());
+            pendingMerchant.setContactName(getParameter("contactName").toString());
+            pendingMerchant.setContactPhone(getParameter("contactPhone").toString());
+            pendingMerchant.setIdCard(getParameter("idCard").toString());
             if (!PendingMerchant.updatePendingMerchant(pendingMerchant))
                 return AjaxActionComplete(false);
-
-            List<PendingMerchant> lp =  PendingMerchant.getPendingMerchantById(Long.parseLong(getParameter("cid").toString()), getRequest().getSession().getAttribute("openid").toString());
+            lp =  PendingMerchant.getPendingMerchantById(Long.parseLong(getParameter("cid").toString()), getRequest().getSession().getAttribute("openid").toString());
             getRequest().setAttribute("reginfo",lp.get(0));
             return "register2";
         }
@@ -297,39 +296,37 @@ public class RegAction extends AjaxActionSupport {
     }
     public String reg2() {
         try {
-            PendingMerchant pendingMerchant =new PendingMerchant();
-            pendingMerchant.setOpenid(getRequest().getSession().getAttribute("openid").toString());
-            pendingMerchant.setId(Long.parseLong(getParameter("cid").toString()));
-            pendingMerchant.setBankCity(getParameter("city").toString());
-            pendingMerchant.setAccountName(getParameter("acountname").toString());
-            pendingMerchant.setAccountNo(getParameter("acountNo").toString());
-            pendingMerchant.setBankName(getParameter("bankname").toString());
-            pendingMerchant.setBankCode(getParameter("bankcode").toString());
+            List<PendingMerchant> lp =  PendingMerchant.getPendingMerchantById(Long.parseLong(getParameter("cid").toString()), getRequest().getSession().getAttribute("openid").toString());
+            PendingMerchant pendingMerchant =lp.get(0);
+            pendingMerchant.setBankCity(getParameter("bankCity").toString());
+            pendingMerchant.setAccountName(getParameter("accountName").toString());
+            pendingMerchant.setAccountNo(getParameter("accountNo").toString());
+            pendingMerchant.setBankName(getParameter("bankName").toString());
+            pendingMerchant.setBankCode(getParameter("bankCode").toString());
             // TODO
             if (!PendingMerchant.updatePendingMerchant(pendingMerchant))
                 return AjaxActionComplete(false);
-
-            List<PendingMerchant> lp =  PendingMerchant.getPendingMerchantById(Long.parseLong(getParameter("cid").toString()), getRequest().getSession().getAttribute("openid").toString());
+            lp =  PendingMerchant.getPendingMerchantById(Long.parseLong(getParameter("cid").toString()), getRequest().getSession().getAttribute("openid").toString());
             getRequest().setAttribute("reginfo",lp.get(0));
             return "register3";
         } catch (Exception e) {
             e.printStackTrace();
-            return ("");
+            return AjaxActionComplete(false);
         }
     }
 
     public String uploadpic() {
         String msg="";
-        try {System.out.println("in");
+        try {System.out.println("in:"+getParameter("cid").toString());
             File ff = (File) getParameter("fsfzz");//fdphy,fyhkf,fyhkz,fsfzf,fsfzz
-            File fm = new File(ProjectSettings.getPicpath() + String.valueOf(getRequest().getSession().getAttribute("cardid"))
+            File fm = new File(ProjectSettings.getPicpath() +getParameter("cid").toString()
                     + getRequest().getSession().getAttribute("openid") + "sfzz.jpg");
             if (null != ff && ff.length() > 1000) {
                 PublicFunc.copyFile(ff.getAbsolutePath(), fm.getAbsolutePath(), true);
             } else if (null == ff || fm.length()<100)
                 msg = "身份证正面照文件不对";
             ff = (File) getParameter("fsfzf");//fdphy,fyhkf,fyhkz,fsfzf,fsfzz
-            fm = new File(ProjectSettings.getPicpath() + String.valueOf(getRequest().getSession().getAttribute("cardid"))
+            fm = new File(ProjectSettings.getPicpath() +(getParameter("cid").toString())
                     + getRequest().getSession().getAttribute("openid") + "sfzf.jpg");
             if (null != ff && ff.length() > 1000) {
                 {
@@ -338,7 +335,7 @@ public class RegAction extends AjaxActionSupport {
             } else  if (null == ff || fm.length()<100)
                 msg = "身份证反面照文件不对";
             ff = (File) getParameter("fscsfz");//fdphy,fyhkf,fyhkz,fsfzf,fsfzz
-            fm = new File(ProjectSettings.getPicpath() + String.valueOf(getRequest().getSession().getAttribute("cardid"))
+            fm = new File(ProjectSettings.getPicpath() +(getParameter("cid").toString())
                     + getRequest().getSession().getAttribute("openid") + "scsfz.jpg");
             if (null != ff && ff.length() > 1000) {
                 {
@@ -347,7 +344,7 @@ public class RegAction extends AjaxActionSupport {
             } else  if (null == ff || fm.length()<1000)
                 msg = "手持身份证照文件不对";
             ff = (File) getParameter("fyhk");//fdphy,fyhkf,fyhkz,fsfzf,fsfzz
-            fm = new File(ProjectSettings.getPicpath() + String.valueOf(getRequest().getSession().getAttribute("cardid"))
+            fm = new File(ProjectSettings.getPicpath() +(getParameter("cid").toString())
                     + getRequest().getSession().getAttribute("openid") + "yhk.jpg");
             if (null != ff && ff.length() > 1000) {
                 {
@@ -376,7 +373,7 @@ public class RegAction extends AjaxActionSupport {
             getResponse().setDateHeader("Expires", 0);
             getResponse().setContentType("image/jpeg");
             ServletOutputStream out = null;
-            String cardidstr = null== getRequest().getSession().getAttribute("cardid")?getParameter("cid").toString():getRequest().getSession().getAttribute("cardid").toString();
+            String cardidstr = getParameter("cid").toString();
             String openidstr = null== getRequest().getSession().getAttribute("openid")?getParameter("openid").toString():getRequest().getSession().getAttribute("openid").toString();
             System.out.println("scardstr"+cardidstr);System.out.print("openidstr"+cardidstr);
             byte[] bt = null;
@@ -438,16 +435,15 @@ public class RegAction extends AjaxActionSupport {
 
     public String Fetchmerchant(){
         Map<Object, Object> param= new HashMap<>();
-        List<HashMap> allmerchantlist = null;
+        List<PendingMerchant> allmerchantlist = null;
         if (null!=getParameter("item").toString() && (!getParameter("item").toString().trim().equals(""))){
             param.put("item",getParameter("item"));
         }
-        param.put("status","0");
         // TODO
-        //allmerchantlist =DBmap.getpendingmerchant(param);
+        allmerchantlist =PendingMerchant.getPendingMerchant(param);
         Map map=new HashMap<>();
         map.put("totalcount",allmerchantlist.size());
-        allmerchantlist.add(0, (HashMap) map);
+        allmerchantlist.add(0, (PendingMerchant) map);
         return  AjaxActionComplete(allmerchantlist);
     }
 

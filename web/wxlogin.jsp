@@ -11,10 +11,8 @@
                 dataType:"json",
                 data:{id: "<%=request.getParameter("state")%>", code : "<%=request.getParameter("code")%>"},
                 success: function (data) {
-                    alert(data);
                      var json = eval("(" + data + ")");
                      if (json.resultCode == 'Succeed') {
-                         alert(json.url);
                          window.location.href =json.url;
                      }
                      else {

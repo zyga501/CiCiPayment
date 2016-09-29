@@ -5,6 +5,16 @@
         SELECT * FROM pendingmerchant where id=#{id} <if test="openid!=null"> and openid=#{openid}</if>
     </select>
 
+    <select id="getPendingMerchant" parameterType="java.util.HashMap" resultMap="pendingMerchantResult">
+        SELECT * FROM pendingmerchant
+        <where><if  test="openid!=null">openid=#{openid}</if>
+        <if test="cid!=null">and  id  =${cid} </if>
+        <if test="item!=null"> and (name like  CONCAT('%','${item}','%' )
+            or   contactPhone like   CONCAT('%','${item}','%' )
+            or id  like  CONCAT('%','${item}','%' ))  </if>
+    </where>
+    </select>
+
     <insert id="insertPendingMerchant" parameterType="cc.database.merchant.PendingMerchant">
         INSERT INTO pendingmerchant(id,name,address,contactName,contactPhone,idCard,idCardPF,idCardPB,idCardPC,registerDate,paymentStatus,
         wxStatus,wxRate,aliStatus,aliRate,jdStatus,jdRate,bestStatus,bestRate,bankCity,bankName,accountNo,accountName,accountPhone,openid)
