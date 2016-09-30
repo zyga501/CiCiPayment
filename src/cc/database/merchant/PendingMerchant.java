@@ -2,6 +2,7 @@ package cc.database.merchant;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PendingMerchant extends MerchantInfo {
     public static void main(String[] args) throws Exception {
@@ -14,6 +15,10 @@ public class PendingMerchant extends MerchantInfo {
         return Database.Instance().selectList(statement, new HashMap<String, Object>(){{put("id", id);put("openid", openid);}});
     }
 
+    public static List<Map> getPendingMerchant(Map map) {
+        String statement = "cc.database.merchant.mapping.pendingMerchant.getPendingMerchant";
+        return Database.Instance().selectList(statement, map);
+    }
     public static boolean insertPendingMerchant(PendingMerchant pendingMerchant) {
         String statement = "cc.database.merchant.mapping.pendingMerchant.insertPendingMerchant";
         return Database.Instance().insert(statement, pendingMerchant) == 1;

@@ -27,8 +27,8 @@
                     <label class="col-sm-3 control-label">开户名：</label>
 
                     <div class="col-sm-8">
-                        <input type="text" placeholder="开户名" name="acountName" class="form-control"
-                               value="${reginfo.acountName}">
+                        <input type="text" placeholder="开户名" name="accountName" class="form-control"
+                               value="${reginfo.accountName}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -74,15 +74,16 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">开户市：</label>
                     <div class="col-sm-8">
-                        <select  name="city" id="city" class="form-control"
-                                value="${reginfo.city}"></select>
+                        <select  name="bankCity" id="city" class="form-control"
+                                value="${reginfo.bankCity}"></select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">银行：</label>
 
                     <div class="col-sm-8">
-                        <select   name="bank" id="bankname" placeholder="银行" class="form-control" value="${reginfo.bankname}">
+                        <input type="hidden"    name="bankName" >
+                        <select id="bankName" placeholder="银行" class="form-control" value="${reginfo.bankName}">
                             <option value="">==请选择银行==</option>
                             <option value="100">中原银行</option>
                             <option value="102">中国工商银行</option>
@@ -178,14 +179,15 @@
                     <label class="col-sm-3 control-label">银行卡号：</label>
 
                     <div class="col-sm-8">
-                        <input type="text" name="acountno" placeholder="银行卡号" class="form-control"
-                               value="${reginfo.acountno}">
+                        <input type="text" name="accountNo" placeholder="银行卡号" class="form-control"
+                               value="${reginfo.accountNo}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">开户行：</label>
                     <div class="col-sm-5">
-                        <select   name="accountname" id="accountname"  class="form-control" onchange="fetchnum()" ></select>
+                        <select id="banklist" onclick="fetchnum()"  class="form-control" ></select>
+                        <input type="hidden"  name="accountName" id="accountName"  class="form-control"  >
                     </div>
                     <div class="col-sm-3">
                         <button class=" btn btn-sm btn-primary btn-block" type="button" onclick="getnum();">获_取
@@ -195,8 +197,8 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">联行号：</label>
                     <div class="col-sm-8">
-                        <input   name="contactnum" id="contactnum"  class="form-control"
-                                  value="${reginfo.contactnum}">
+                        <input   name="bankCode" id="bankCode"  class="form-control"
+                                  value="${reginfo.bankCode}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -213,7 +215,8 @@
 <script src="<%=request.getContextPath()%>/js/ajaxfileupload.js"></script>
 <script>
     function fetchnum(obj){
-        $("#contactnum").val($("#openbank").val());
+        $("#accountName").val($("#banklist").text());
+        $("#bankCode").val($("#banklist").val());
     }
 
         function pchg() {
@@ -259,12 +262,12 @@
         $.ajax({
             type: "post",
             url: "Reg!queryallrtgsnode",
-            data: {'cityCode': $("#city").val(), 'clsCode': $("#bank").val()},
+            data: {'cityCode': $("#city").val(), 'clsCode': $("#bankName").val()},
             dataType: 'json',
             success: function (data) {
                 var json = eval( data.substring(1,data.length-1) );
                 if (json != null && json != undefined) {
-                    var $parente = $("#openbank");
+                    var $parente = $("#banklist");
                     var $doms = $("<option></option>");
                     $parente.empty();
                     for (var i = 0; i < json.length; i++) {
