@@ -46,70 +46,63 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">联系人：</label>
                         <div class="col-sm-8">
-                            <input type="text" placeholder="联系人" name="contact" class="form-control"  value="${reginfo.contact}">
+                            <input type="text" placeholder="联系人" name="contact" class="form-control"  value="${reginfo.contactName}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">身份证：</label>
                         <div class="col-sm-8">
-                            <input type="text" name="idcardno" id="idcardno" placeholder="身份证" class="form-control"  value="${reginfo.idcardno}">
+                            <input type="text" name="idcardno" id="idcardno" placeholder="身份证" class="form-control"  value="${reginfo.idCard}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">手机号：</label>
                         <div class="col-sm-8">
-                            <input type="text" name="tel" id="tel" placeholder="手机号" class="form-control" value="${reginfo.tel}" >
+                            <input type="text" name="tel" id="tel" placeholder="手机号" class="form-control" value="${reginfo.contactPhone}" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">推广号：</label>
                         <div class="col-sm-8">
-                            <input type="text" name="uname" placeholder="推广号" class="form-control" value="${reginfo.uname}">
+                            <input type="text" name="uname" placeholder="推广号" class="form-control" value="${reginfo.idCard}">
                         </div>
                     </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">开户名：</label>
                             <div class="col-sm-8">
-                                <input type="text" placeholder="开户名" name="acountname" class="form-control" value="${reginfo.acountname}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">开户省：</label>
-
-                            <div class="col-sm-8">
-                                <input name="province" id="province" class="form-control" value="${reginfo.province}">
+                                <input type="text" placeholder="开户名" name="acountname" class="form-control" value="${reginfo.contactName}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">开户市：</label>
                             <div class="col-sm-8">
-                                <input  name="city" id="city" class="form-control" value="${reginfo.city}">
+                                <input  name="city" id="city" class="form-control" value="${reginfo.bankCity}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">银行：</label>
 
                             <div class="col-sm-8">
-                                <input   name="bank" id="bank" placeholder="银行" class="form-control" value="${reginfo.bank}">
+                                <input   name="bank" id="bank" placeholder="银行" class="form-control" value="${reginfo.bankName}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">银行卡号：</label>
 
                             <div class="col-sm-8">
-                                <input type="text" name="acountcode" placeholder="银行卡号" class="form-control" value="${reginfo.acountcode}">
+                                <input type="text" name="acountcode" placeholder="银行卡号" class="form-control" value="${reginfo.accountNo}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">开户行：</label>
                             <div class="col-sm-8">
-                                <input   name="openbank" id="openbank"  class="form-control" value="${reginfo.openbank}">
+                                <input   name="openbank" id="openbank"  class="form-control" value="${reginfo.accountName}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">联行号：</label>
                             <div class="col-sm-8">
-                                <input   name="contactnum" id="contactnum"  class="form-control" value="${reginfo.contactnum}">
+                                <input   name="contactnum" id="contactnum"  class="form-control" value="${reginfo.bankCode}">
                             </div>
                         </div>
                 </div>
@@ -117,6 +110,7 @@
     </div>
 </div>
 <form>
+    <input type="hidden" name="cid" value="${reginfo.id}">
 <table class="table table-bordered" >
     <tbody>
     <tr>

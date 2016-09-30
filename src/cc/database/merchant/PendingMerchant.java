@@ -15,7 +15,7 @@ public class PendingMerchant extends MerchantInfo {
         return Database.Instance().selectList(statement, new HashMap<String, Object>(){{put("id", id);put("openid", openid);}});
     }
 
-    public static List<PendingMerchant> getPendingMerchant(Map map) {
+    public static List<Map> getPendingMerchant(Map map) {
         String statement = "cc.database.merchant.mapping.pendingMerchant.getPendingMerchant";
         return Database.Instance().selectList(statement, map);
     }
