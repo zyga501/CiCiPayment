@@ -6,10 +6,10 @@
     </select>
 
     <insert id="insertMerchantInfo" parameterType="cc.database.merchant.MerchantInfo">
-        INSERT INTO merchantinfo(id,name,address,contactName,contactPhone,idCard,idCardPF,idCardPB,idCardPC,registerDate,paymentStatus,
-        wxStatus,wxRate,aliStatus,aliRate,jdStatus,jdRate,bestStatus,bestRate,bankCity,bankName,accountNo,accountName,accountPhone)
-        VALUE (#{id},#{name},#{address},#{contactName},#{contactPhone},#{idCard},#{idCardPF},#{idCardPB},#{idCardPC},#{registerDate},#{paymentStatus},
-        #{wxStatus},#{wxRate},#{aliStatus},#{aliRate},#{jdStatus},#{jdRate},#{bestStatus},#{bestRate},#{bankCity},#{bankName},#{accountNo},#{accountName},#{accountPhone})
+        INSERT INTO merchantinfo(id,name,address,contactName,contactPhone,idCard,idCardPF,idCardPB,idCardPC,paymentStatus,
+        wxStatus,wxRate,aliStatus,aliRate,jdStatus,jdRate,bestStatus,bestRate,bankCity,bankName,bankCode,accountNo,accountName,accountPhone)
+        VALUE (#{id},#{name},#{address},#{contactName},#{contactPhone},#{idCard},#{idCardPF},#{idCardPB},#{idCardPC},#{paymentStatus},
+        #{wxStatus},#{wxRate},#{aliStatus},#{aliRate},#{jdStatus},#{jdRate},#{bestStatus},#{bestRate},#{bankCity},#{bankCode},#{bankName},#{accountNo},#{accountName},#{accountPhone})
     </insert>
 
     <update id="updateMerchantInfo" parameterType="cc.database.merchant.MerchantInfo">

@@ -1,5 +1,6 @@
 package cc.swiftpass.action;
 
+import cc.ProjectSettings;
 import cc.swiftpass.api.AliJsPay;
 import cc.swiftpass.api.RequestBean.AliJsPayRequestData;
 import cc.swiftpass.api.WeixinJsPay;
@@ -10,11 +11,13 @@ import framework.utils.StringUtils;
 
 public class PayAction extends AjaxActionSupport {
     public String weixinJsPay() throws Exception {
+        try{
         WeixinJsPayRequestData weixinJsPayRequestData = new WeixinJsPayRequestData();
         weixinJsPayRequestData.mch_id = "100530020860";
         weixinJsPayRequestData.body = getParameter("body").toString();
         weixinJsPayRequestData.total_fee = (int)Double.parseDouble(getParameter("total_fee").toString());
-        WeixinOpenId weixinOpenId = new WeixinOpenId("", "", getParameter("code").toString());
+        WeixinOpenId weixinOpenId = new WeixinOpenId(ProjectSettings.getMapData("weixinServerInfo").get("appid").toString(),
+                ProjectSettings.getMapData("weixinServerInfo").get("appSecret").toString(), getParameter("code").toString());
         if (!weixinOpenId.getRequest()) {
             return AjaxActionComplete(false) ;
         }
@@ -30,6 +33,11 @@ public class PayAction extends AjaxActionSupport {
 
         WeixinJsPay jsPay = new WeixinJsPay(weixinJsPayRequestData);
         return AjaxActionComplete(jsPay.postRequest("4fe41e8ca0b0c643120ee0aca96cf6cb"));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return AjaxActionComplete(false);
     }
 
     public String aliJsPay() throws Exception {

@@ -13,8 +13,6 @@ public class UserAction extends AjaxActionSupport {
 
     public void wxlogin() throws IOException {
         String appid = ProjectSettings.getMapData("weixinServerInfo").get("appid").toString();
-        System.out.println("URI ="+getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath());
-        System.out.println("appid ="+appid);
         String redirect_uri =  getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + "/wxlogin.jsp";
         String petOpenidUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
                         "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=login#wechat_redirect",
@@ -29,11 +27,27 @@ public class UserAction extends AjaxActionSupport {
         if (!weixinOpenId.getRequest()) {
             return AjaxActionComplete(false) ;
         }
-        System.out.println("fopenId="+ weixinOpenId.getOpenId());
         getRequest().getSession().setAttribute("openid", weixinOpenId.getOpenId());
         Map map = new HashMap<>();
         map.put("url", getAttribute("params"));
         return AjaxActionComplete(true,map);
+    }
+
+    public void wxpayaction() throws IOException {
+        try {
+            System.out.println("wxpayaction in");
+            String appid = ProjectSettings.getMapData("weixinServerInfo").get("appid").toString();
+            String redirect_uri = getRequest().getScheme() + "://" + getRequest().getServerName() + getRequest().getContextPath() + "/swiftpass/index.jsp";
+            String ccid = getParameter("cid").toString();
+            String petOpenidUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
+                            "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=%s#wechat_redirect",
+                    appid, redirect_uri, ccid);
+            System.out.println("petOpenidUri :" + petOpenidUri);
+            getResponse().sendRedirect(petOpenidUri);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
 

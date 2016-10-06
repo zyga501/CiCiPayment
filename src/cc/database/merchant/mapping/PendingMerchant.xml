@@ -26,7 +26,7 @@
         UPDATE pendingmerchant
         SET name=#{name},address=#{address},contactName=#{contactName},contactPhone=#{contactPhone},idCard=#{idCard},idCardPF=#{idCardPF},idCardPB=#{idCardPB},idCardPC=#{idCardPC},
         paymentStatus=#{paymentStatus},wxStatus=#{wxStatus},wxRate=#{wxRate},aliStatus=#{aliStatus},aliRate=#{aliRate},jdStatus=#{jdStatus},jdRate=#{jdRate},bestStatus=#{bestStatus},bestRate=#{bestRate},
-        bankCity=#{bankCity},bankName=#{bankName},accountNo=#{accountNo},accountName=#{accountName},accountPhone=#{accountPhone}
+        bankCity=#{bankCity},bankName=#{bankName},accountNo=#{accountNo},accountName=#{accountName},accountPhone=#{accountPhone},bankCode=#{bankCode}
         where id = #{id} and OPENid =#{openid}
     </update>
     <resultMap type="cc.database.merchant.PendingMerchant" id="pendingMerchantResult">
