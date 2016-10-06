@@ -38,6 +38,7 @@
             </result>
             <result name="page404">./page404.jsp</result>
             <result name="wxopenid" type="redirectAction" >User!wxlogin</result>
+            <result type= "chain" name="wxpayaction">User!wxpayaction</result>
         </global-results>
         <!-- compatible api -->
         <action name="User!*" class="cc.action.UserAction" method="{1}">

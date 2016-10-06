@@ -246,7 +246,7 @@ public class RegAction extends AjaxActionSupport {
                 return "page404";//goto pay page; 根据支付类型跳转
             }
             else if ((lm.size()==1)){
-                return "paypage";
+                return "wxpayaction";
             }
 
             List<PendingMerchant> lp =  PendingMerchant.getPendingMerchantById(Long.parseLong(getParameter("cid").toString()), getRequest().getSession().getAttribute("openid").toString());
@@ -255,6 +255,7 @@ public class RegAction extends AjaxActionSupport {
                 pendingMerchant.setId(Long.parseLong(getParameter("cid").toString()));
                 pendingMerchant.setOpenid(getAttribute("openid").toString());
                 PendingMerchant.insertPendingMerchant(pendingMerchant);
+                getRequest().setAttribute("reginfo",pendingMerchant);
             }
             else
                 getRequest().setAttribute("reginfo",lp.get(0));
@@ -469,7 +470,7 @@ public class RegAction extends AjaxActionSupport {
 
     public String checkone() {
         try {
-            List<PendingMerchant> lp =  PendingMerchant.getPendingMerchantById(Long.parseLong(getParameter("cid").toString()), getRequest().getSession().getAttribute("openid").toString());
+            List<PendingMerchant> lp =  PendingMerchant.getPendingMerchantById(Long.parseLong(getParameter("cid").toString()), getParameter("openid").toString());
             PendingMerchant pendingMerchant =lp.get(0);
             pendingMerchant.setWxStatus((null!=getParameter("wxpay"))&&(getParameter("wxpay").equals("on")));
             pendingMerchant.setJdStatus((null!=getParameter("jdpay"))&&(getParameter("jdpay").equals("on")));

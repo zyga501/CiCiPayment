@@ -82,8 +82,8 @@
                     <label class="col-sm-3 control-label">银行：</label>
 
                     <div class="col-sm-8">
-                        <input type="hidden"    name="bankName" >
-                        <select id="bankName" placeholder="银行" class="form-control" value="${reginfo.bankName}">
+                        <input type="hidden" class="bankName"    name="bankName" value="${reginfo.bankName}" >
+                        <select id="bankName" placeholder="银行" class="form-control" onchange="javascript:$('.bankName').val($(this).find('option:selected').text())" >
                             <option value="">==请选择银行==</option>
                             <option value="100">中原银行</option>
                             <option value="102">中国工商银行</option>
@@ -186,8 +186,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">开户行：</label>
                     <div class="col-sm-5">
-                        <select id="banklist" onclick="fetchnum()"  class="form-control" ></select>
-                        <input type="hidden"  name="accountName" id="accountName"  class="form-control"  >
+                        <select id="banklist" onchange="fetchnum()"  class="form-control" ></select>
                     </div>
                     <div class="col-sm-3">
                         <button class=" btn btn-sm btn-primary btn-block" type="button" onclick="getnum();">获_取
@@ -215,7 +214,7 @@
 <script src="<%=request.getContextPath()%>/js/ajaxfileupload.js"></script>
 <script>
     function fetchnum(obj){
-        $("#accountName").val($("#banklist").text());
+        $("#accountName").val($("#banklist").find('option:selected').text());
         $("#bankCode").val($("#banklist").val());
     }
 
