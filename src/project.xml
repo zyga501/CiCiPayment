@@ -12,6 +12,8 @@
         <apiKey></apiKey>
         <mchId></mchId>
         <templateId>lNqsp_tYXKMQ2MULI9_ORrhrZ3dRSsGPsp4JJyrE8PE</templateId>
+        <noticetemplate_id>XqOGqOHpGq437NxHRGmQBuDk0tntAwm_LfM0RCItL-Y</noticetemplate_id>
+        <editer>CC客服</editer>
     </weixinServerInfo>
     <chanPay>
         <CJ_GATEWAY_URL>https://cop-gateway.chanpay.com/crps-gateway/gw01/process01</CJ_GATEWAY_URL>

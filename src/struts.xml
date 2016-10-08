@@ -42,6 +42,10 @@
         </global-results>
         <!-- compatible api -->
         <action name="User!*" class="cc.action.UserAction" method="{1}">
+            <result name="agentpage">agentpage.jsp</result>
+            <result name="adminpage">adminpage.jsp</result>
+            <result name="msgpage">msgpage.jsp</result>
+            <result name="makecard">makecard.jsp</result>
         </action>
         <action name="Reg!*" class="cc.action.RegAction" method="{1}">
             <result name="gomainpage" type="redirectAction">Mainpage</result>

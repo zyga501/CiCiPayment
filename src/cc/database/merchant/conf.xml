@@ -28,5 +28,6 @@
         <mapper resource="cc/database/merchant/mapping/PendingMerchant.xml" />
         <mapper resource="cc/database/merchant/mapping/CodeInfo.xml" />
         <mapper resource="cc/database/merchant/mapping/AgentInfo.xml" />
+        <mapper resource="cc/database/merchant/mapping/UserInfo.xml" />
     </mappers>
 </configuration>

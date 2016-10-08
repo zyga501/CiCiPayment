@@ -1,5 +1,9 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%
+   // if  (!request.getSession().getAttribute("roletype").toString().equals("1"))
+   //     request.getRequestDispatcher("page404.jsp").forward(request,response);
+%>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
