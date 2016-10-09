@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class CodeInfo {
     public static void main(String[] args) throws Exception {
-        List<CodeInfo> codeInfoList = getCodeInfoById(12332100);
+        List<CodeInfo> codeInfoList = getCodeInfoById(1871367318371400l);
         System.exit(0);
     }
 
@@ -20,11 +20,11 @@ public class CodeInfo {
         return Database.Instance().selectList(statement, id);
     }
 
-    public int getId() {
+    public long getId() {
         return id_;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id_ = id;
     }
 
@@ -44,7 +44,7 @@ public class CodeInfo {
         this.makeDate_ = makeDate;
     }
 
-    private int id_;
+    private long id_;
     private String agentId_;
     private Timestamp makeDate_;
 }

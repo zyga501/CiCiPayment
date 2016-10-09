@@ -5,7 +5,7 @@
         SELECT * FROM codeinfo where id=#{id}
     </select>
     <select id="insertCodeInfo" parameterType="java.util.HashMap" resultMap="codeInfoResult">
-        insert into codeinfo (id,agentid) VALUES (#{id},#{agentid})
+        INSERT INTO codeinfo (id,agentid) VALUES (#{id},#{agentid})
     </select>
     <resultMap type="cc.database.merchant.CodeInfo" id="codeInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />

@@ -6,8 +6,10 @@ import cc.database.merchant.CodeInfo;
 import cc.database.merchant.MerchantInfo;
 import cc.database.merchant.PendingMerchant;
 import cc.utils.HttpPostUrl;
+import cc.utils.IdConvert;
 import cc.utils.PublicFunc;
 import framework.action.AjaxActionSupport;
+import framework.utils.StringUtils;
 
 import javax.servlet.ServletOutputStream;
 import java.io.File;
@@ -15,7 +17,7 @@ import java.io.FileInputStream;
 import java.text.DateFormat;
 import java.util.*;
 
-public class RegAction extends AjaxActionSupport {
+public class RegisterAction extends AjaxActionSupport {
 
     private String cardid ;
     private String openid ;
@@ -225,28 +227,17 @@ public class RegAction extends AjaxActionSupport {
         return   AjaxActionComplete(map);
     }
 
-    public String reg(){
+    public String registerMerchant() {
         try {
-            System.out.println("rparam="+getRequest().getServletPath()+" ** "+getRequest().getQueryString());
-            getRequest().getSession().setAttribute("params","Reg!reg?cid="+getParameter("cid").toString());
-//            getRequest().getSession().setAttribute("openid","123123123123sss");
-            if (null==getAttribute("openid")||getAttribute("openid").equals(""))
-                return "wxopenid";
+            if (StringUtils.convertNullableString(getAttribute("openid")).length() == 0) {
+                getRequest().getSession().setAttribute("params","Register!registerMerchant?cid=" + getParameter("cid").toString());
+                return "fetchWxCode";
+            }
             getRequest().getSession().removeAttribute("params");
-            List<CodeInfo> lc = null;
-            try {
-                lc= CodeInfo.getCodeInfoById(Long.parseLong(getParameter("cid").toString()));
-            }
-            catch (Exception e){
-                e.printStackTrace();
-                System.out.println("cid="+getParameter("cid").toString());
-            }
-            List<MerchantInfo> lm = MerchantInfo.getMerchantInfoById(Long.parseLong(getParameter("cid").toString()));
-            if (null==lc || (lc.size()==0)){
-                return "page404";//goto pay page; 根据支付类型跳转
-            }
-            else if ((lm.size()==1)){
-                return "wxpayaction";
+
+            List<CodeInfo> codeInfoList = CodeInfo.getCodeInfoById(IdConvert.DecryptionId(Long.parseLong(getParameter("cid").toString())));
+            if (null==codeInfoList || (codeInfoList.size()==0)) {
+                return "page404";
             }
 
             List<PendingMerchant> lp =  PendingMerchant.getPendingMerchantById(Long.parseLong(getParameter("cid").toString()), getRequest().getSession().getAttribute("openid").toString());
@@ -261,8 +252,7 @@ public class RegAction extends AjaxActionSupport {
                 getRequest().setAttribute("reginfo",lp.get(0));
             return "register1";
         }
-        catch (Exception e){
-            e.printStackTrace();
+        catch (Exception e) {
             return "page404";
         }
     }

@@ -7,7 +7,7 @@
         function updateWeixinIdById() {
             $.ajax({
                 type: 'post',
-                url: "<%=request.getContextPath()%>/User!fetchOpenid",
+                url: "<%=request.getContextPath()%>/User!fetchWxOpenid",
                 dataType:"json",
                 data:{id: "<%=request.getParameter("state")%>", code : "<%=request.getParameter("code")%>"},
                 success: function (data) {
@@ -16,7 +16,7 @@
                          window.location.href =json.url;
                      }
                      else {
-                         window.location.href ="page404.jsp";
+                         window.location.href ="../page404.jsp";
                      }
                 }
             }) ;
@@ -30,5 +30,6 @@
 <body>
 <center>
     <input id="Message" type="button" value="正在授权中..." onclick="javascript:WeixinJSBridge.call('closeWindow');" />
+</center>
 </body>
 </html>

@@ -37,21 +37,22 @@
                 <param name="root">ajaxActionResult</param>
             </result>
             <result name="page404">./page404.jsp</result>
-            <result name="wxopenid" type="redirectAction" >User!wxlogin</result>
             <result type= "chain" name="wxpayaction">User!wxpayaction</result>
         </global-results>
-        <!-- compatible api -->
-        <action name="User!*" class="cc.action.UserAction" method="{1}">
-            <result name="agentpage">agentpage.jsp</result>
-            <result name="adminpage">adminpage.jsp</result>
-            <result name="agentreg">agentreg.jsp</result>
-            <result name="msgpage">msgpage.jsp</result>
-            <result name="makecard">makecard.jsp</result>
+        <action name="Pay!*" class="cc.action.PayAction" method="{1}">
+            <result name="registerMerchant" type="chain">Register!registerMerchant</result>
         </action>
-        <action name="Reg!*" class="cc.action.RegAction" method="{1}">
-            <result name="gomainpage" type="redirectAction">Mainpage</result>
-            <result name="mainpagejsp">./mainpage.jsp</result>
-            <result name="loginpage">./login.jsp</result>
+        <action name="User!*" class="cc.action.UserAction" method="{1}">
+            <result name="agentPage">agentpage.jsp</result>
+            <result name="adminPage">adminpage.jsp</result>
+            <result name="agentRegister">agentreg.jsp</result>
+            <result name="msgpage">msgpage.jsp</result>
+            <result name="makeCard">makecard.jsp</result>
+        </action>
+        <action name="Register!*" class="cc.action.RegisterAction" method="{1}">
+            <result name="fetchWxCode" type="chain" >User!fetchWxCode</result>
+            <result name="mainPage">./mainpage.jsp</result>
+            <result name="loginPage">./login.jsp</result>
             <result name="register1">./reg/register.jsp</result>
             <result name="register2">./reg/register2.jsp</result>
             <result name="register3">./reg/register3.jsp</result>

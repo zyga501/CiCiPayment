@@ -16,34 +16,33 @@ import java.util.Map;
 
 public class UserAction extends AjaxActionSupport {
 
-    public void wxlogin() throws IOException {
+    public void fetchWxCode() throws IOException {
         String appid = ProjectSettings.getMapData("weixinServerInfo").get("appid").toString();
-        String redirect_uri =  getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + "/wxlogin.jsp";
-        String petOpenidUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
+        String redirect_uri =  getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + "/reg/wxlogin.jsp";
+        String fetchOpenidUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
                         "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=login#wechat_redirect",
                 appid, redirect_uri);
-        getResponse().sendRedirect(petOpenidUri);
+        getResponse().sendRedirect(fetchOpenidUri);
     }
 
-    public String fetchOpenid() throws Exception {
+    public String fetchWxOpenid() throws Exception {
         String appid =  ProjectSettings.getMapData("weixinServerInfo").get("appid").toString();
         String appsecret =  ProjectSettings.getMapData("weixinServerInfo").get("appSecret").toString();
         WeixinOpenId weixinOpenId = new WeixinOpenId(appid, appsecret, getParameter("code").toString());
         if (!weixinOpenId.getRequest()) {
             return AjaxActionComplete(false) ;
         }
-        System.out.println("openid"+ weixinOpenId.getOpenId());
         getRequest().getSession().setAttribute("openid", weixinOpenId.getOpenId());
         Map map = new HashMap<>();
         map.put("url", getAttribute("params"));
         return AjaxActionComplete(true,map);
     }
 
-    public String userRegPage(){
+    public String userRegPage() {
         getRequest().getSession().setAttribute("params", "User!userRegPage");
         if (null == getAttribute("openid") || getAttribute("openid").equals(""))
             return "wxopenid";
-        return "agentreg";
+        return "agentRegister";
     }
 
     public String userReg() {
@@ -92,9 +91,9 @@ public class UserAction extends AjaxActionSupport {
         setAttribute("roletype",lu.get(0).getRoletype());
         setAttribute("userid",lu.get(0).getId());
         if (lu.get(0).getRoletype()==0)
-            return "agentpage";
+            return "agentPage";
         if (lu.get(0).getRoletype()==1)
-            return "adminpage";
+            return "adminPage";
         return "";
     }
 
@@ -125,7 +124,7 @@ public class UserAction extends AjaxActionSupport {
         map.put("roletype",0);
         List<UserInfo> lu =  UserInfo.getUserInfoByMap(map);
         setAttribute("userList",lu);
-        return "makecard";
+        return "makeCard";
     }
 
     public String sendMakeCardMsg(){
