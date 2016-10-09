@@ -21,7 +21,7 @@
 <div class="wrapper wrapper-content  animated fadeInRight">
     <div class="full-height-scroll">
         <div class="ibox-content">
-            <form action="Reg!reg2" method="post" class="form-horizontal">
+            <form action="Register!reg2" method="post" class="form-horizontal">
                 <input type="hidden" name="cid" value="${reginfo.id}">
                 <div class="form-group">
                     <label class="col-sm-3 control-label">开户名：</label>
@@ -221,7 +221,7 @@
         function pchg() {
             $.ajax({
                 type: "post",
-                url: "Reg!queryCityByProvinceId",
+                url: "Register!queryCityByProvinceId",
                 data: {provinceCode: $("#province").val()},
                 dataType: 'json',
                 success: function (data) {
@@ -243,7 +243,7 @@
     function nextpage() {
         $.ajax({
             type: 'post',
-            url: 'Reg!reg2',
+            url: 'Register!reg2',
             dataType: "json",
             data: $("form").serialize(),
             success: function (data) {
@@ -260,7 +260,7 @@
     function getnum () {
         $.ajax({
             type: "post",
-            url: "Reg!queryAllRtgsNode",
+            url: "Register!queryAllRtgsNode",
             data: {'cityCode': $("#city").val(), 'clsCode': $("#bankName").val()},
             dataType: 'json',
             success: function (data) {

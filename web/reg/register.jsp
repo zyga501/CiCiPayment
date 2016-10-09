@@ -17,7 +17,7 @@
 <div class="wrapper wrapper-content  animated fadeInRight">
     <div class="full-height-scroll">
         <div class="ibox-content">
-            <form action="Reg!reg1" method="post" class="form-horizontal">
+            <form action="Register!reg1" method="post" class="form-horizontal">
                 <input type="hidden" name="cid" value="${reginfo.id}">
                 <input type="text"  value="${reginfo.id}">
                 <div class="form-group">
@@ -89,7 +89,7 @@
     function nextpage(){
         $.ajax({
             type: 'post',
-            url: 'Reg!reg1',
+            url: 'Register!reg1',
             dataType:"json",
             data:$("form").serialize(),
             success: function (data) {

@@ -180,25 +180,25 @@
         var openid="<%=request.getAttribute("openid").toString()%>";
         var cid="<%=request.getAttribute("cid").toString()%>";
         try{
-            $("#fsfzz").attr("src","<%=request.getContextPath()%>/Reg!checkInfo?picname=sfzz&cid="+cid+"&openid="+openid);
+            $("#fsfzz").attr("src","<%=request.getContextPath()%>/Register!checkInfo?picname=sfzz&cid="+cid+"&openid="+openid);
         }
         catch(e) {
 
         };
         try{
-            $("#fsfzf").attr("src","Reg!checkInfo?picname=sfzf&cid="+cid+"&openid="+openid);
+            $("#fsfzf").attr("src","Register!checkInfo?picname=sfzf&cid="+cid+"&openid="+openid);
         }
         catch(e) {
 
         };
         try{
-            $("#fscsfz").attr("src","Reg!checkInfo?picname=scsfz&cid="+cid+"&openid="+openid);
+            $("#fscsfz").attr("src","Register!checkInfo?picname=scsfz&cid="+cid+"&openid="+openid);
         }
         catch(e) {
 
         };
         try{
-            $("#fyhk").attr("src","Reg!checkInfo?picname=yhk&cid="+cid+"&openid="+openid);
+            $("#fyhk").attr("src","Register!checkInfo?picname=yhk&cid="+cid+"&openid="+openid);
         }
         catch(e) {
 
@@ -219,7 +219,7 @@
     function checkone () {
         $.ajax({
         type: 'post',
-        url: '<%=request.getContextPath()%>/Reg!checkOne',
+        url: '<%=request.getContextPath()%>/Register!checkOne',
         dataType: "json",
         data: $("form").serialize(),
         success: function (data) {

@@ -34,19 +34,19 @@
     <tr>
         <td>
             <input type="file" class="infile" name="fsfzz" id="fsfzz" style="display:none">
-            <img class="img" style="width: 100px;height: 80px" src="Reg!checkInfo?picname=sfzz&cid=${reginfo.id}" onclick="openBrowse('fsfzz')"><p>身份证正面</p></td>
+            <img class="img" style="width: 100px;height: 80px" src="Register!checkInfo?picname=sfzz&cid=${reginfo.id}" onclick="openBrowse('fsfzz')"><p>身份证正面</p></td>
         <td>
             <input type="file" class="infile" name="fsfzf" id="fsfzf" style="display:none">
-            <img class="img" style="width: 100px;height: 80px"src="Reg!checkInfo?picname=sfzf&cid=${reginfo.id}" onclick="openBrowse('fsfzf')"><p>身份证反面</p>
+            <img class="img" style="width: 100px;height: 80px"src="Register!checkInfo?picname=sfzf&cid=${reginfo.id}" onclick="openBrowse('fsfzf')"><p>身份证反面</p>
         </td>
     </tr>
     <tr>
         <td>
             <input type="file" class="infile" name="fscsfz" id="fscsfz" style="display:none">
-            <img  class="img" style="width: 80px;height: 80px"src="Reg!checkInfo?picname=scsfz&cid=${reginfo.id}" onclick="openBrowse('fscsfz')" ><p>手持身份证</p></td>
+            <img  class="img" style="width: 80px;height: 80px"src="Register!checkInfo?picname=scsfz&cid=${reginfo.id}" onclick="openBrowse('fscsfz')" ><p>手持身份证</p></td>
         <td>
             <input type="file" class="infile" name="fyhk" id="fyhk" style="display:none">
-            <img  class="img" style="width: 100px;height: 80px"src="Reg!checkInfo?picname=yhk&cid=${reginfo.id}" onclick="openBrowse('fyhk')"><p>银行卡</p></td>
+            <img  class="img" style="width: 100px;height: 80px"src="Register!checkInfo?picname=yhk&cid=${reginfo.id}" onclick="openBrowse('fyhk')"><p>银行卡</p></td>
     </tr>
     <tr >
         <td colspan="2">
@@ -97,7 +97,7 @@
 
     function uploadinfo(){
       $.ajaxFileUpload({
-          url: "Reg!uploadPic",
+          url: "Register!uploadPic",
           secureuri: false,
           fileElementId: ['fsfzf','fsfzz','fscsfz','fyhk'],
           dataType: 'multipart/form-data',

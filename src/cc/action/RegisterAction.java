@@ -235,21 +235,22 @@ public class RegisterAction extends AjaxActionSupport {
             }
             getRequest().getSession().removeAttribute("params");
 
-            List<CodeInfo> codeInfoList = CodeInfo.getCodeInfoById(IdConvert.DecryptionId(Long.parseLong(getParameter("cid").toString())));
-            if (null==codeInfoList || (codeInfoList.size()==0)) {
+            long merchantId = IdConvert.DecryptionId(Long.parseLong(getParameter("cid").toString()));
+            List<CodeInfo> codeInfoList = CodeInfo.getCodeInfoById(merchantId);
+            if (codeInfoList.size() == 0) {
                 return "page404";
             }
 
-            List<PendingMerchant> lp =  PendingMerchant.getPendingMerchantById(Long.parseLong(getParameter("cid").toString()), getRequest().getSession().getAttribute("openid").toString());
-            if ( null==lp || lp.size()==0) {
+            List<PendingMerchant> pendingMerchantList =  PendingMerchant.getPendingMerchantById(merchantId, getRequest().getSession().getAttribute("openid").toString());
+            if (pendingMerchantList.size() == 0) {
                 PendingMerchant pendingMerchant = new PendingMerchant();
-                pendingMerchant.setId(Long.parseLong(getParameter("cid").toString()));
+                pendingMerchant.setId(merchantId);
                 pendingMerchant.setOpenid(getAttribute("openid").toString());
                 PendingMerchant.insertPendingMerchant(pendingMerchant);
                 getRequest().setAttribute("reginfo",pendingMerchant);
             }
-            else
-                getRequest().setAttribute("reginfo",lp.get(0));
+
+            getRequest().setAttribute("reginfo", pendingMerchantList.get(0));
             return "register1";
         }
         catch (Exception e) {
