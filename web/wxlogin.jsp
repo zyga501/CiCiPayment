@@ -7,7 +7,7 @@
         function updateWeixinIdById() {
             $.ajax({
                 type: 'post',
-                url: "<%=request.getContextPath()%>/User!fetchopenid",
+                url: "<%=request.getContextPath()%>/User!fetchOpenid",
                 dataType:"json",
                 data:{id: "<%=request.getParameter("state")%>", code : "<%=request.getParameter("code")%>"},
                 success: function (data) {

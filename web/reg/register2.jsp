@@ -260,7 +260,7 @@
     function getnum () {
         $.ajax({
             type: "post",
-            url: "Reg!queryallrtgsnode",
+            url: "Reg!queryAllRtgsNode",
             data: {'cityCode': $("#city").val(), 'clsCode': $("#bankName").val()},
             dataType: 'json',
             success: function (data) {

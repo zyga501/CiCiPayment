@@ -14,7 +14,13 @@
         <filter-name>login</filter-name>
         <filter-class>cc.filter.LoginFilter</filter-class>
     </filter>
-
+    <servlet>
+        <servlet-name>WeixinAccessToken</servlet-name>
+        <servlet-class>
+            cc.servlet.AccessTokenServlet
+        </servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
     <filter-mapping>
         <filter-name>struts2</filter-name>
         <url-pattern>/*</url-pattern>

@@ -316,9 +316,9 @@ public class RegAction extends AjaxActionSupport {
         }
     }
 
-    public String uploadpic() {
+    public String uploadPic() {
         String msg="";
-        try {System.out.println("in:"+getParameter("cid").toString());
+        try {
             File ff = (File) getParameter("fsfzz");//fdphy,fyhkf,fyhkz,fsfzf,fsfzz
             File fm = new File(ProjectSettings.getPicpath() +getParameter("cid").toString()
                     + getRequest().getSession().getAttribute("openid") + "sfzz.jpg");
@@ -365,7 +365,7 @@ public class RegAction extends AjaxActionSupport {
         }
     }
 
-    public void checkinfo(){
+    public void checkInfo(){
         try {
             String picname = getParameter("picname").toString();
             System.out.println(picname);
@@ -423,7 +423,7 @@ public class RegAction extends AjaxActionSupport {
         return AjaxActionComplete(list);
     }
 
-    public String queryallrtgsnode(){
+    public String queryAllRtgsNode(){
         Map<String, String> mapParam = new HashMap<String, String>();
         mapParam.put("cityCode",getParameter("cityCode").toString());
         mapParam.put("clsCode",getParameter("clsCode").toString());
@@ -434,7 +434,7 @@ public class RegAction extends AjaxActionSupport {
         return AjaxActionComplete(list);
     }
 
-    public String Fetchmerchant(){
+    public String fetchMerchant(){
         Map<Object, Object> param= new HashMap<>();
         List<Map> allmerchantlist = null;
         if (null!=getParameter("item").toString() && (!getParameter("item").toString().trim().equals(""))){
@@ -449,7 +449,7 @@ public class RegAction extends AjaxActionSupport {
     }
 
 
-    public String selectone(){
+    public String selectOne(){
         try {
             Map map = new HashMap<>();
             map.put("openid", getParameter("openid"));
@@ -468,7 +468,7 @@ public class RegAction extends AjaxActionSupport {
     }
 
 
-    public String checkone() {
+    public String checkOne() {
         try {
             List<PendingMerchant> lp =  PendingMerchant.getPendingMerchantById(Long.parseLong(getParameter("cid").toString()), getParameter("openid").toString());
             PendingMerchant pendingMerchant =lp.get(0);

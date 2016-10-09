@@ -1,4 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+//if  (!request.getAttribute("roletype").toString().equals("1"))
+//request.getRequestDispatcher("page404.jsp").forward(request,response);
+%>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" >
@@ -176,25 +180,25 @@
         var openid="<%=request.getAttribute("openid").toString()%>";
         var cid="<%=request.getAttribute("cid").toString()%>";
         try{
-            $("#fsfzz").attr("src","<%=request.getContextPath()%>/Reg!checkinfo?picname=sfzz&cid="+cid+"&openid="+openid);
+            $("#fsfzz").attr("src","<%=request.getContextPath()%>/Reg!checkInfo?picname=sfzz&cid="+cid+"&openid="+openid);
         }
         catch(e) {
 
         };
         try{
-            $("#fsfzf").attr("src","Reg!checkinfo?picname=sfzf&cid="+cid+"&openid="+openid);
+            $("#fsfzf").attr("src","Reg!checkInfo?picname=sfzf&cid="+cid+"&openid="+openid);
         }
         catch(e) {
 
         };
         try{
-            $("#fscsfz").attr("src","Reg!checkinfo?picname=scsfz&cid="+cid+"&openid="+openid);
+            $("#fscsfz").attr("src","Reg!checkInfo?picname=scsfz&cid="+cid+"&openid="+openid);
         }
         catch(e) {
 
         };
         try{
-            $("#fyhk").attr("src","Reg!checkinfo?picname=yhk&cid="+cid+"&openid="+openid);
+            $("#fyhk").attr("src","Reg!checkInfo?picname=yhk&cid="+cid+"&openid="+openid);
         }
         catch(e) {
 
@@ -215,7 +219,7 @@
     function checkone () {
         $.ajax({
         type: 'post',
-        url: '<%=request.getContextPath()%>/Reg!checkone',
+        url: '<%=request.getContextPath()%>/Reg!checkOne',
         dataType: "json",
         data: $("form").serialize(),
         success: function (data) {

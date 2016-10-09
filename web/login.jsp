@@ -67,16 +67,16 @@
         <div class="logo">
             <img src="img/qmlogo.png" width="200" alt="" />
         </div>
-            <form class="form-signin form-inline" action="<%=request.getContextPath()%>/User!Login" method="post" >
+            <form class="form-signin form-inline" action="<%=request.getContextPath()%>/User!login" method="post" >
                 <div id="myTabContent" class="tab-content">
                     <div id="home" class="tab-pane in active">
                         <div class="form-group">
                             <label for="uname">账号</label>
-                            <input type="text" class="form-control" id="uname" name="uname" placeholder="账号">
+                            <input type="text" class="form-control" id="uname" name="username" placeholder="账号">
                         </div>
                         <div class="form-group">
                             <label for="upwd">密码</label>
-                            <input type="password" class="form-control" id="upwd" name="upwd" placeholder="密码">
+                            <input type="password" class="form-control" id="upwd" name="password" placeholder="密码">
                         </div>
                         <div class="form-inline">
                             <label for="upwd">角色</label>

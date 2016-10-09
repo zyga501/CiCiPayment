@@ -2,6 +2,7 @@ package cc.database.merchant;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 public class MerchantInfo {
     public static void main(String[] args) throws Exception {
@@ -9,11 +10,15 @@ public class MerchantInfo {
         System.exit(0);
     }
 
+    public static List<MerchantInfo> getMerchantInfoByMap(Map map) {
+        String statement = "cc.database.merchant.mapping.merchantInfo.getMerchantInfoByMap";
+        return Database.Instance().selectList(statement, map);
+    }
+
     public static List<MerchantInfo> getMerchantInfoById(long id) {
         String statement = "cc.database.merchant.mapping.merchantInfo.getMerchantInfoById";
         return Database.Instance().selectList(statement, id);
     }
-
     public static boolean insertMerchantInfo(MerchantInfo merchantInfo) {
         String statement = "cc.database.merchant.mapping.merchantInfo.insertMerchantInfo";
         return Database.Instance().insert(statement, merchantInfo)==1;
