@@ -55,10 +55,11 @@
     });
     //]]>
 
-    function sendmsg() {
+    function sendmakecardmsg() {
+        $("#idslist").text("");
         $.ajax({
             type: 'post',
-            url: 'User!sendmakecardmsg',
+            url: 'User!sendMakeCardMsg',
             dataType: "json",
             data: $("form").serialize(),
             success: function (data) {

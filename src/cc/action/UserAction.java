@@ -6,7 +6,6 @@ import cc.database.merchant.MerchantInfo;
 import cc.database.merchant.UserInfo;
 import cc.message.WeixinMessage;
 import cc.swiftpass.api.WeixinOpenId;
-import com.opensymphony.xwork2.ActionContext;
 import framework.action.AjaxActionSupport;
 import framework.utils.IdWorker;
 
@@ -23,11 +22,10 @@ public class UserAction extends AjaxActionSupport {
         String petOpenidUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
                         "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=login#wechat_redirect",
                 appid, redirect_uri);
-        System.out.println("petOpenidUri"+petOpenidUri);
         getResponse().sendRedirect(petOpenidUri);
     }
 
-    public String fetchopenid() throws Exception {
+    public String fetchOpenid() throws Exception {
         String appid =  ProjectSettings.getMapData("weixinServerInfo").get("appid").toString();
         String appsecret =  ProjectSettings.getMapData("weixinServerInfo").get("appSecret").toString();
         WeixinOpenId weixinOpenId = new WeixinOpenId(appid, appsecret, getParameter("code").toString());
@@ -41,9 +39,16 @@ public class UserAction extends AjaxActionSupport {
         return AjaxActionComplete(true,map);
     }
 
-    public String userreg() {
+    public String userRegPage(){
+        getRequest().getSession().setAttribute("params", "User!userRegPage");
+        if (null == getAttribute("openid") || getAttribute("openid").equals(""))
+            return "wxopenid";
+        return "agentreg";
+    }
+
+    public String userReg() {
         try {
-            getRequest().getSession().setAttribute("params", "User!userreg?username=" + getParameter("username").toString()+
+            getRequest().getSession().setAttribute("params", "User!userReg?username=" + getParameter("username").toString()+
             "&password="+ getParameter("password").toString());
             if (null == getAttribute("openid") || getAttribute("openid").equals(""))
                 return "wxopenid";
@@ -93,7 +98,7 @@ public class UserAction extends AjaxActionSupport {
         return "";
     }
 
-    public String msgpage(){
+    public String msgPage(){
         if (!getAttribute("roletype").equals("1"))
             return "";
         List<MerchantInfo> lu =  MerchantInfo.getMerchantInfoByMap(null);
@@ -101,7 +106,7 @@ public class UserAction extends AjaxActionSupport {
         return "msgpage";
     }
 
-    public String sendmsg() throws Exception {
+    public String sendMsg() throws Exception {
         String[] userarrary =  getRequest().getParameterValues("ulist");
         String[] msgstr = getRequest().getParameterValues("msgstr");
         Map map= new HashMap<>();
@@ -113,7 +118,7 @@ public class UserAction extends AjaxActionSupport {
         return AjaxActionComplete(true);
     }
 
-    public String makecard(){
+    public String makeCardPage(){
         if (!getAttribute("roletype").equals("1"))
             return "";
         Map map = new HashMap<>();
@@ -123,7 +128,7 @@ public class UserAction extends AjaxActionSupport {
         return "makecard";
     }
 
-    public String sendmakecardmsg(){
+    public String sendMakeCardMsg(){
         IdWorker worker2 = new IdWorker(2);
         Map map = new HashMap<>();
         String rtnstr="";
@@ -134,12 +139,12 @@ public class UserAction extends AjaxActionSupport {
             map.put("agentid",getParameter("agentid"));
             if (CodeInfo.insertCodeInfo(map)) {
                 long after = (before * 100 + System.currentTimeMillis() % 100) ^ 1361753741828L;
-                rtnstr += String.valueOf(after) + "\r\n";
+                rtnstr += String.valueOf(after) + "<br>";
             }
         }
         map.clear();
         map.put("idslist",rtnstr);
-        return AjaxActionComplete(true);
+        return AjaxActionComplete(true,map);
     }
 }
 

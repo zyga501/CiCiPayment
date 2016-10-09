@@ -27,7 +27,7 @@
     </script>
 </head>
 <body onload="chakan()">
-<form action="<%=request.getContextPath()%>/User!userreg" method="post">
+<form action="<%=request.getContextPath()%>/User!userReg" method="post">
 <div class="wrapper wrapper-content  animated fadeInRight">
     <div class="full-height-scroll">
         <div class="ibox-content">
@@ -55,27 +55,6 @@
     </div>
 </div>
 <script src="<%=request.getContextPath()%>/js/ajaxfileupload.js"></script>
-<script>
-$().read(function(){
-    });
-    function checkone () {
-        $.ajax({
-        type: 'post',
-        url: '<%=request.getContextPath()%>/User!userreg',
-        dataType: "json",
-        data: $("form").serialize(),
-        success: function (data) {
-        var json = eval("(" + data + ")");
-        if (json.resultCode == 'Succeed') {
-            layer.msg('操作成功', {icon: 1});
-            parent.refresh();
-        }
-        else
-        layer.msg('操作失败', {icon: 2});
-        }
-        })
-    }
-</script>
 </body>
 </html>
 

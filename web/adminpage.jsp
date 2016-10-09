@@ -14,8 +14,8 @@
   </head>
   <body>
   <a href="#" class="btn btn-primary" onclick="$('#div').load('<%=request.getContextPath()%>/reg/merchantlist.jsp')">审核CC卡申请</a>
-  <a href="#" class="btn btn-info" onclick="$('#div').load('User!makecard')">CC卡发售</a>
-  <a href="#" class="btn btn-warning" onclick="$('#div').load('User!msgpage')">发送公众号消息</a>
+  <a href="#" class="btn btn-info" onclick="$('#div').load('User!makeCardPage')">CC卡发售</a>
+  <a href="#" class="btn btn-warning" onclick="$('#div').load('User!msgPage')">发送公众号消息</a>
   <div id="div"></div>
   </body>
 </html>

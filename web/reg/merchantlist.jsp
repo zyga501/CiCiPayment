@@ -46,7 +46,7 @@
         $("#contentdiv").html("<img  src='<%=request.getContextPath()%>/img/loading.gif'>");
         $.ajax({
             type: 'post',
-            url: '<%=request.getContextPath()%>/Reg!Fetchmerchant',
+            url: '<%=request.getContextPath()%>/Reg!fetchMerchant',
             dataType: "json",
             data: $("#searchform").serialize() + "&currpagenum=" + curr,
             success: function (data) {
@@ -66,7 +66,7 @@
                                 $("#contentdiv").html("<img  src='<%=request.getContextPath()%>/img/loading.gif'>");
                                 $.ajax({
                                     type: 'post',
-                                    url: '<%=request.getContextPath()%>/Reg!Fetchmerchant',
+                                    url: '<%=request.getContextPath()%>/Reg!fetchMerchant',
                                     dataType: "json",
                                     data: $("#searchform").serialize() + "&currpagenum=" + obj.curr,
                                     success: function (data) {
@@ -132,7 +132,7 @@
                 shade: 0.8,
                 area: ['100%', '100%'],
                 shadeClose: true, //开启遮罩关闭
-                content: "<%=request.getContextPath()%>/Reg!selectone?cid="+id+"&openid="+oid
+                content: "<%=request.getContextPath()%>/Reg!selectOne?cid="+id+"&openid="+oid
             });
         }
     }

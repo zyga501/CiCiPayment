@@ -100,7 +100,7 @@
     function sendmsg() {
         $.ajax({
             type: 'post',
-            url: 'User!sendmsg',
+            url: 'User!sendMsg',
             dataType: "json",
             data: $("form").serialize(),
             success: function (data) {
