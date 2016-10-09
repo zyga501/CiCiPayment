@@ -6,13 +6,12 @@ import java.util.Map;
 
 public class PendingMerchant extends MerchantInfo {
     public static void main(String[] args) throws Exception {
-        List<PendingMerchant> pendingMerchantList = getPendingMerchantById(123, "321");
         System.exit(0);
     }
 
-    public static List<PendingMerchant> getPendingMerchantById(long id, String openid) {
+    public static PendingMerchant getPendingMerchantById(long id, String openid) {
         String statement = "cc.database.merchant.mapping.pendingMerchant.getPendingMerchantById";
-        return Database.Instance().selectList(statement, new HashMap<String, Object>(){{put("id", id);put("openid", openid);}});
+        return Database.Instance().selectOne(statement, new HashMap<String, Object>(){{put("id", id);put("openid", openid);}});
     }
 
     public static List<Map> getPendingMerchant(Map map) {

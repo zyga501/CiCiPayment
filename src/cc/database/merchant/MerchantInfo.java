@@ -6,7 +6,6 @@ import java.util.Map;
 
 public class MerchantInfo {
     public static void main(String[] args) throws Exception {
-        List<MerchantInfo> merchantInfoList = getMerchantInfoById(123);
         System.exit(0);
     }
 
@@ -15,10 +14,11 @@ public class MerchantInfo {
         return Database.Instance().selectList(statement, map);
     }
 
-    public static List<MerchantInfo> getMerchantInfoById(long id) {
+    public static MerchantInfo getMerchantInfoById(long id) {
         String statement = "cc.database.merchant.mapping.merchantInfo.getMerchantInfoById";
-        return Database.Instance().selectList(statement, id);
+        return Database.Instance().selectOne(statement, id);
     }
+
     public static boolean insertMerchantInfo(MerchantInfo merchantInfo) {
         String statement = "cc.database.merchant.mapping.merchantInfo.insertMerchantInfo";
         return Database.Instance().insert(statement, merchantInfo)==1;

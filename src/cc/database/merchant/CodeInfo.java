@@ -1,12 +1,10 @@
 package cc.database.merchant;
 
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.Map;
 
 public class CodeInfo {
     public static void main(String[] args) throws Exception {
-        List<CodeInfo> codeInfoList = getCodeInfoById(1871367318371400l);
         System.exit(0);
     }
 
@@ -15,9 +13,9 @@ public class CodeInfo {
         return Database.Instance().insert(statement, map)==1;
     }
 
-    public static List<CodeInfo> getCodeInfoById(long id) {
+    public static CodeInfo getCodeInfoById(long id) {
         String statement = "cc.database.merchant.mapping.codeInfo.getCodeInfoById";
-        return Database.Instance().selectList(statement, id);
+        return Database.Instance().selectOne(statement, id);
     }
 
     public long getId() {

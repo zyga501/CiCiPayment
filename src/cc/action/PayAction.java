@@ -6,8 +6,6 @@ import cc.utils.IdConvert;
 import framework.action.AjaxActionSupport;
 import framework.utils.StringUtils;
 
-import java.util.List;
-
 public class PayAction extends AjaxActionSupport {
     public String payAdapter() {
         try {
@@ -17,8 +15,8 @@ public class PayAction extends AjaxActionSupport {
                 }
                 setAttribute("openid", "oBhD-wj1zMF5-FET_9dwK8rI2nt0");
                 long cardId = Long.parseLong(getParameter("cid").toString());
-                List<MerchantInfo> merchantInfoList = MerchantInfo.getMerchantInfoById(IdConvert.DecryptionId(cardId));
-                if (merchantInfoList.size() == 0) {
+                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(IdConvert.DecryptionId(cardId));
+                if (merchantInfo == null) {
                     return "registerMerchant";
                 }
 
