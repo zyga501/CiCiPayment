@@ -13,7 +13,7 @@ public class PayAction extends AjaxActionSupport {
                 if (StringUtils.convertNullableString(getParameter("cid")).length() == 0) {
                     break;
                 }
-                setAttribute("openid", "oBhD-wj1zMF5-FET_9dwK8rI2nt0");
+                
                 long cardId = Long.parseLong(getParameter("cid").toString());
                 MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(IdConvert.DecryptionId(cardId));
                 if (merchantInfo == null) {
