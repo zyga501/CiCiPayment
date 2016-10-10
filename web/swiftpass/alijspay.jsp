@@ -157,6 +157,11 @@
     <input type="hidden" id="auto_redirect" name="auto_redirect" value="true" />
     <div class="Layer1">
         <div class="dv1">
+    <span class="STYLE7">
+      <label>支付宝账号: </label>
+    </span>
+    <input type="text" id="buyer_logon_id" name="buyer_logon_id" value=""/>
+    <br><br>
 	<span class="STYLE7">
   	  <label>消费总额: </label>
   	</span>
@@ -168,7 +173,8 @@
         <div class="dv2">
 	<span class="STYLE7">
   	  <label>实付金额: </label>
-  	</span> <label id="paynum" class="paynum"></label><br><br>
+  	</span>
+            <label id="paynum" class="paynum"></label><br><br>
             <input type="submit" class="but" id="butpaynum"  disabled="disabled" value="支付宝支付"/>
         </div>
     </div>

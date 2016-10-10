@@ -51,7 +51,7 @@ public class PayAction extends AjaxActionSupport {
         requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "swiftpass/"
                 + CallbackAction.ALIJSPAYCALLBACK;
         aliJsPayRequestData.notify_url = requestUrl;
-        aliJsPayRequestData.buyer_logon_id = "vonchenplus@163.com";
+        aliJsPayRequestData.buyer_logon_id = getParameter("buyer_logon_id").toString();
         if (!StringUtils.convertNullableString(getParameter("out_trade_no")).isEmpty()) {
             aliJsPayRequestData.out_trade_no = getParameter("out_trade_no").toString();
         }
