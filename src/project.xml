@@ -5,7 +5,7 @@
     <name>cicipay</name>
     <serverAddress>127.0.0.1</serverAddress>
     <idWorkerSeed>1</idWorkerSeed>
-    <Picpath>D:\\QiLian\\</Picpath>
+    <CachePath>D:\\QiLian\\</CachePath>
     <weixinServerInfo>
         <appid>wx866bca62844d900f</appid>
         <appSecret>9e23e7b99fddf616c5413cbe57db3a0f</appSecret>

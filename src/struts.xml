@@ -40,7 +40,7 @@
             <result type= "chain" name="wxpayaction">User!wxpayaction</result>
         </global-results>
         <action name="Pay!*" class="cc.action.PayAction" method="{1}">
-            <result name="registerMerchant" type="chain">Register!registerMerchant</result>
+            <result name="registerPrepare" type="chain">Register!registerPrepare</result>
         </action>
         <action name="User!*" class="cc.action.UserAction" method="{1}">
             <result name="agentPage">agentpage.jsp</result>
@@ -53,10 +53,10 @@
             <result name="fetchWxCode" type="chain" >User!fetchWxCode</result>
             <result name="mainPage">./mainpage.jsp</result>
             <result name="loginPage">./login.jsp</result>
-            <result name="register1">./reg/register.jsp</result>
-            <result name="register2">./reg/register2.jsp</result>
-            <result name="register3">./reg/register3.jsp</result>
-            <result name="registerall">./reg/registerall.jsp</result>
+            <result name="registerStep1">./register/registerStep1.jsp</result>
+            <result name="registerStep2">./register/registerStep2.jsp</result>
+            <result name="registerStep3">./register/registerStep3.jsp</result>
+            <result name="registerall">./register/registerall.jsp</result>
             <result name="paypage">./welcome.html</result>
         </action>
         <action name="Mainpage" class="cc.action.UserAction" method="Initmainpage">

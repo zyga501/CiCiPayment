@@ -97,7 +97,7 @@
 
     function uploadinfo(){
       $.ajaxFileUpload({
-          url: "Register!uploadPic",
+          url: "Register!uploadIDCard",
           secureuri: false,
           fileElementId: ['fsfzf','fsfzz','fscsfz','fyhk'],
           dataType: 'multipart/form-data',

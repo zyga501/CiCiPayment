@@ -21,7 +21,7 @@
 <div class="wrapper wrapper-content  animated fadeInRight">
     <div class="full-height-scroll">
         <div class="ibox-content">
-            <form action="Register!reg2" method="post" class="form-horizontal">
+            <form action="Register!registerStep2" method="post" class="form-horizontal">
                 <input type="hidden" name="cid" value="${reginfo.id}">
                 <div class="form-group">
                     <label class="col-sm-3 control-label">开户名：</label>

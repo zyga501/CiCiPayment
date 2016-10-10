@@ -64,10 +64,10 @@ public class ProjectSettings {
         return 0;
     }
 
-    public static String getPicpath() {
+    public static String getCachePath() {
         try {
-            if (projectSettings_ != null && projectSettings_.get("Picpath") != null) {
-                return (projectSettings_.get("Picpath").toString());
+            if (projectSettings_ != null && projectSettings_.get("CachePath") != null) {
+                return (projectSettings_.get("CachePath").toString());
             }
         }
         catch (NumberFormatException exception) {
