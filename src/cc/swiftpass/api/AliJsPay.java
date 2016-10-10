@@ -16,6 +16,10 @@ public class AliJsPay extends SwiftPassAPIWithSign {
         return JSPAY_API;
     }
 
+    public String getPayUrl() {
+        return payUrl_;
+    }
+
     @Override
     protected boolean handlerResponse(Map<String,Object> responseResult) {
         if (responseResult.containsKey("pay_url")) {

@@ -184,6 +184,14 @@ public class MerchantInfo {
         this.bankCity_ = bankCity;
     }
 
+    public String getBankGeneralName() {
+        return bankGeneralName_;
+    }
+
+    public void setBankGeneralName(String bankGeneralName) {
+        this.bankGeneralName_ = bankGeneralName;
+    }
+
     public String getBankName() {
         return bankName_;
     }
@@ -252,6 +260,7 @@ public class MerchantInfo {
     private boolean bestStatus_;
     private float bestRate_;
     private String bankCity_;
+    private String bankGeneralName_;
     private String bankName_;
     private String bankCode_;
     private String accountNo_;

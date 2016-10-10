@@ -16,16 +16,16 @@
 
     <insert id="insertMerchantInfo" parameterType="cc.database.merchant.MerchantInfo">
         INSERT INTO merchantinfo(id,name,address,contactName,contactPhone,idCard,idCardPF,idCardPB,idCardPC,paymentStatus,
-        wxStatus,wxRate,aliStatus,aliRate,jdStatus,jdRate,bestStatus,bestRate,bankCity,bankName,bankCode,accountNo,accountName,accountPhone,openid)
+        wxStatus,wxRate,aliStatus,aliRate,jdStatus,jdRate,bestStatus,bestRate,bankCity,bankName,bankGeneralName,bankCode,accountNo,accountName,accountPhone,openid)
         VALUE (#{id},#{name},#{address},#{contactName},#{contactPhone},#{idCard},#{idCardPF},#{idCardPB},#{idCardPC},#{paymentStatus},
-        #{wxStatus},#{wxRate},#{aliStatus},#{aliRate},#{jdStatus},#{jdRate},#{bestStatus},#{bestRate},#{bankCity},#{bankCode},#{bankName},#{accountNo},#{accountName},#{accountPhone},#{openid})
+        #{wxStatus},#{wxRate},#{aliStatus},#{aliRate},#{jdStatus},#{jdRate},#{bestStatus},#{bestRate},#{bankCity},#{bankCode},#{bankName},#{bankGeneralName},#{accountNo},#{accountName},#{accountPhone},#{openid})
     </insert>
 
     <update id="updateMerchantInfo" parameterType="cc.database.merchant.MerchantInfo">
         UPDATE merchantinfo
         SET id = #{id},name=#{name},address=#{address},contactName=#{contactName},contactPhone=#{contactPhone},idCard=#{idCard},idCardPF=#{idCardPF},idCardPB=#{idCardPB},idCardPC=#{idCardPC},registerDate=#{registerDate},
         paymentStatus=#{paymentStatus},wxStatus=#{wxStatus},wxRate=#{wxRate},aliStatus=#{aliStatus},aliRate=#{aliRate},jdStatus=#{jdStatus},jdRate=#{jdRate},bestStatus=#{bestStatus},bestRate=#{bestRate},
-        bankCity=#{bankCity},bankName=#{bankName},accountNo=#{accountNo},accountName=#{accountName},accountPhone=#{accountPhone}
+        bankCity=#{bankCity},bankName=#{bankName},bankGeneralName=#{bankGeneralName},accountNo=#{accountNo},accountName=#{accountName},accountPhone=#{accountPhone}
     </update>
 
     <resultMap type="cc.database.merchant.MerchantInfo" id="merchantInfoResult">

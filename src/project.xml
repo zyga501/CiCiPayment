@@ -15,6 +15,11 @@
         <noticetemplate_id>XqOGqOHpGq437NxHRGmQBuDk0tntAwm_LfM0RCItL-Y</noticetemplate_id>
         <editer>CC客服</editer>
     </weixinServerInfo>
+    <swiftpass>
+        <merchantId>100530020860</merchantId>
+        <body>企盟支付</body>
+        <apiKey>4fe41e8ca0b0c643120ee0aca96cf6cb</apiKey>
+    </swiftpass>
     <chanPay>
         <CJ_GATEWAY_URL>https://cop-gateway.chanpay.com/crps-gateway/gw01/process01</CJ_GATEWAY_URL>
         <MERCHANT_ID>cp2016091930738</MERCHANT_ID>

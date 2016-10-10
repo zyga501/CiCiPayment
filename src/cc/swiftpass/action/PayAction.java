@@ -42,9 +42,10 @@ public class PayAction extends AjaxActionSupport {
 
     public String aliJsPay() throws Exception {
         AliJsPayRequestData aliJsPayRequestData = new AliJsPayRequestData();
-        aliJsPayRequestData.mch_id = "100530020860";
-        aliJsPayRequestData.body = getParameter("body").toString();
-        aliJsPayRequestData.total_fee = (int)Double.parseDouble(getParameter("total_fee").toString());
+        aliJsPayRequestData.mch_id = ProjectSettings.getMapData("swiftpass").get("merchantId").toString();
+        aliJsPayRequestData.body = ProjectSettings.getMapData("swiftpass").get("body").toString();
+        aliJsPayRequestData.attach = getParameter("cardId").toString();
+        aliJsPayRequestData.total_fee = (int)Double.parseDouble(getParameter("total_amount").toString());
         String requestUrl = getRequest().getRequestURL().toString();
         requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
         requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "swiftpass/"
@@ -56,6 +57,10 @@ public class PayAction extends AjaxActionSupport {
         }
 
         AliJsPay aliJsPay = new AliJsPay(aliJsPayRequestData);
-        return AjaxActionComplete(aliJsPay.postRequest("4fe41e8ca0b0c643120ee0aca96cf6cb"));
+        if (aliJsPay.postRequest(ProjectSettings.getMapData("swiftpass").get("apiKey").toString())) {
+            getResponse().sendRedirect(aliJsPay.getPayUrl());
+        }
+
+        return AjaxActionComplete(false);
     }
 }

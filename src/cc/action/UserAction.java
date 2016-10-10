@@ -80,7 +80,6 @@ public class UserAction extends AjaxActionSupport {
         }
     }
 
-
     public String login() {
         Map map = new HashMap<>();
         map.put("username",getParameter("username"));

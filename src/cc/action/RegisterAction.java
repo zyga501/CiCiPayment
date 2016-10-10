@@ -223,7 +223,7 @@ public class RegisterAction extends AjaxActionSupport {
         String dt = df.format(date);
         Map  map=new HashMap<>();
         map.put("new",dt);
-        return   AjaxActionComplete(map);
+        return AjaxActionComplete(map);
     }
 
     public String registerPrepare() {
