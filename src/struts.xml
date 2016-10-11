@@ -49,19 +49,16 @@
             <result name="agentRegister">agentreg.jsp</result>
             <result name="msgpage">msgpage.jsp</result>
             <result name="makeCard">makecard.jsp</result>
+            <result name="mainpagejsp">mainpage.jsp</result>
         </action>
         <action name="Register!*" class="cc.action.RegisterAction" method="{1}">
             <result name="fetchWxCode" type="chain" >User!fetchWxCode</result>
-            <result name="mainPage">./mainpage.jsp</result>
             <result name="loginPage">./login.jsp</result>
             <result name="registerStep1">./register/registerStep1.jsp</result>
             <result name="registerStep2">./register/registerStep2.jsp</result>
             <result name="registerStep3">./register/registerStep3.jsp</result>
             <result name="registerall">./register/registerall.jsp</result>
             <result name="paypage">./welcome.html</result>
-        </action>
-        <action name="Mainpage" class="cc.action.UserAction" method="Initmainpage">
-            <result name="mainpagejsp">./mainpage.jsp</result>
         </action>
     </package>
     <constant name="struts.custom.i18n.resources" value="cc/mui/resources"/>

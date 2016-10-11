@@ -49,12 +49,6 @@
                                 </span>
                             </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                <li><a class="J_menuItem" href="<%=request.getContextPath()%>/form_avatar.html"
-                                       data-index="0">修改头像</a>
-                                </li>
-                                <li><a class="J_menuItem" href="<%=request.getContextPath()%>/profile.html"
-                                       data-index="1">个人资料</a>
-                                </li>
                                 <li class="divider"></li>
                                 <li><a href="/User!Logout">安全退出</a>
                                 </li>
@@ -63,9 +57,9 @@
                         <div class="logo-element"><img alt="image" class="img-circle" src="img/userlogo.jpg" style="width: 60px">
                         </div>
                     </li>
-                    <s:iterator value="menulist" id="ml" status="st">
+                    <s:iterator value="#request.session.menulist" id="ml" status="st">
                         <li>
-                            <a href="https://www.baidu.com/s?wd=<s:property value="#ml.prenode.menuname"></s:property>">
+                            <a href="#">
                                 <i class="fa <s:property value="#ml.prenode.labelico"></s:property>"></i>
                                 <span class="nav-label"><s:property value="#ml.prenode.menuname"></s:property></span>
                                 <span class="fa arrow"></span>

@@ -1,8 +1,9 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%
-   // if  (!request.getSession().getAttribute("roletype").toString().equals("1"))
-   //     request.getRequestDispatcher("page404.jsp").forward(request,response);
+    if ((!request.getSession().getAttribute("roletype").toString().equals("1"))&&
+            (!request.getSession().getAttribute("roletype").toString().equals("111")))
+        request.getRequestDispatcher("page404.jsp").forward(request, response);
 %>
 <html>
 <head>
@@ -117,12 +118,11 @@
                 }
             }
         })
-
         function nulltoempty(val){
             if  (val=="null" || val==null)
-            return "";
+                return "";
             else
-            return val;
+                return val;
         }
         function  showinfo(id,oid) {
             layer.open({
@@ -136,7 +136,6 @@
             });
         }
     }
-
     function refresh(){
         searchlist(1);
     }

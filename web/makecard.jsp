@@ -1,7 +1,8 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    if (!request.getSession().getAttribute("roletype").toString().equals("1"))
+    if ((!request.getSession().getAttribute("roletype").toString().equals("1"))&&
+            (!request.getSession().getAttribute("roletype").toString().equals("111")))
         request.getRequestDispatcher("page404.jsp").forward(request, response);
 %>
 <html>
@@ -54,7 +55,6 @@
         $('.combobox').combobox()
     });
     //]]>
-
     function sendmakecardmsg() {
         $("#idslist").text("");
         $.ajax({
@@ -76,4 +76,3 @@
 </script>
 </body>
 </html>
-

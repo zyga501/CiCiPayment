@@ -2,6 +2,7 @@ package cc.action;
 
 import cc.ProjectSettings;
 import cc.database.merchant.CodeInfo;
+import cc.database.merchant.MenuTree;
 import cc.database.merchant.MerchantInfo;
 import cc.database.merchant.UserInfo;
 import cc.message.WeixinMessage;
@@ -10,6 +11,7 @@ import framework.action.AjaxActionSupport;
 import framework.utils.IdWorker;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +50,7 @@ public class UserAction extends AjaxActionSupport {
     public String userReg() {
         try {
             getRequest().getSession().setAttribute("params", "User!userReg?username=" + getParameter("username").toString()+
-            "&password="+ getParameter("password").toString());
+                    "&password="+ getParameter("password").toString());
             if (null == getAttribute("openid") || getAttribute("openid").equals(""))
                 return "wxopenid";
             Map map = new HashMap<>();
@@ -80,6 +82,7 @@ public class UserAction extends AjaxActionSupport {
         }
     }
 
+
     public String login() {
         Map map = new HashMap<>();
         map.put("username",getParameter("username"));
@@ -89,15 +92,21 @@ public class UserAction extends AjaxActionSupport {
             return AjaxActionComplete(false);
         setAttribute("roletype",lu.get(0).getRoletype());
         setAttribute("userid",lu.get(0).getId());
-        if (lu.get(0).getRoletype()==0)
-            return "agentPage";
-        if (lu.get(0).getRoletype()==1)
-            return "adminPage";
-        return "";
+        List<MenuTree> menutreelist = MenuTree.getMenuNodeByUid(Long.parseLong(getRequest().getSession().getAttribute("roletype").toString()));
+        List<Object> menulist = new ArrayList<>();
+        for (MenuTree m : menutreelist) {
+            List<MenuTree> prem = MenuTree.getMenuNodeByPreId(m.getId(),Long.parseLong(getRequest().getSession().getAttribute("roletype").toString()));
+            Map mapitem = new HashMap();
+            mapitem.put("prenode",m);
+            mapitem.put("subnode",prem);
+            menulist.add(mapitem);
+        }
+        getRequest().getSession().setAttribute("menulist" ,menulist );
+        return "mainpagejsp";
     }
 
     public String msgPage(){
-        if (!getAttribute("roletype").equals("1"))
+        if ((!getAttribute("roletype").equals("1"))&&(!getAttribute("roletype").equals("111")))
             return "";
         List<MerchantInfo> lu =  MerchantInfo.getMerchantInfoByMap(null);
         setAttribute("userList",lu);
@@ -117,7 +126,7 @@ public class UserAction extends AjaxActionSupport {
     }
 
     public String makeCardPage(){
-        if (!getAttribute("roletype").equals("1"))
+        if ((!getAttribute("roletype").equals("1"))&&(!getAttribute("roletype").equals("111")))
             return "";
         Map map = new HashMap<>();
         map.put("roletype",0);
@@ -145,4 +154,3 @@ public class UserAction extends AjaxActionSupport {
         return AjaxActionComplete(true,map);
     }
 }
-
