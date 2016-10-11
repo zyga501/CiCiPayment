@@ -20,24 +20,21 @@ public class UserAction extends AjaxActionSupport {
 
     public void fetchWxCode() throws IOException {
         String appid = ProjectSettings.getMapData("weixinServerInfo").get("appid").toString();
-        String redirect_uri =  getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + "/register/wxlogin.jsp";
+        String redirect_uri =  getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + "/User!fetchWxOpenid";
         String fetchOpenidUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
-                        "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=login#wechat_redirect",
-                appid, redirect_uri);
+                        "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=%s#wechat_redirect",
+                appid, redirect_uri, getParameter("redirect_url").toString());
         getResponse().sendRedirect(fetchOpenidUri);
     }
 
-    public String fetchWxOpenid() throws Exception {
+    public void fetchWxOpenid() throws Exception {
         String appid =  ProjectSettings.getMapData("weixinServerInfo").get("appid").toString();
         String appsecret =  ProjectSettings.getMapData("weixinServerInfo").get("appSecret").toString();
         OpenId weixinOpenId = new OpenId(appid, appsecret, getParameter("code").toString());
-        if (!weixinOpenId.getRequest()) {
-            return AjaxActionComplete(false) ;
+        if (weixinOpenId.getRequest()) {
+            getRequest().getSession().setAttribute("openid", weixinOpenId.getOpenId());
+            getResponse().sendRedirect(getParameter("state").toString());
         }
-        getRequest().getSession().setAttribute("openid", weixinOpenId.getOpenId());
-        Map map = new HashMap<>();
-        map.put("url", getAttribute("params"));
-        return AjaxActionComplete(true,map);
     }
 
     public String userRegPage() {

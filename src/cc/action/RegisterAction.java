@@ -229,10 +229,9 @@ public class RegisterAction extends AjaxActionSupport {
     public String registerPrepare() {
         try {
             if (StringUtils.convertNullableString(getAttribute("openid")).length() == 0) {
-                getRequest().getSession().setAttribute("params","Register!registerPrepare?cid=" + getParameter("cid").toString());
+                setParameter("redirect_url","Register!registerPrepare?cid=" + getParameter("cid").toString());
                 return "fetchWxCode";
             }
-            getRequest().getSession().removeAttribute("params");
 
             long merchantId = IdConvert.DecryptionId(Long.parseLong(getParameter("cid").toString()));
             CodeInfo codeInfo = CodeInfo.getCodeInfoById(merchantId);
