@@ -228,7 +228,7 @@ public class RegisterAction extends AjaxActionSupport {
 
     public String registerPrepare() {
         try {
-            if (StringUtils.convertNullableString(getAttribute("openid")).length() == 0) {
+            if (StringUtils.convertNullableString(getParameter("openid")).length() == 0) {
                 setParameter("redirect_url","Register!registerPrepare?cid=" + getParameter("cid").toString());
                 return "fetchWxCode";
             }
@@ -239,11 +239,11 @@ public class RegisterAction extends AjaxActionSupport {
                 return "page404";
             }
 
-            PendingMerchant pendingMerchant =  PendingMerchant.getPendingMerchantById(merchantId, getRequest().getSession().getAttribute("openid").toString());
+            PendingMerchant pendingMerchant =  PendingMerchant.getPendingMerchantById(merchantId, getParameter("openid").toString());
             if (pendingMerchant == null) {
                 pendingMerchant = new PendingMerchant();
                 pendingMerchant.setId(merchantId);
-                pendingMerchant.setOpenid(getAttribute("openid").toString());
+                pendingMerchant.setOpenid(getParameter("openid").toString());
                 PendingMerchant.insertPendingMerchant(pendingMerchant);
                 getRequest().setAttribute("reginfo",pendingMerchant);
             }

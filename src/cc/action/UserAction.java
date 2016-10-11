@@ -32,8 +32,7 @@ public class UserAction extends AjaxActionSupport {
         String appsecret =  ProjectSettings.getMapData("weixinServerInfo").get("appSecret").toString();
         OpenId weixinOpenId = new OpenId(appid, appsecret, getParameter("code").toString());
         if (weixinOpenId.getRequest()) {
-            getRequest().getSession().setAttribute("openid", weixinOpenId.getOpenId());
-            getResponse().sendRedirect(getParameter("state").toString());
+            getResponse().sendRedirect(getParameter("state").toString() + "&openid=" + weixinOpenId.getOpenId());
         }
     }
 
