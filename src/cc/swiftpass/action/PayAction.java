@@ -54,7 +54,7 @@ public class PayAction extends AjaxActionSupport {
         AliJsPayRequestData aliJsPayRequestData = new AliJsPayRequestData();
         aliJsPayRequestData.mch_id = ProjectSettings.getMapData("swiftpass").get("merchantId").toString();
         aliJsPayRequestData.body = ProjectSettings.getMapData("swiftpass").get("body").toString();
-        aliJsPayRequestData.attach = getParameter("cardId").toString();
+        aliJsPayRequestData.attach = getParameter("state").toString();
         aliJsPayRequestData.total_fee = (int)Double.parseDouble(getParameter("total_amount").toString());
         String requestUrl = getRequest().getRequestURL().toString();
         requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
