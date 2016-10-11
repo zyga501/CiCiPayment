@@ -1,12 +1,12 @@
-package cc.swiftpass.api;
+package cc.weixin.api;
 
-import cc.ProjectLogger;
 import net.sf.json.JSONObject;
+import cc.ProjectLogger;
 
-public class WeixinOpenId extends SwiftPassAPI {
+public class OpenId extends WeixinAPI {
     private final static String OPENID_API = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code";
 
-    public WeixinOpenId(String appid, String appSecret , String code) {
+    public OpenId(String appid, String appSecret , String code) {
         appid_ = appid;
         appSecret_ = appSecret;
         code_ = code;

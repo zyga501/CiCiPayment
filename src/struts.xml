@@ -41,7 +41,10 @@
         </global-results>
         <action name="Pay!*" class="cc.action.PayAction" method="{1}">
             <result name="registerPrepare" type="chain">Register!registerPrepare</result>
-            <result name="AliPay">./swiftpass/alijspay.jsp</result>
+            <result name="SwiftPassAliPay" type="chain">
+                <param name="actionName">Pay!aliJsPay</param>
+                <param name="namespace">/swiftpass</param>
+            </result>
         </action>
         <action name="User!*" class="cc.action.UserAction" method="{1}">
             <result name="agentPage">agentpage.jsp</result>

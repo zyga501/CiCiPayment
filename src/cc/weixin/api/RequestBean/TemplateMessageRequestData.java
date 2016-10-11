@@ -1,4 +1,4 @@
-package cc.message.api.RequestBean;
+package cc.weixin.api.RequestBean;
 
 import framework.utils.I18n;
 

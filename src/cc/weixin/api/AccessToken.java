@@ -1,4 +1,4 @@
-package cc.message.api;
+package cc.weixin.api;
 
 import cc.ProjectSettings;
 import framework.utils.HttpClient;

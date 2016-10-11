@@ -43,7 +43,7 @@ public class PayAction extends AjaxActionSupport {
             return "JDPay";
         }
         else if (userAgent.contains("alipayclient")){
-            return "AliPay";
+            return "SwiftPassAliPay";
         }
         else if (userAgent.contains("bestpay")){
             return "BestPay";

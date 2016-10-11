@@ -1,4 +1,4 @@
-package cc.message.api;
+package cc.weixin.api;
 
 import framework.utils.HttpClient;
 import net.sf.json.JSONObject;

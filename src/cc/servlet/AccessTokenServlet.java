@@ -1,7 +1,7 @@
 package cc.servlet;
 
 import cc.ProjectSettings;
-import cc.message.api.AccessToken;
+import cc.weixin.api.AccessToken;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

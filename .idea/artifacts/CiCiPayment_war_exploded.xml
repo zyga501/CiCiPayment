@@ -16,6 +16,8 @@
           <element id="library" level="project" name="MySql 5.1.10" />
           <element id="library" level="project" name="Struts 2-2.3.20.1" />
           <element id="library" level="project" name="XStream 1.4.9" />
+          <element id="library" level="project" name="AliPay" />
+          <element id="library" level="project" name="Taobao" />
         </element>
       </element>
     </root>

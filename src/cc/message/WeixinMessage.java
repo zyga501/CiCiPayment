@@ -1,9 +1,9 @@
 package cc.message;
 
 import cc.ProjectSettings;
-import cc.message.api.AccessToken;
-import cc.message.api.RequestBean.TemplateNoticeRequestData;
-import cc.message.api.TemplateMessage;
+import cc.weixin.api.AccessToken;
+import cc.weixin.api.RequestBean.TemplateNoticeRequestData;
+import cc.weixin.api.TemplateMessage;
 
 public class WeixinMessage {
     public static boolean sendTemplateMessage(String openid,String msgstr) throws Exception {

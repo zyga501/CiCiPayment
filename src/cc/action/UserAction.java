@@ -6,7 +6,7 @@ import cc.database.merchant.MenuTree;
 import cc.database.merchant.MerchantInfo;
 import cc.database.merchant.UserInfo;
 import cc.message.WeixinMessage;
-import cc.swiftpass.api.WeixinOpenId;
+import cc.weixin.api.OpenId;
 import framework.action.AjaxActionSupport;
 import framework.utils.IdWorker;
 
@@ -20,7 +20,7 @@ public class UserAction extends AjaxActionSupport {
 
     public void fetchWxCode() throws IOException {
         String appid = ProjectSettings.getMapData("weixinServerInfo").get("appid").toString();
-        String redirect_uri =  getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + "/reg/wxlogin.jsp";
+        String redirect_uri =  getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + "/register/wxlogin.jsp";
         String fetchOpenidUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
                         "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=login#wechat_redirect",
                 appid, redirect_uri);
@@ -30,7 +30,7 @@ public class UserAction extends AjaxActionSupport {
     public String fetchWxOpenid() throws Exception {
         String appid =  ProjectSettings.getMapData("weixinServerInfo").get("appid").toString();
         String appsecret =  ProjectSettings.getMapData("weixinServerInfo").get("appSecret").toString();
-        WeixinOpenId weixinOpenId = new WeixinOpenId(appid, appsecret, getParameter("code").toString());
+        OpenId weixinOpenId = new OpenId(appid, appsecret, getParameter("code").toString());
         if (!weixinOpenId.getRequest()) {
             return AjaxActionComplete(false) ;
         }

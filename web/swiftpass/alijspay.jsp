@@ -152,16 +152,11 @@
 <input type="hidden" name="hideparam" id="hideparam" value=""/>
 
 <form action="<%=request.getContextPath()%>/swiftpass/Pay!aliJsPay" method="post">
-    <input type="hidden" value=<%=request.getParameter("cid")%> name="cardId" id="cardId"/>
+    <input type="hidden" value=<%=request.getParameter("state")%> name="cardId" id="cardId"/>
+    <input type="hidden" value=<%=request.getParameter("auth_code")%> name="auth_code" id="auth_code" />
     <input type="hidden" value="" name="total_amount" id="total_amount"/>
-    <input type="hidden" id="auto_redirect" name="auto_redirect" value="true" />
     <div class="Layer1">
         <div class="dv1">
-    <span class="STYLE7">
-      <label>支付宝账号: </label>
-    </span>
-    <input type="text" id="buyer_logon_id" name="buyer_logon_id" value=""/>
-    <br><br>
 	<span class="STYLE7">
   	  <label>消费总额: </label>
   	</span>
