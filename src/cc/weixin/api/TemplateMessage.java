@@ -31,12 +31,12 @@ public class TemplateMessage extends HttpClient {
                     return true;
                 }
                 case "40001": {
-                    String appid = AccessToken.getAppidByAccessToken(accessToken_);
-                    if (appid.isEmpty()) {
+                    AccessToken accessToken = AccessToken.getAccessTokenByAccessToken(accessToken_);
+                    if (accessToken == null) {
                         return false;
                     }
 
-                    accessToken_ = AccessToken.updateAccessToken(appid, accessToken_);
+                    accessToken_ = AccessToken.updateAccessToken(accessToken, accessToken_);
                     return postRequest(postData_);
                 }
                 default: {
