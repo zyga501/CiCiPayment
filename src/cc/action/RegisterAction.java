@@ -467,4 +467,8 @@ public class RegisterAction extends AjaxActionSupport {
         }
         return AjaxActionComplete(false);
     }
+
+    public String goMerchantList(){
+        return "merchantlist";
+    }
 }
