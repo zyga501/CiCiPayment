@@ -115,7 +115,7 @@ public class SinglePayRequestData extends RequestData {
     public String drctBankCode; // 清算行号
     public String protocolNo; // 协议号
     public String currency; // 货币类型, 人民币
-    public long amount; // 金额
+    public int amount; // 金额
     public String idType; // 开户证件类型
     public String id; // 证件号
     public String tel; // 手机号

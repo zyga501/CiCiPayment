@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cc.database.order.mapping.chanOrderInfo">
-    <resultMap type="cc.database.merchant.AgentInfo" id="chanOrderInfoResult">
+    <select id="getOrderInfo" resultMap="orderInfoResult">
+        SELECT * FROM chanOrderInfo
+    </select>
+
+    <insert id="insertOrderInfo" parameterType="cc.database.order.ChanOrderInfo">
+        INSERT INTO chanOrderInfo(merchantId, payTradeNo, tradeNo, tradeAmount, tradeTime)
+        VALUE (#{merchantId},#{payTradeNo},#{tradeNo},#{tradeAmount},#{tradeTime})
+    </insert>
+
+    <resultMap type="cc.database.order.ChanOrderInfo" id="orderInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
+        <result property="merchantId" column="merchantId" jdbcType="BIGINT" />
+        <result property="payTradeNo" column="payTradeNo" jdbcType="VARCHAR" />
+        <result property="tradeNo" column="tradeNo" jdbcType="VARCHAR" />
+        <result property="tradeAmount" column="tradeAmount" jdbcType="NUMERIC" />
+        <result property="tradeTime" column="tradeTime" jdbcType="VARCHAR" />
+        <result property="createTime" column="createTime" jdbcType="TIMESTAMP" />
     </resultMap>
 </mapper>

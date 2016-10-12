@@ -2,11 +2,12 @@ package cc.chanpay.action;
 
 import cc.chanpay.api.RequestBean.SinglePayRequestData;
 import cc.chanpay.api.SinglePay;
+import cc.database.order.ChanOrderInfo;
 import framework.action.AjaxActionSupport;
 import framework.utils.StringUtils;
 
 public class PayAction extends AjaxActionSupport{
-    public String singlePay() throws Exception {
+    public void singlePay() throws Exception {
         SinglePayRequestData singlePayRequestData = new SinglePayRequestData();
         singlePayRequestData.amount = Integer.parseInt(getParameter("amount").toString());
         singlePayRequestData.bankGeneralName = getParameter("bankGeneralName").toString();
@@ -17,6 +18,13 @@ public class PayAction extends AjaxActionSupport{
         singlePayRequestData.accountName = getParameter("accountName").toString();
         singlePayRequestData.tel = StringUtils.convertNullableString(getParameter("tel"));
         SinglePay singlePay = new SinglePay(singlePayRequestData);
-        return AjaxActionComplete(singlePay.postRequest());
+        if (singlePay.postRequest()) {
+            ChanOrderInfo chanOrderInfo = new ChanOrderInfo();
+            chanOrderInfo.setMerchantId(123);
+            chanOrderInfo.setTradeNo(singlePay.getReqSn());
+            chanOrderInfo.setTradeTime(singlePay.getTimeStamp());
+            chanOrderInfo.setTradeAmount(singlePayRequestData.amount);
+            ChanOrderInfo.insertOrderInfo(chanOrderInfo);
+        }
     }
 }

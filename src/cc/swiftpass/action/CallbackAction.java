@@ -4,6 +4,7 @@ import cc.ProjectLogger;
 import cc.chanpay.api.RequestBean.SinglePayRequestData;
 import cc.chanpay.api.SinglePay;
 import cc.database.merchant.MerchantInfo;
+import cc.database.order.ChanOrderInfo;
 import cc.database.order.PayOrderInfo;
 import cc.utils.IdConvert;
 import framework.action.AjaxActionSupport;
@@ -34,7 +35,7 @@ public class CallbackAction extends AjaxActionSupport {
             responseResult.get("pay_result").toString().compareTo("0") == 0) {
             long merchantId = IdConvert.DecryptionId(Long.parseLong(responseResult.get("attach").toString()));
             int total_fee = Integer.parseInt(responseResult.get("total_fee").toString());
-            boolean paid = doChanPay(merchantId, total_fee, tradeType);
+            boolean paid = doChanPay(merchantId, StringUtils.convertNullableString(responseResult.get("out_trade_no")), total_fee, tradeType);
             if (savePayOrder(merchantId, total_fee, StringUtils.convertNullableString(responseResult.get("out_trade_no")), tradeType, StringUtils.convertNullableString(responseResult.get("time_end")), paid))
                 return;
         }
@@ -42,7 +43,7 @@ public class CallbackAction extends AjaxActionSupport {
         ProjectLogger.error("Swiftpass Callback Error!");
     }
 
-    private boolean doChanPay(long merchantId, int totalFee, String tradeType) {
+    private boolean doChanPay(long merchantId, String payTradeNo, int totalFee, String tradeType) {
         MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(merchantId);
         if (merchantInfo == null) {
             return false;
@@ -66,7 +67,10 @@ public class CallbackAction extends AjaxActionSupport {
                     break;
             }
             SinglePay singlePay = new SinglePay(singlePayRequestData);
-            return singlePay.postRequest();
+            if (singlePay.postRequest()) {
+                saveChanOrder(merchantId, payTradeNo, singlePayRequestData.amount, singlePay.getReqSn(), singlePay.getTimeStamp());
+                return true;
+            }
         }
         catch (Exception exception) {
 
@@ -84,5 +88,15 @@ public class CallbackAction extends AjaxActionSupport {
         payOrderInfo.setTradeTime(tradeTime);
         payOrderInfo.setPaid(paid);
         return PayOrderInfo.insertOrderInfo(payOrderInfo);
+    }
+
+    private boolean saveChanOrder(long merchantId, String payTradeNo, int tradeAmount, String tradeNo, String tradeTime) {
+        ChanOrderInfo chanOrderInfo = new ChanOrderInfo();
+        chanOrderInfo.setMerchantId(merchantId);
+        chanOrderInfo.setPayTradeNo(payTradeNo);
+        chanOrderInfo.setTradeNo(tradeNo);
+        chanOrderInfo.setTradeAmount(tradeAmount);
+        chanOrderInfo.setTradeTime(tradeTime);
+        return ChanOrderInfo.insertOrderInfo(chanOrderInfo);
     }
 }

@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public class PayOrderInfo {
-    public static List<PayOrderInfo> getPayOrderInfo() {
+    public static List<PayOrderInfo> getOrderInfo() {
         String statement = "cc.database.order.mapping.payOrderInfo.getOrderInfo";
         return Database.Instance().selectList(statement);
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cc.database.order.mapping.payOrderInfo">
-    <select id="getOrderInfo">
+    <select id="getOrderInfo" resultMap="orderInfoResult">
         SELECT * FROM payOrderInfo
     </select>
 
@@ -10,7 +10,7 @@
         VALUE (#{merchantId},#{tradeNo},#{tradeAmount},#{tradeType},#{tradeTime},#{paid})
     </insert>
 
-    <resultMap type="cc.database.order.PayOrderInfo" id="payOrderInfoResult">
+    <resultMap type="cc.database.order.PayOrderInfo" id="orderInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="merchantId" column="merchantId" jdbcType="BIGINT" />
         <result property="tradeNo" column="tradeNo" jdbcType="VARCHAR" />
