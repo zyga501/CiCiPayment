@@ -4,62 +4,85 @@ import cc.ProjectLogger;
 import cc.chanpay.api.RequestBean.SinglePayRequestData;
 import cc.chanpay.api.SinglePay;
 import cc.database.merchant.MerchantInfo;
+import cc.database.order.PayOrderInfo;
 import cc.utils.IdConvert;
 import framework.action.AjaxActionSupport;
-import framework.utils.XMLParser;
+import framework.utils.StringUtils;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.Map;
 
 public class CallbackAction extends AjaxActionSupport {
     public final static String WEIXINJSPAYCALLBACK = "Callback!weixinJsPay";
     public final static String ALIJSPAYCALLBACK = "Callback!aliJsPay";
     public final static String SUCCESS = "success";
+    public final static String WEIXINPJSPAY = "SwiftPass.WeixinJsPay";
+    public final static String ALIJSPAY = "SwiftPass.AliJsPay";
 
     public void weixinJsPay() throws Exception {
+        handlerCallback(WEIXINPJSPAY);
         getResponse().getWriter().write(SUCCESS);
     }
 
     public void aliJsPay() throws Exception {
-        handlerCallback();
+        handlerCallback(ALIJSPAY);
         getResponse().getWriter().write(SUCCESS);
     }
 
-    private void handlerCallback() throws Exception {
+    private void handlerCallback(String tradeType) throws Exception {
+        Map<String,Object> responseResult = getInputStreamMap();
+        if (responseResult.get("result_code").toString().compareTo("0") == 0 &&
+            responseResult.get("pay_result").toString().compareTo("0") == 0) {
+            long merchantId = IdConvert.DecryptionId(Long.parseLong(responseResult.get("attach").toString()));
+            int total_fee = Integer.parseInt(responseResult.get("total_fee").toString());
+            boolean paid = doChanPay(merchantId, total_fee, tradeType);
+            if (savePayOrder(merchantId, total_fee, StringUtils.convertNullableString(responseResult.get("out_trade_no")), tradeType, StringUtils.convertNullableString(responseResult.get("time_end")), paid))
+                return;
+        }
+
+        ProjectLogger.error("Swiftpass Callback Error!");
+    }
+
+    private boolean doChanPay(long merchantId, int totalFee, String tradeType) {
+        MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(merchantId);
+        if (merchantInfo == null) {
+            return false;
+        }
+
         try {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getRequest().getInputStream(), "utf-8"));
-            StringBuilder stringBuilder = new StringBuilder();
-            String lineBuffer;
-            while ((lineBuffer = bufferedReader.readLine()) != null) {
-                stringBuilder.append(lineBuffer);
+            SinglePayRequestData singlePayRequestData = new SinglePayRequestData();
+            singlePayRequestData.bankGeneralName = merchantInfo.getBankGeneralName();
+            singlePayRequestData.bankName = merchantInfo.getBankName();
+            singlePayRequestData.bankCode = merchantInfo.getBankCode();
+            singlePayRequestData.accountType = "00";
+            singlePayRequestData.accountNo = merchantInfo.getAccountNo();
+            singlePayRequestData.accountName = merchantInfo.getAccountName();
+            singlePayRequestData.tel = merchantInfo.getAccountPhone();
+            switch (tradeType) {
+                case WEIXINPJSPAY:
+                    singlePayRequestData.amount = (int)(totalFee * (1 - merchantInfo.getWxRate()));
+                    break;
+                case ALIJSPAY:
+                    singlePayRequestData.amount = (int)(totalFee * (1 - merchantInfo.getAliRate()));
+                    break;
             }
-            bufferedReader.close();
-
-            String responseString = stringBuilder.toString();
-            Map<String,Object> responseResult = XMLParser.convertMapFromXml(responseString);
-            if (responseResult.get("result_code").toString().compareTo("0") == 0 &&
-                responseResult.get("pay_result").toString().compareTo("0") == 0) {
-                long merchantId = IdConvert.DecryptionId(Long.parseLong(responseResult.get("attach").toString()));
-                int total_fee = Integer.parseInt(responseResult.get("total_fee").toString());
-                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(merchantId);
-                SinglePayRequestData singlePayRequestData = new SinglePayRequestData();
-                singlePayRequestData.bankGeneralName = merchantInfo.getBankGeneralName();
-                singlePayRequestData.bankName = merchantInfo.getBankName();
-                singlePayRequestData.bankCode = merchantInfo.getBankCode();
-                singlePayRequestData.accountType = "00";
-                singlePayRequestData.accountNo = merchantInfo.getAccountNo();
-                singlePayRequestData.accountName = merchantInfo.getAccountName();
-                singlePayRequestData.tel = merchantInfo.getAccountPhone();
-                singlePayRequestData.amount = total_fee;
-                SinglePay singlePay = new SinglePay(singlePayRequestData);
-                if (singlePay.postRequest()) {
-
-                }
-            }
+            SinglePay singlePay = new SinglePay(singlePayRequestData);
+            return singlePay.postRequest();
         }
         catch (Exception exception) {
-            ProjectLogger.error("Swiftpass Callback Error!");
+
         }
+
+        return false;
+    }
+
+    private boolean savePayOrder(long merchantId, int tradeAmount, String tradeNo, String tradeType, String tradeTime, boolean paid) {
+        PayOrderInfo payOrderInfo = new PayOrderInfo();
+        payOrderInfo.setMerchantId(merchantId);
+        payOrderInfo.setTradeNo(tradeNo);
+        payOrderInfo.setTradeAmount(tradeAmount);
+        payOrderInfo.setTradeType(tradeType);
+        payOrderInfo.setTradeTime(tradeTime);
+        payOrderInfo.setPaid(paid);
+        return PayOrderInfo.insertOrderInfo(payOrderInfo);
     }
 }

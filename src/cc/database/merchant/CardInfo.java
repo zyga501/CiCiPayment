@@ -3,18 +3,18 @@ package cc.database.merchant;
 import java.sql.Timestamp;
 import java.util.Map;
 
-public class CodeInfo {
+public class CardInfo {
     public static void main(String[] args) throws Exception {
         System.exit(0);
     }
 
-    public static boolean insertCodeInfo(Map map) {
-        String statement = "cc.database.merchant.mapping.codeInfo.insertCodeInfo";
+    public static boolean insertCardInfo(Map map) {
+        String statement = "cc.database.merchant.mapping.cardInfo.insertCardInfo";
         return Database.Instance().insert(statement, map)==1;
     }
 
-    public static CodeInfo getCodeInfoById(long id) {
-        String statement = "cc.database.merchant.mapping.codeInfo.getCodeInfoById";
+    public static CardInfo getCardInfoById(long id) {
+        String statement = "cc.database.merchant.mapping.cardInfo.getCardInfoById";
         return Database.Instance().selectOne(statement, id);
     }
 
@@ -34,15 +34,15 @@ public class CodeInfo {
         this.agentId_ = agentId;
     }
 
-    public Timestamp getMakeDate() {
-        return makeDate_;
+    public Timestamp getCreateDate() {
+        return createTime_;
     }
 
-    public void setMakeDate(Timestamp makeDate) {
-        this.makeDate_ = makeDate;
+    public void setCreateDate(Timestamp createTime) {
+        this.createTime_ = createTime;
     }
 
     private long id_;
     private String agentId_;
-    private Timestamp makeDate_;
+    private Timestamp createTime_;
 }

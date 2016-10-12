@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.database.merchant.mapping.cardInfo">
+    <select id="getCardInfoById" parameterType="long" resultMap="cardInfoResult">
+        SELECT * FROM cardInfo where id=#{id}
+    </select>
+    <insert id="insertCardInfo" parameterType="java.util.HashMap">
+        INSERT INTO cardInfo (id,agentid) VALUES (#{id},#{agentid})
+    </insert>
+    <resultMap type="cc.database.merchant.CardInfo" id="cardInfoResult">
+        <id property="id" column="id" jdbcType="BIGINT" />
+        <result property="agentId" column="agentId" jdbcType="VARCHAR" />
+        <result property="createTime" column="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+</mapper>

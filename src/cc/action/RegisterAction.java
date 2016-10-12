@@ -1,7 +1,7 @@
 package cc.action;
 
 import cc.ProjectSettings;
-import cc.database.merchant.CodeInfo;
+import cc.database.merchant.CardInfo;
 import cc.database.merchant.MerchantInfo;
 import cc.database.merchant.PendingMerchant;
 import cc.utils.HttpPostUrl;
@@ -234,8 +234,8 @@ public class RegisterAction extends AjaxActionSupport {
             }
 
             long merchantId = IdConvert.DecryptionId(Long.parseLong(getParameter("cid").toString()));
-            CodeInfo codeInfo = CodeInfo.getCodeInfoById(merchantId);
-            if (codeInfo == null) {
+            CardInfo cardInfo = CardInfo.getCardInfoById(merchantId);
+            if (cardInfo == null) {
                 return "page404";
             }
 
@@ -261,8 +261,8 @@ public class RegisterAction extends AjaxActionSupport {
             if (null==getAttribute("openid"))
                 return "User!wxlogin";
 
-            CodeInfo codeInfo = CodeInfo.getCodeInfoById(Long.parseLong(getParameter("cid").toString()));
-            if (codeInfo.getAgentId().compareTo(getParameter("uname").toString()) != 0) {
+            CardInfo cardInfo = CardInfo.getCardInfoById(Long.parseLong(getParameter("cid").toString()));
+            if (cardInfo.getAgentId().compareTo(getParameter("uname").toString()) != 0) {
                 return "registerStep1";
             }
 

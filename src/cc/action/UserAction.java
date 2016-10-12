@@ -1,7 +1,7 @@
 package cc.action;
 
 import cc.ProjectSettings;
-import cc.database.merchant.CodeInfo;
+import cc.database.merchant.CardInfo;
 import cc.database.merchant.MenuTree;
 import cc.database.merchant.MerchantInfo;
 import cc.database.merchant.UserInfo;
@@ -165,7 +165,7 @@ public class UserAction extends AjaxActionSupport {
             map.clear();
             map.put("id",before);
             map.put("agentid",getParameter("agentid"));
-            if (CodeInfo.insertCodeInfo(map)) {
+            if (CardInfo.insertCardInfo(map)) {
                 long after = (before * 100 + System.currentTimeMillis() % 100) ^ 1361753741828L;
                 rtnstr += String.valueOf(after) + "<br>";
             }

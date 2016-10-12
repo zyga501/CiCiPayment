@@ -4,7 +4,6 @@ import java.util.List;
 
 public class AgentInfo {
     public static void main(String[] args) throws Exception {
-        List<AgentInfo> codeInfoList = getAgentInfoById(12);
         System.exit(0);
     }
 
