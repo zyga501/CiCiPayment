@@ -116,7 +116,32 @@ public class UserAction extends AjaxActionSupport {
         map.put("idlist",userarrary);
         List<MerchantInfo> lu =  MerchantInfo.getMerchantInfoByMap(map);
         for (MerchantInfo merchantInfo :  lu){
-            WeixinMessage.sendNoticeMessage(merchantInfo.getOpenid(),msgstr);
+            WeixinMessage.sendNoticeMessage(ProjectSettings.getMapData("weixinServerInfo").get("appid").toString(),
+                    ProjectSettings.getMapData("weixinServerInfo").get("noticetemplate_id").toString(),
+                    "",merchantInfo.getOpenid(),msgstr,ProjectSettings.getMapData("weixinServerInfo").get("editer").toString());
+        }
+        return AjaxActionComplete(true);
+    }
+
+    public String wxMsgPage(){
+        if ((!getAttribute("roletype").equals("1"))&&(!getAttribute("roletype").equals("111")))
+            return "";
+        List<MerchantInfo> lu =  MerchantInfo.getMerchantInfoByMap(null);
+        setAttribute("userList",lu);
+        return "msgpage";
+    }
+
+    public String senWxMsg() throws Exception {
+        String[] userarrary =  getRequest().getParameterValues("ulist");
+        String[] msgstr = getRequest().getParameterValues("msgstr");
+        String appid = getParameter("appid").toString();
+        String templateid = getParameter("templateid").toString();
+        String editer = getParameter("editer").toString();
+        Map map= new HashMap<>();
+        map.put("idlist",userarrary);
+        List<MerchantInfo> lu =  MerchantInfo.getMerchantInfoByMap(map);
+        for (MerchantInfo merchantInfo :  lu){
+            WeixinMessage.sendNoticeMessage(appid,templateid,"",merchantInfo.getOpenid(),msgstr,editer);
         }
         return AjaxActionComplete(true);
     }

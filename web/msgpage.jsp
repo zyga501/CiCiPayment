@@ -10,6 +10,10 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <title></title>
+    <link href="<%=request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/css/font-awesome.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/css/animate.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/css/style.min.css" rel="stylesheet">
     <style>
         td {
             text-align: center;
