@@ -109,24 +109,6 @@
 $(function(){
 $(".banner").swBanner();
 });
-    function login(){
-        $.ajax({
-            type: 'post',
-            url: 'User!Login',
-            dataType:"json",
-            data:$("form").serialize(),
-            success: function (data) {
-                var json =  eval("(" + data + ")");
-                if ( json.resultCode =="Failed")
-                alert ("登录失败，请检查账号密码，验证码");
-                else if (json.resultCode =="Succeed"){
-                    alert(json.resultCode)
-                    window.location.href ="mainpage.jsp";
-
-                }
-            }
-        })
-    }
     function iniqcode() {;
                 var qr = qrcode(10, 'Q');
                 qr.addData(json.code_url);

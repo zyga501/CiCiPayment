@@ -10,6 +10,10 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <title>注册</title>
+    <link href="<%=request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/css/font-awesome.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/css/animate.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/css/style.min.css" rel="stylesheet">
     <link href="<%=request.getContextPath()%>/css/bootstrap-combobox.css" rel="stylesheet" type="text/css"/>
     <script src="<%=request.getContextPath()%>/js/jquery/jquery.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/layer.min.js"></script>

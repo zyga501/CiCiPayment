@@ -28,23 +28,25 @@ public class WeixinMessage {
 //            }
         return false;
     }
-    public static boolean sendNoticeMessage(String openid,String[] msgstr) throws Exception {
-        String accessToken = new String();
-        accessToken = AccessToken.getAccessToken(ProjectSettings.getMapData("weixinServerInfo").get("appid").toString());
 
-            if (!accessToken.isEmpty()) {
-                TemplateNoticeRequestData templateNoticeRequestData = new TemplateNoticeRequestData();
-                templateNoticeRequestData.template_id = ProjectSettings.getMapData("weixinServerInfo").get("noticetemplate_id").toString();
-                templateNoticeRequestData.timeArea = msgstr[1];
-                templateNoticeRequestData.title = msgstr[0];
-                templateNoticeRequestData.notice = msgstr[2];
-                templateNoticeRequestData.editer = ProjectSettings.getMapData("weixinServerInfo").get("editer").toString();
-                templateNoticeRequestData.remark =  msgstr[3];
-                TemplateMessage templateMessage = new TemplateMessage(accessToken);
-                templateNoticeRequestData.touser = openid;
-                    templateMessage.postRequest(templateNoticeRequestData.buildRequestData());
-                return true;
-            }
+    public static boolean sendNoticeMessage(String appid,String templateid ,String accessToken,String openid,String[] msgstr,String editer) throws Exception {
+       // String accessToken = new String();
+        if (accessToken.equals(""))
+            accessToken = AccessToken.getAccessToken(appid);
+
+        if (!accessToken.isEmpty()) {
+            TemplateNoticeRequestData templateNoticeRequestData = new TemplateNoticeRequestData();
+            templateNoticeRequestData.template_id =templateid;
+            templateNoticeRequestData.timeArea = msgstr[1];
+            templateNoticeRequestData.title = msgstr[0];
+            templateNoticeRequestData.notice = msgstr[2];
+            templateNoticeRequestData.editer = editer;
+            templateNoticeRequestData.remark =  msgstr[3];
+            TemplateMessage templateMessage = new TemplateMessage(accessToken);
+            templateNoticeRequestData.touser = openid;
+                templateMessage.postRequest(templateNoticeRequestData.buildRequestData());
+            return true;
+        }
         return false;
     }
 }
