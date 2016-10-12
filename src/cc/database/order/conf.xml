@@ -24,5 +24,7 @@
     </environments>
 
     <mappers>
+        <mapper resource="cc/database/order/mapping/ChanOrderInfo.xml" />
+        <mapper resource="cc/database/order/mapping/PayOrderInfo.xml" />
     </mappers>
 </configuration>
