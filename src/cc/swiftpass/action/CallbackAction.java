@@ -33,22 +33,23 @@ public class CallbackAction extends AjaxActionSupport {
         Map<String,Object> responseResult = getInputStreamMap();
         if (responseResult.get("result_code").toString().compareTo("0") == 0 &&
             responseResult.get("pay_result").toString().compareTo("0") == 0) {
-            long merchantId = IdConvert.DecryptionId(Long.parseLong(responseResult.get("attach").toString()));
-            int total_fee = Integer.parseInt(responseResult.get("total_fee").toString());
-            boolean paid = doChanPay(merchantId, StringUtils.convertNullableString(responseResult.get("out_trade_no")), total_fee, tradeType);
-            if (savePayOrder(merchantId, total_fee, StringUtils.convertNullableString(responseResult.get("out_trade_no")), tradeType, StringUtils.convertNullableString(responseResult.get("time_end")), paid))
-                return;
+            doChanPay(responseResult, tradeType);
         }
 
         ProjectLogger.error("Swiftpass Callback Error!");
     }
 
-    private boolean doChanPay(long merchantId, String payTradeNo, int totalFee, String tradeType) {
+    private boolean doChanPay(Map<String,Object> responseResult, String tradeType) {
+        long merchantId = IdConvert.DecryptionId(Long.parseLong(responseResult.get("attach").toString()));
+        int total_fee = Integer.parseInt(responseResult.get("total_fee").toString());
+        String tradeNo = StringUtils.convertNullableString(responseResult.get("out_trade_no"));
+
         MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(merchantId);
         if (merchantInfo == null) {
             return false;
         }
 
+        boolean paid = false;
         try {
             SinglePayRequestData singlePayRequestData = new SinglePayRequestData();
             singlePayRequestData.bankGeneralName = merchantInfo.getBankGeneralName();
@@ -60,32 +61,41 @@ public class CallbackAction extends AjaxActionSupport {
             singlePayRequestData.tel = merchantInfo.getAccountPhone();
             switch (tradeType) {
                 case WEIXINPJSPAY:
-                    singlePayRequestData.amount = (int)(totalFee * (1 - merchantInfo.getWxRate()));
+                    singlePayRequestData.amount = (int)(total_fee * (1 - merchantInfo.getWxRate()));
                     break;
                 case ALIJSPAY:
-                    singlePayRequestData.amount = (int)(totalFee * (1 - merchantInfo.getAliRate()));
+                    singlePayRequestData.amount = (int)(total_fee * (1 - merchantInfo.getAliRate()));
                     break;
             }
             SinglePay singlePay = new SinglePay(singlePayRequestData);
-            if (singlePay.postRequest()) {
-                saveChanOrder(merchantId, payTradeNo, singlePayRequestData.amount, singlePay.getReqSn(), singlePay.getTimeStamp());
+            if (paid = singlePay.postRequest()) {
+                saveChanOrder(merchantId, tradeNo, singlePayRequestData.amount, singlePay.getReqSn(), singlePay.getTimeStamp());
                 return true;
             }
         }
         catch (Exception exception) {
 
         }
+        finally {
+            savePayOrder(merchantId, total_fee,
+                    tradeNo,
+                    tradeType,
+                    StringUtils.convertNullableString(responseResult.get("time_end")),
+                    merchantInfo.getWxRate(),
+                    paid);
+        }
 
         return false;
     }
 
-    private boolean savePayOrder(long merchantId, int tradeAmount, String tradeNo, String tradeType, String tradeTime, boolean paid) {
+    private boolean savePayOrder(long merchantId, int tradeAmount, String tradeNo, String tradeType, String tradeTime, double tradeRate, boolean paid) {
         PayOrderInfo payOrderInfo = new PayOrderInfo();
         payOrderInfo.setMerchantId(merchantId);
         payOrderInfo.setTradeNo(tradeNo);
         payOrderInfo.setTradeAmount(tradeAmount);
         payOrderInfo.setTradeType(tradeType);
         payOrderInfo.setTradeTime(tradeTime);
+        payOrderInfo.setTradeRate(tradeRate);
         payOrderInfo.setPaid(paid);
         return PayOrderInfo.insertOrderInfo(payOrderInfo);
     }
