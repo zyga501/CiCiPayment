@@ -62,6 +62,14 @@ public class PayOrderInfo {
         this.tradeTime_ = tradeTime;
     }
 
+    public double getTradeRate() {
+        return tradeRate_;
+    }
+
+    public void setTradeRate(double tradeRate) {
+        this.tradeRate_ = tradeRate;
+    }
+
     public boolean getPaid() {
         return paid_;
     }
@@ -84,6 +92,7 @@ public class PayOrderInfo {
     private int tradeAmount_;
     private String tradeType_;
     private String tradeTime_;
+    private double tradeRate_;
     private boolean paid_;
     private Timestamp createTime_;
 }

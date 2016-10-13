@@ -6,8 +6,8 @@
     </select>
 
     <insert id="insertOrderInfo" parameterType="cc.database.order.PayOrderInfo">
-        INSERT INTO payOrderInfo(merchantId, tradeNo, tradeAmount, tradeType, tradeTime, paid)
-        VALUE (#{merchantId},#{tradeNo},#{tradeAmount},#{tradeType},#{tradeTime},#{paid})
+        INSERT INTO payOrderInfo(merchantId, tradeNo, tradeAmount, tradeType, tradeTime, tradeRate, paid)
+        VALUE (#{merchantId},#{tradeNo},#{tradeAmount},#{tradeType},#{tradeTime},#{tradeRate},#{paid})
     </insert>
 
     <resultMap type="cc.database.order.PayOrderInfo" id="orderInfoResult">
@@ -17,6 +17,7 @@
         <result property="tradeAmount" column="tradeAmount" jdbcType="NUMERIC" />
         <result property="tradeType" column="tradeType" jdbcType="VARCHAR" />
         <result property="tradeTime" column="tradeTime" jdbcType="VARCHAR" />
+        <result property="tradeRate" column="tradeRate" jdbcType="DOUBLE" />
         <result property="paid" column="paid" jdbcType="TINYINT" />
         <result property="createTime" column="createTime" jdbcType="TIMESTAMP" />
     </resultMap>
