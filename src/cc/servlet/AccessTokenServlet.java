@@ -15,7 +15,6 @@ public class AccessTokenServlet extends HttpServlet {
                 try {
                     List<AccessToken> appidList = new ArrayList<>();
                     appidList.add(new AccessToken(ProjectSettings.getMapData("weixinServerInfo").get("appid").toString(), ProjectSettings.getMapData("weixinServerInfo").get("appSecret").toString()));
-                    appidList.add(new AccessToken(ProjectSettings.getMapData("weixinServerInfo2").get("appid").toString(), ProjectSettings.getMapData("weixinServerInfo2").get("appSecret").toString()));
                     AccessToken.updateAccessToken(appidList);
                     // 休眠7000秒
                     Thread.sleep((DEFAULTEXPIRESTIME - 200) * 1000);
