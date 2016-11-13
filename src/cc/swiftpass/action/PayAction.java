@@ -14,17 +14,23 @@ import com.alipay.api.response.AlipaySystemOauthTokenResponse;
 import framework.action.AjaxActionSupport;
 import framework.utils.StringUtils;
 
+import java.io.IOException;
+
 public class PayAction extends AjaxActionSupport {
     public String weixinJsPay() throws Exception {
-        try{
-        WeixinJsPayRequestData weixinJsPayRequestData = new WeixinJsPayRequestData();
-        weixinJsPayRequestData.mch_id = "100530020860";
-        weixinJsPayRequestData.body = getParameter("body").toString();
-        weixinJsPayRequestData.total_fee = (int)Double.parseDouble(getParameter("total_fee").toString());
-            OpenId weixinOpenId = new OpenId(ProjectSettings.getMapData("weixinServerInfo").get("appid").toString(),
-                ProjectSettings.getMapData("weixinServerInfo").get("appSecret").toString(), getParameter("code").toString());
-        if (!weixinOpenId.getRequest()) {
-            return AjaxActionComplete(false) ;
+        if (getParameter("code") == null) {
+            return "fetchWxCode";
+        }
+
+        try {
+            WeixinJsPayRequestData weixinJsPayRequestData = new WeixinJsPayRequestData();
+            weixinJsPayRequestData.mch_id = ProjectSettings.getMapData("weixinServerInfo").get("mchId").toString();
+            weixinJsPayRequestData.body = ProjectSettings.getMapData("swiftpass").get("body").toString();
+            weixinJsPayRequestData.total_fee = (int)Double.parseDouble(getParameter("total_amount").toString());
+                OpenId weixinOpenId = new OpenId(ProjectSettings.getMapData("weixinServerInfo").get("appid").toString(),
+                    ProjectSettings.getMapData("weixinServerInfo").get("appSecret").toString(), getParameter("code").toString());
+            if (!weixinOpenId.getRequest()) {
+                return AjaxActionComplete(false) ;
         }
         weixinJsPayRequestData.sub_openid = weixinOpenId.getOpenId();
         String requestUrl = getRequest().getRequestURL().toString();
@@ -37,12 +43,21 @@ public class PayAction extends AjaxActionSupport {
         }
 
         WeixinJsPay jsPay = new WeixinJsPay(weixinJsPayRequestData);
-        return AjaxActionComplete(jsPay.postRequest("4fe41e8ca0b0c643120ee0aca96cf6cb"));
+        return AjaxActionComplete(jsPay.postRequest(ProjectSettings.getMapData("weixinServerInfo").get("apiKey").toString()));
         }
-        catch (Exception e){
+        catch (Exception e) {
             e.printStackTrace();
         }
         return AjaxActionComplete(false);
+    }
+
+    public void fetchWxCode() throws IOException {
+        String appid = ProjectSettings.getMapData("weixinServerInfo").get("appid").toString();
+        String redirect_uri =  getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + "/swiftpass/weixinjspay.jsp";
+        String fetchOpenidUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
+                        "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=state#wechat_redirect",
+                appid, redirect_uri);
+        getResponse().sendRedirect(fetchOpenidUri);
     }
 
     public void aliJsPay() throws Exception {

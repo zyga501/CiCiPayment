@@ -13,6 +13,7 @@
         </global-results>
 
         <action name="Pay!*" class="cc.swiftpass.action.PayAction" method="{1}">
+            <result name="fetchWxCode" type="chain" >Pay!fetchWxCode</result>
         </action>
         <action name="Callback!*" class="cc.swiftpass.action.CallbackAction" method="{1}">
         </action>
