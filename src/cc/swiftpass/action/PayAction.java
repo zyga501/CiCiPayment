@@ -31,23 +31,24 @@ public class PayAction extends AjaxActionSupport {
                     ProjectSettings.getMapData("weixinServerInfo").get("appSecret").toString(), getParameter("code").toString());
             if (!weixinOpenId.getRequest()) {
                 return AjaxActionComplete(false) ;
-        }
-        weixinJsPayRequestData.sub_openid = weixinOpenId.getOpenId();
-        String requestUrl = getRequest().getRequestURL().toString();
-        requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
-        requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "swiftpass/"
-                + CallbackAction.WEIXINJSPAYCALLBACK;
-        weixinJsPayRequestData.notify_url = requestUrl;
-        if (!StringUtils.convertNullableString(getParameter("out_trade_no")).isEmpty()) {
-            weixinJsPayRequestData.out_trade_no = getParameter("out_trade_no").toString();
-        }
+            }
+            weixinJsPayRequestData.sub_openid = weixinOpenId.getOpenId();
+            String requestUrl = getRequest().getRequestURL().toString();
+            requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
+            requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "swiftpass/"
+                    + CallbackAction.WEIXINJSPAYCALLBACK;
+            weixinJsPayRequestData.notify_url = requestUrl;
+            if (!StringUtils.convertNullableString(getParameter("out_trade_no")).isEmpty()) {
+                weixinJsPayRequestData.out_trade_no = getParameter("out_trade_no").toString();
+            }
 
-        WeixinJsPay jsPay = new WeixinJsPay(weixinJsPayRequestData);
-        return AjaxActionComplete(jsPay.postRequest(ProjectSettings.getMapData("weixinServerInfo").get("apiKey").toString()));
+            WeixinJsPay jsPay = new WeixinJsPay(weixinJsPayRequestData);
+            return AjaxActionComplete(jsPay.postRequest(ProjectSettings.getMapData("weixinServerInfo").get("apiKey").toString()));
         }
         catch (Exception e) {
             e.printStackTrace();
         }
+
         return AjaxActionComplete(false);
     }
 

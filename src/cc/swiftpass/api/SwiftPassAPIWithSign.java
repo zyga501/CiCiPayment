@@ -48,7 +48,9 @@ public abstract class SwiftPassAPIWithSign extends SwiftPassAPI {
         }
 
         boolean ret = parseResponse(responseString, apiKey) && handlerResponse(responseResult_);
-
+        ProjectLogger.error("Request Url:\r\n" + apiUri);
+        ProjectLogger.error("Request Data:\r\n" + postDataXML);
+        ProjectLogger.error("Response Data:\r\n" + responseString);
         if (!ret) {
             ProjectLogger.error("Request Url:\r\n" + apiUri);
             ProjectLogger.error("Response Data:\r\n" + responseString);
