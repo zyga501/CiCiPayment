@@ -30,7 +30,7 @@ public class PayAction extends AjaxActionSupport {
                 OpenId weixinOpenId = new OpenId(ProjectSettings.getMapData("weixinServerInfo").get("appid").toString(),
                     ProjectSettings.getMapData("weixinServerInfo").get("appSecret").toString(), getParameter("code").toString());
             if (!weixinOpenId.getRequest()) {
-                return AjaxActionComplete(false) ;
+                return AjaxActionComplete(false);
             }
             weixinJsPayRequestData.sub_openid = weixinOpenId.getOpenId();
             String requestUrl = getRequest().getRequestURL().toString();
@@ -43,7 +43,9 @@ public class PayAction extends AjaxActionSupport {
             }
 
             WeixinJsPay jsPay = new WeixinJsPay(weixinJsPayRequestData);
-            return AjaxActionComplete(jsPay.postRequest(ProjectSettings.getMapData("weixinServerInfo").get("apiKey").toString()));
+            if (jsPay.postRequest(ProjectSettings.getMapData("weixinServerInfo").get("apiKey").toString())) {
+                getResponse().sendRedirect(jsPay.getRedirectUrl());
+            }
         }
         catch (Exception e) {
             e.printStackTrace();
