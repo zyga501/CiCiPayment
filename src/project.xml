@@ -9,8 +9,6 @@
     <weixinServerInfo>
         <appid>wx866bca62844d900f</appid>
         <appSecret>9e23e7b99fddf616c5413cbe57db3a0f</appSecret>
-        <apiKey>49e78ffb6d503bda68898ed06a0c98d9</apiKey>
-        <mchId>100530023507</mchId>
         <templateId>lNqsp_tYXKMQ2MULI9_ORrhrZ3dRSsGPsp4JJyrE8PE</templateId>
         <noticetemplate_id>XqOGqOHpGq437NxHRGmQBuDk0tntAwm_LfM0RCItL-Y</noticetemplate_id>
         <editer>CC客服</editer>
@@ -25,9 +23,9 @@
         </publicKey>
     </aliServerInfo>
     <swiftpass>
-        <merchantId>100530020860</merchantId>
+        <merchantId>100530023507</merchantId>
         <body>企盟支付</body>
-        <apiKey>4fe41e8ca0b0c643120ee0aca96cf6cb</apiKey>
+        <apiKey>49e78ffb6d503bda68898ed06a0c98d9</apiKey>
     </swiftpass>
     <chanPay>
         <CJ_GATEWAY_URL>https://cop-gateway.chanpay.com/crps-gateway/gw01/process01</CJ_GATEWAY_URL>

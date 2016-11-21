@@ -9,6 +9,7 @@ import cc.database.order.PayOrderInfo;
 import cc.utils.IdConvert;
 import framework.action.AjaxActionSupport;
 import framework.utils.StringUtils;
+import framework.utils.XMLParser;
 
 import java.util.Map;
 
@@ -30,10 +31,11 @@ public class CallbackAction extends AjaxActionSupport {
     }
 
     private void handlerCallback(String tradeType) throws Exception {
-        Map<String,Object> responseResult = getInputStreamMap();
+        Map<String,Object> responseResult = XMLParser.convertMapFromXml(getInputStreamAsString());
         if (responseResult.get("result_code").toString().compareTo("0") == 0 &&
             responseResult.get("pay_result").toString().compareTo("0") == 0) {
             doChanPay(responseResult, tradeType);
+            return;
         }
 
         ProjectLogger.error("Swiftpass Callback Error!");

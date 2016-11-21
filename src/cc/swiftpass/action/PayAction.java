@@ -24,8 +24,9 @@ public class PayAction extends AjaxActionSupport {
 
         try {
             WeixinJsPayRequestData weixinJsPayRequestData = new WeixinJsPayRequestData();
-            weixinJsPayRequestData.mch_id = ProjectSettings.getMapData("weixinServerInfo").get("mchId").toString();
+            weixinJsPayRequestData.mch_id = ProjectSettings.getMapData("swiftpass").get("merchantId").toString();
             weixinJsPayRequestData.body = ProjectSettings.getMapData("swiftpass").get("body").toString();
+            weixinJsPayRequestData.attach = getParameter("state").toString();
             weixinJsPayRequestData.total_fee = (int)Double.parseDouble(getParameter("total_amount").toString());
                 OpenId weixinOpenId = new OpenId(ProjectSettings.getMapData("weixinServerInfo").get("appid").toString(),
                     ProjectSettings.getMapData("weixinServerInfo").get("appSecret").toString(), getParameter("code").toString());
@@ -43,7 +44,7 @@ public class PayAction extends AjaxActionSupport {
             }
 
             WeixinJsPay jsPay = new WeixinJsPay(weixinJsPayRequestData);
-            if (jsPay.postRequest(ProjectSettings.getMapData("weixinServerInfo").get("apiKey").toString())) {
+            if (jsPay.postRequest(ProjectSettings.getMapData("swiftpass").get("apiKey").toString())) {
                 getResponse().sendRedirect(jsPay.getRedirectUrl());
             }
         }
@@ -58,8 +59,8 @@ public class PayAction extends AjaxActionSupport {
         String appid = ProjectSettings.getMapData("weixinServerInfo").get("appid").toString();
         String redirect_uri =  getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + "/swiftpass/weixinjspay.jsp";
         String fetchOpenidUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
-                        "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=state#wechat_redirect",
-                appid, redirect_uri);
+                        "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=%s#wechat_redirect",
+                appid, redirect_uri, getParameter("cid").toString());
         getResponse().sendRedirect(fetchOpenidUri);
     }
 
