@@ -3,8 +3,8 @@ package cc.chanpay.action;
 import cc.chanpay.api.RequestBean.SinglePayRequestData;
 import cc.chanpay.api.SinglePay;
 import cc.database.order.ChanOrderInfo;
-import framework.action.AjaxActionSupport;
-import framework.utils.StringUtils;
+import QimCommon.struts.AjaxActionSupport;
+import QimCommon.utils.StringUtils;
 
 public class PayAction extends AjaxActionSupport{
     public void singlePay() throws Exception {

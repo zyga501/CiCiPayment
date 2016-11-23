@@ -1,7 +1,7 @@
 package cc.chanpay.api;
 
 import cc.ProjectSettings;
-import framework.utils.HttpClient;
+import QimCommon.utils.HttpClient;
 
 import java.util.Map;
 

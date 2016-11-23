@@ -1,6 +1,6 @@
 package cc.action;
 
-import framework.action.AjaxActionSupport;
+import QimCommon.struts.AjaxActionSupport;
 
 import java.io.IOException;
 

@@ -1,7 +1,7 @@
 package cc.swiftpass.api.RequestBean;
 
 import cc.swiftpass.utils.Signature;
-import framework.utils.StringUtils;
+import QimCommon.utils.StringUtils;
 
 public class RequestData {
     public RequestData() {

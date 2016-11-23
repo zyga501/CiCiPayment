@@ -7,8 +7,8 @@ import cc.database.merchant.MerchantInfo;
 import cc.database.merchant.UserInfo;
 import cc.message.WeixinMessage;
 import cc.weixin.api.OpenId;
-import framework.action.AjaxActionSupport;
-import framework.utils.IdWorker;
+import QimCommon.struts.AjaxActionSupport;
+import QimCommon.utils.IdWorker;
 
 import java.io.IOException;
 import java.util.ArrayList;

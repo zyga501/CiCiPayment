@@ -11,8 +11,8 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipaySystemOauthTokenRequest;
 import com.alipay.api.response.AlipaySystemOauthTokenResponse;
-import framework.action.AjaxActionSupport;
-import framework.utils.StringUtils;
+import QimCommon.struts.AjaxActionSupport;
+import QimCommon.utils.StringUtils;
 
 import java.io.IOException;
 

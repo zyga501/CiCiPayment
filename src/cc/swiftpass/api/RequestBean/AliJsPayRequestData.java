@@ -1,7 +1,7 @@
 package cc.swiftpass.api.RequestBean;
 
 import cc.ProjectSettings;
-import framework.utils.IdWorker;
+import QimCommon.utils.IdWorker;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

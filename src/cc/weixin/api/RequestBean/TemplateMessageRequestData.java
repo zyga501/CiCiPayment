@@ -1,6 +1,6 @@
 package cc.weixin.api.RequestBean;
 
-import framework.utils.I18n;
+import QimCommon.utils.I18n;
 
 public class TemplateMessageRequestData {
     public TemplateMessageRequestData() {

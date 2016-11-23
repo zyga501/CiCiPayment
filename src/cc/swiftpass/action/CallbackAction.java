@@ -7,9 +7,9 @@ import cc.database.merchant.MerchantInfo;
 import cc.database.order.ChanOrderInfo;
 import cc.database.order.PayOrderInfo;
 import cc.utils.IdConvert;
-import framework.action.AjaxActionSupport;
-import framework.utils.StringUtils;
-import framework.utils.XMLParser;
+import QimCommon.struts.AjaxActionSupport;
+import QimCommon.utils.StringUtils;
+import QimCommon.utils.XMLParser;
 
 import java.util.Map;
 

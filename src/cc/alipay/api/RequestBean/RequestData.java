@@ -2,8 +2,8 @@ package cc.alipay.api.RequestBean;
 
 import net.sf.json.JSONArray;
 import cc.alipay.utils.Signature;
-import framework.utils.ClassUtils;
-import framework.utils.StringUtils;
+import QimCommon.utils.ClassUtils;
+import QimCommon.utils.StringUtils;
 
 public class RequestData {
     public RequestData() {

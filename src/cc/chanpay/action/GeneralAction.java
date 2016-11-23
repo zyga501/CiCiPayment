@@ -2,8 +2,8 @@ package cc.chanpay.action;
 
 import cc.chanpay.api.RequestBean.VerifiedRequestData;
 import cc.chanpay.api.Verified;
-import framework.action.AjaxActionSupport;
-import framework.utils.StringUtils;
+import QimCommon.struts.AjaxActionSupport;
+import QimCommon.utils.StringUtils;
 
 public class GeneralAction extends AjaxActionSupport{
     public String verified() throws Exception {

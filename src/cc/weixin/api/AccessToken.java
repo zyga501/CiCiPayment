@@ -1,7 +1,7 @@
 package cc.weixin.api;
 
 import cc.ProjectSettings;
-import framework.utils.HttpClient;
+import QimCommon.utils.HttpClient;
 import net.sf.json.JSONObject;
 
 import java.util.HashMap;

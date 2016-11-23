@@ -1,6 +1,6 @@
 package cc.weixin.api;
 
-import framework.utils.HttpClient;
+import QimCommon.utils.HttpClient;
 
 public class UserList extends HttpClient {
     private static final String USERLIST_API = "https://api.weixin.qq.com/cgi-bin/user/get?access_token=%s&next_openid=%s";

@@ -1,7 +1,7 @@
 package cc.chanpay.api.RequestBean;
 
 import cc.ProjectSettings;
-import framework.utils.IdWorker;
+import QimCommon.utils.IdWorker;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;

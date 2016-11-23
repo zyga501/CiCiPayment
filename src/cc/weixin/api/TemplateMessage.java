@@ -1,6 +1,6 @@
 package cc.weixin.api;
 
-import framework.utils.HttpClient;
+import QimCommon.utils.HttpClient;
 import net.sf.json.JSONObject;
 
 public class TemplateMessage extends HttpClient {

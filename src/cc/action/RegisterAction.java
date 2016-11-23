@@ -7,8 +7,8 @@ import cc.database.merchant.PendingMerchant;
 import cc.utils.HttpPostUrl;
 import cc.utils.IdConvert;
 import cc.utils.PublicFunc;
-import framework.action.AjaxActionSupport;
-import framework.utils.StringUtils;
+import QimCommon.struts.AjaxActionSupport;
+import QimCommon.utils.StringUtils;
 
 import javax.servlet.ServletOutputStream;
 import java.io.File;

@@ -4,8 +4,8 @@ import cc.ProjectLogger;
 import cc.database.merchant.MerchantInfo;
 import cc.utils.IdConvert;
 import com.opensymphony.xwork2.ActionContext;
-import framework.action.AjaxActionSupport;
-import framework.utils.StringUtils;
+import QimCommon.struts.AjaxActionSupport;
+import QimCommon.utils.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
