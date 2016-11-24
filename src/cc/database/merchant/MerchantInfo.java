@@ -1,5 +1,9 @@
 package cc.database.merchant;
 
+import QimCommon.utils.JsonUtils;
+import QimCommon.utils.StringUtils;
+import net.sf.json.JSONObject;
+
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
@@ -38,62 +42,6 @@ public class MerchantInfo {
 
     public void setName(String name) {
         this.name_ = name;
-    }
-
-    public String getAddress() {
-        return address_;
-    }
-
-    public void setAddress(String address) {
-        this.address_ = address;
-    }
-
-    public String getContactName() {
-        return contactName_;
-    }
-
-    public void setContactName(String contactName) {
-        this.contactName_ = contactName;
-    }
-
-    public String getContactPhone() {
-        return contactPhone_;
-    }
-
-    public void setContactPhone(String contactPhone) {
-        this.contactPhone_ = contactPhone;
-    }
-
-    public String getIdCard() {
-        return idCard_;
-    }
-
-    public void setIdCard(String idCard) {
-        this.idCard_ = idCard;
-    }
-
-    public String getIdCardPF() {
-        return idCardPF_;
-    }
-
-    public void setIdCardPF(String idCardPF) {
-        this.idCardPF_ = idCardPF;
-    }
-
-    public String getIdCardPB() {
-        return idCardPB_;
-    }
-
-    public void setIdCardPB(String idCardPB) {
-        this.idCardPB_ = idCardPB;
-    }
-
-    public String getIdCardPC() {
-        return idCardPC_;
-    }
-
-    public void setIdCardPC(String idCardPC) {
-        this.idCardPC_ = idCardPC;
     }
 
     public Timestamp getRegisterDate() {
@@ -240,15 +188,105 @@ public class MerchantInfo {
         this.openid_ = openid_;
     }
 
+    public String getExternInfo() {
+        return externInfo_;
+    }
+
+    public void setExternInfo(String externInfo) {
+        externInfo_ = externInfo;
+    }
+
+    public static class ExternInfo {
+        public ExternInfo() {
+
+        }
+
+        public ExternInfo(String json) {
+            Map<String, Object> resultMap = JsonUtils.toMap(json, true);
+            if (resultMap == null) {
+                return;
+            }
+
+            address = StringUtils.convertNullableString(resultMap.get("address"));
+            contactName = StringUtils.convertNullableString(resultMap.get("contactName"));
+            contactPhone = StringUtils.convertNullableString(resultMap.get("contactPhone"));
+            idCard = StringUtils.convertNullableString(resultMap.get("idCard"));
+            idCardPF = StringUtils.convertNullableString(resultMap.get("idCardPF"));
+            idCardPB = StringUtils.convertNullableString(resultMap.get("idCardPB"));
+            idCardPC = StringUtils.convertNullableString(resultMap.get("idCardPC"));
+        }
+
+        public String toString() {
+            return JSONObject.fromObject(this).toString();
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getContactName() {
+            return contactName;
+        }
+
+        public void setContactName(String contactName) {
+            this.contactName = contactName;
+        }
+
+        public String getContactPhone() {
+            return contactPhone;
+        }
+
+        public void setContactPhone(String contactPhone) {
+            this.contactPhone = contactPhone;
+        }
+
+        public String getIdCard() {
+            return idCard;
+        }
+
+        public void setIdCard(String idCard) {
+            this.idCard = idCard;
+        }
+
+        public String getIdCardPF() {
+            return idCardPF;
+        }
+
+        public void setIdCardPF(String idCardPF) {
+            this.idCardPF = idCardPF;
+        }
+
+        public String getIdCardPB() {
+            return idCardPB;
+        }
+
+        public void setIdCardPB(String idCardPB) {
+            this.idCardPB = idCardPB;
+        }
+
+        public String getIdCardPC() {
+            return idCardPC;
+        }
+
+        public void setIdCardPC(String idCardPC) {
+            this.idCardPC = idCardPC;
+        }
+
+        private String address;
+        private String contactName;
+        private String contactPhone;
+        private String idCard;
+        private String idCardPF;
+        private String idCardPB;
+        private String idCardPC;
+    }
+
     private long id_;
     private String name_;
-    private String address_;
-    private String contactName_;
-    private String contactPhone_;
-    private String idCard_;
-    private String idCardPF_;
-    private String idCardPB_;
-    private String idCardPC_;
     private Timestamp registerDate_;
     private boolean paymentStatus_;
     private boolean wxStatus_;
@@ -267,4 +305,5 @@ public class MerchantInfo {
     private String accountName_;
     private String accountPhone_;
     private String openid_;
+    private String externInfo_;
 }
