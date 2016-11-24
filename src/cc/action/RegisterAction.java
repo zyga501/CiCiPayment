@@ -268,7 +268,7 @@ public class RegisterAction extends AjaxActionSupport {
 
             PendingMerchant pendingMerchant =  PendingMerchant.getPendingMerchantById(Long.parseLong(getParameter("cid").toString()), getRequest().getSession().getAttribute("openid").toString());
             pendingMerchant.setName(getParameter("name").toString());
-            MerchantInfo.ExternInfo externInfo = new MerchantInfo.ExternInfo();
+            MerchantInfo.ExternInfo externInfo = pendingMerchant.new ExternInfo();
             externInfo.setAddress(getParameter("address").toString());
             externInfo.setContactName(getParameter("contactName").toString());
             externInfo.setContactPhone(getParameter("contactPhone").toString());

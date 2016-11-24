@@ -196,7 +196,7 @@ public class MerchantInfo {
         externInfo_ = externInfo;
     }
 
-    public static class ExternInfo {
+    public class ExternInfo {
         public ExternInfo() {
 
         }
