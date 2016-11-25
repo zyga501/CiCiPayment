@@ -1,5 +1,6 @@
 package cc.database.merchant;
 
+import java.sql.JDBCType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

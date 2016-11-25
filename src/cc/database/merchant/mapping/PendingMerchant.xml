@@ -54,6 +54,6 @@
         <result property="accountName" column="accountName" jdbcType="VARCHAR" />
         <result property="accountPhone" column="accountPhone" jdbcType="VARCHAR" />
         <result property="openid" column="openid" jdbcType="VARCHAR" />
-        <result property="externInfo" column="externInfo" javaType="TEXT" />
+        <result property="externInfo" column="externInfo" jdbcType="LONGVARCHAR" />
     </resultMap>
 </mapper>
