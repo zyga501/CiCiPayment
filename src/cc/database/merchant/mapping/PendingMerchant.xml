@@ -28,6 +28,11 @@
         bankCity=#{bankCity},bankName=#{bankName},bankGeneralName=#{bankGeneralName},accountNo=#{accountNo},accountName=#{accountName},accountPhone=#{accountPhone},bankCode=#{bankCode},externInfo=#{externInfo}
         where id = #{id} and OPENid =#{openid}
     </update>
+
+    <delete id="deletePendingMerchant"  parameterType="cc.database.merchant.PendingMerchant">
+        delete from pendingmerchant where id=#{id}
+    </delete>
+
     <resultMap type="cc.database.merchant.PendingMerchant" id="pendingMerchantResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="name" column="name" jdbcType="VARCHAR" />

@@ -451,7 +451,6 @@ public class RegisterAction extends AjaxActionSupport {
         }
     }
 
-
     public String checkOne() {
         try {
             PendingMerchant pendingMerchant =  PendingMerchant.getPendingMerchantById(Long.parseLong(getParameter("cid").toString()), getParameter("openid").toString());
