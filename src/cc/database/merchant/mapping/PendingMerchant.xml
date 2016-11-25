@@ -43,6 +43,7 @@
         <result property="bestRate" column="bestRate" jdbcType="FLOAT" />
         <result property="bankCity" column="bankCity" jdbcType="VARCHAR" />
         <result property="bankName" column="bankName" jdbcType="VARCHAR" />
+        <result property="bankGeneralName" column="bankGeneralName" jdbcType="VARCHAR" />
         <result property="bankCode" column="bankCode" jdbcType="VARCHAR" />
         <result property="accountCode" column="accountCode" jdbcType="VARCHAR" />
         <result property="accountName" column="accountName" jdbcType="VARCHAR" />
