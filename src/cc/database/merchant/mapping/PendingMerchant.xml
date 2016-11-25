@@ -16,9 +16,9 @@
     </select>
 
     <insert id="insertPendingMerchant" parameterType="cc.database.merchant.PendingMerchant">
-        INSERT INTO pendingmerchant(id,name,address,contactName,contactPhone,idCard,idCardPF,idCardPB,idCardPC,paymentStatus,
+        INSERT INTO pendingmerchant(id,name,paymentStatus,
         wxStatus,wxRate,aliStatus,aliRate,jdStatus,jdRate,bestStatus,bestRate,bankCity,bankName,bankGeneralName,accountNo,accountName,accountPhone,openid,externInfo)
-        VALUE (#{id},#{name},#{address},#{contactName},#{contactPhone},#{idCard},#{idCardPF},#{idCardPB},#{idCardPC},#{paymentStatus},
+        VALUE (#{id},#{name},#{paymentStatus},
         #{wxStatus},#{wxRate},#{aliStatus},#{aliRate},#{jdStatus},#{jdRate},#{bestStatus},#{bestRate},#{bankCity},#{bankName},#{bankGeneralName},#{accountNo},#{accountName},#{accountPhone},#{openid},#{externInfo})
     </insert>
 
