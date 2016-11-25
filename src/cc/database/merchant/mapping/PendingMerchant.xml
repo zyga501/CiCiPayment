@@ -17,27 +17,20 @@
 
     <insert id="insertPendingMerchant" parameterType="cc.database.merchant.PendingMerchant">
         INSERT INTO pendingmerchant(id,name,address,contactName,contactPhone,idCard,idCardPF,idCardPB,idCardPC,paymentStatus,
-        wxStatus,wxRate,aliStatus,aliRate,jdStatus,jdRate,bestStatus,bestRate,bankCity,bankName,bankGeneralName,accountNo,accountName,accountPhone,openid)
+        wxStatus,wxRate,aliStatus,aliRate,jdStatus,jdRate,bestStatus,bestRate,bankCity,bankName,bankGeneralName,accountNo,accountName,accountPhone,openid,externInfo)
         VALUE (#{id},#{name},#{address},#{contactName},#{contactPhone},#{idCard},#{idCardPF},#{idCardPB},#{idCardPC},#{paymentStatus},
-        #{wxStatus},#{wxRate},#{aliStatus},#{aliRate},#{jdStatus},#{jdRate},#{bestStatus},#{bestRate},#{bankCity},#{bankName},#{bankGeneralName},#{accountNo},#{accountName},#{accountPhone},#{openid})
+        #{wxStatus},#{wxRate},#{aliStatus},#{aliRate},#{jdStatus},#{jdRate},#{bestStatus},#{bestRate},#{bankCity},#{bankName},#{bankGeneralName},#{accountNo},#{accountName},#{accountPhone},#{openid},#{externInfo})
     </insert>
 
     <update id="updatePendingMerchant" parameterType="cc.database.merchant.PendingMerchant">
         UPDATE pendingmerchant
-        SET name=#{name},address=#{address},contactName=#{contactName},contactPhone=#{contactPhone},idCard=#{idCard},idCardPF=#{idCardPF},idCardPB=#{idCardPB},idCardPC=#{idCardPC},
-        paymentStatus=#{paymentStatus},wxStatus=#{wxStatus},wxRate=#{wxRate},aliStatus=#{aliStatus},aliRate=#{aliRate},jdStatus=#{jdStatus},jdRate=#{jdRate},bestStatus=#{bestStatus},bestRate=#{bestRate},
-        bankCity=#{bankCity},bankName=#{bankName},bankGeneralName=#{bankGeneralName},accountNo=#{accountNo},accountName=#{accountName},accountPhone=#{accountPhone},bankCode=#{bankCode}
+        SET name=#{name},paymentStatus=#{paymentStatus},wxStatus=#{wxStatus},wxRate=#{wxRate},aliStatus=#{aliStatus},aliRate=#{aliRate},jdStatus=#{jdStatus},jdRate=#{jdRate},bestStatus=#{bestStatus},bestRate=#{bestRate},
+        bankCity=#{bankCity},bankName=#{bankName},bankGeneralName=#{bankGeneralName},accountNo=#{accountNo},accountName=#{accountName},accountPhone=#{accountPhone},bankCode=#{bankCode},externInfo=#{externInfo}
         where id = #{id} and OPENid =#{openid}
     </update>
     <resultMap type="cc.database.merchant.PendingMerchant" id="pendingMerchantResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="name" column="name" jdbcType="VARCHAR" />
-        <result property="address" column="address" jdbcType="VARCHAR" />
-        <result property="contactPhone" column="contactPhone" jdbcType="VARCHAR" />
-        <result property="idCard" column="idCard" jdbcType="VARCHAR" />
-        <result property="idCardPF" column="idCardPF" jdbcType="VARCHAR" />
-        <result property="idCardPB" column="idCardPB" jdbcType="VARCHAR" />
-        <result property="idCardPC" column="idCardPC" jdbcType="VARCHAR" />
         <result property="registerDate" column="registerDate" jdbcType="TIMESTAMP" />
         <result property="paymentStatus" column="paymentStatus" jdbcType="TINYINT" />
         <result property="wxStatus" column="wxStatus" jdbcType="TINYINT" />
@@ -54,5 +47,7 @@
         <result property="accountCode" column="accountCode" jdbcType="VARCHAR" />
         <result property="accountName" column="accountName" jdbcType="VARCHAR" />
         <result property="accountPhone" column="accountPhone" jdbcType="VARCHAR" />
+        <result property="openid" column="openid" jdbcType="VARCHAR" />
+        <result property="externInfo" column="externInfo" javaType="TEXT" />
     </resultMap>
 </mapper>

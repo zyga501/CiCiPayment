@@ -20,15 +20,8 @@
         VALUE (#{id},#{name},#{paymentStatus},#{wxStatus},#{wxRate},#{aliStatus},#{aliRate},#{jdStatus},#{jdRate},#{bestStatus},#{bestRate},#{bankCity},#{bankCode},#{bankName},#{bankGeneralName},#{accountNo},#{accountName},#{accountPhone},#{openid},#{externInfo})
     </insert>
 
-    <update id="updateMerchantInfo" parameterType="cc.database.merchant.MerchantInfo">
-        UPDATE merchantinfo
-        SET id = #{id},name=#{name},registerDate=#{registerDate},paymentStatus=#{paymentStatus},wxStatus=#{wxStatus},wxRate=#{wxRate},aliStatus=#{aliStatus},aliRate=#{aliRate},jdStatus=#{jdStatus},jdRate=#{jdRate},bestStatus=#{bestStatus},bestRate=#{bestRate},
-        bankCity=#{bankCity},bankName=#{bankName},bankGeneralName=#{bankGeneralName},accountNo=#{accountNo},accountName=#{accountName},accountPhone=#{accountPhone},externInfo=#{externInfo}
-    </update>
-
     <resultMap type="cc.database.merchant.MerchantInfo" id="merchantInfoResult">
-        <id property="mid" column="mid" jdbcType="BIGINT" />
-        <result property="id" column="id" jdbcType="BIGINT" />
+        <id property="id" column="id" jdbcType="BIGINT" />
         <result property="name" column="name" jdbcType="VARCHAR" />
         <result property="registerDate" column="registerDate" jdbcType="TIMESTAMP" />
         <result property="paymentStatus" column="paymentStatus" jdbcType="TINYINT" />
