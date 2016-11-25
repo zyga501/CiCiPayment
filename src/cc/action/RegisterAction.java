@@ -460,6 +460,7 @@ public class RegisterAction extends AjaxActionSupport {
             pendingMerchant.setBestStatus((null!=getParameter("bestpay"))&&(getParameter("bestpay").equals("on")));
             pendingMerchant.setPaymentStatus((null!=getParameter("canpay"))&&(getParameter("canpay").equals("on")));
             if (PendingMerchant.updatePendingMerchant(pendingMerchant)){
+                PendingMerchant.deletePendingMerchant(pendingMerchant);
                 return AjaxActionComplete(MerchantInfo.insertMerchantInfo(pendingMerchant));
             }
         }

@@ -27,4 +27,9 @@ public class PendingMerchant extends MerchantInfo {
         String statement = "cc.database.merchant.mapping.pendingMerchant.updatePendingMerchant";
         return Database.Instance().update(statement, pendingMerchant) == 1;
     }
+
+    public static boolean deletePendingMerchant(PendingMerchant pendingMerchant) {
+        String statement = "cc.database.merchant.mapping.pendingMerchant.deletePendingMerchant";
+        return Database.Instance().delete(statement, pendingMerchant) == 1;
+    }
 }

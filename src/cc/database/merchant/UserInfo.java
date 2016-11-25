@@ -4,9 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 public class UserInfo {
-    public static void main(String[] args) throws Exception {
-        System.exit(0);
-    }
 
     public static List<UserInfo> getUserInfoByMap(Map map) {
         String statement = "cc.database.merchant.mapping.userinfo.getUserInfoByMap";

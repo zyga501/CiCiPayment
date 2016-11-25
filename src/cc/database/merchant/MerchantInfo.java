@@ -9,9 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 public class MerchantInfo {
-    public static void main(String[] args) throws Exception {
-        System.exit(0);
-    }
 
     public static List<MerchantInfo> getMerchantInfoByMap(Map map) {
         String statement = "cc.database.merchant.mapping.merchantInfo.getMerchantInfoByMap";

@@ -223,11 +223,12 @@
             success: function (data) {
                 var json = eval("(" + data + ")");
                 if (json.resultCode == 'Succeed') {
-                    layer.msg('操作成功', {icon: 1});
+                    alert('操作成功');
                     parent.refresh();
+                    parent.layer.closeAll();
                 }
                 else
-                    layer.msg('操作失败', {icon: 2});
+                    alert('操作失败');
             }
         })
     }
