@@ -15,7 +15,7 @@
     </select>
 
     <insert id="insertMerchantInfo" parameterType="cc.database.merchant.MerchantInfo">
-        INSERT INTO merchantinfo(id,name,address,contactName,contactPhone,idCard,idCardPF,idCardPB,idCardPC,paymentStatus,
+        INSERT INTO merchantinfo(id,name,paymentStatus,
         wxStatus,wxRate,aliStatus,aliRate,jdStatus,jdRate,bestStatus,bestRate,bankCity,bankName,bankGeneralName,bankCode,accountNo,accountName,accountPhone,openid,externInfo)
         VALUE (#{id},#{name},#{paymentStatus},#{wxStatus},#{wxRate},#{aliStatus},#{aliRate},#{jdStatus},#{jdRate},#{bestStatus},#{bestRate},#{bankCity},#{bankCode},#{bankName},#{bankGeneralName},#{accountNo},#{accountName},#{accountPhone},#{openid},#{externInfo})
     </insert>

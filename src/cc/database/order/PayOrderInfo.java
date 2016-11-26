@@ -2,11 +2,22 @@ package cc.database.order;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 public class PayOrderInfo {
     public static List<PayOrderInfo> getOrderInfo() {
         String statement = "cc.database.order.mapping.payOrderInfo.getOrderInfo";
         return Database.Instance().selectList(statement);
+    }
+
+    public static List<Map> getOrderInfoByLimit(Map map) {
+        String statement = "cc.database.order.mapping.payOrderInfo.getOrderInfoByLimit";
+        return Database.Instance().selectList(statement, map);
+    }
+
+    public static Long getOrderTotal() {
+        String statement = "cc.database.order.mapping.payOrderInfo.getOrderTotal";
+        return Database.Instance().selectOne(statement);
     }
 
     public static boolean insertOrderInfo(PayOrderInfo payOrderInfo) {

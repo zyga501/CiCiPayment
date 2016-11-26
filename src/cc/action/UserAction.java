@@ -5,12 +5,16 @@ import cc.database.merchant.CardInfo;
 import cc.database.merchant.MenuTree;
 import cc.database.merchant.MerchantInfo;
 import cc.database.merchant.UserInfo;
+import cc.database.order.ChanOrderInfo;
+import cc.database.order.PayOrderInfo;
 import cc.message.WeixinMessage;
 import cc.weixin.api.OpenId;
 import QimCommon.struts.AjaxActionSupport;
 import QimCommon.utils.IdWorker;
+import net.sf.json.JSONArray;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -173,5 +177,48 @@ public class UserAction extends AjaxActionSupport {
         map.clear();
         map.put("idslist",rtnstr);
         return AjaxActionComplete(true,map);
+    }
+
+    public void fetchPayorderList() {
+        try {
+            int pageSize = Math.max(1,Integer.parseInt(getParameter("pageSize").toString()));
+            int pageNumber = Math.max(1,Integer.parseInt(getParameter("pageNumber").toString()));
+            Map map = new HashMap<>();
+            map.put("ps",(pageNumber-1)*pageSize);
+            map.put("pe",(pageNumber)*pageSize);
+            if (null!=getParameter("name")&&!getParameter("name").toString().equals(""))
+                map.put("name",getParameter("name").toString());
+            List<Map> payOrderInfo = PayOrderInfo.getOrderInfoByLimit(map);
+            getResponse().setCharacterEncoding("utf-8");
+            PrintWriter pw = getResponse().getWriter();
+            String jsont= JSONArray.fromObject(payOrderInfo).toString();
+            String jsons = "{\"total\":" + PayOrderInfo.getOrderTotal() + ",\"rows\":" + jsont + "}";
+            pw.println(jsons);
+            pw.flush();
+            pw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void fetchChanorderList() {
+        try {
+            int pageSize = Math.max(1,Integer.parseInt(getParameter("pageSize").toString()));
+            int pageNumber = Math.max(1,Integer.parseInt(getParameter("pageNumber").toString()));
+            Map map = new HashMap<>();
+            map.put("ps",(pageNumber-1)*pageSize);
+            map.put("pe",(pageNumber)*pageSize);
+            if (null!=getParameter("name")&&!getParameter("name").toString().equals(""))
+                map.put("name",getParameter("name").toString());
+            List<Map> payOrderInfo = ChanOrderInfo.getOrderInfoByLimit(map);
+            getResponse().setCharacterEncoding("utf-8");
+            PrintWriter pw = getResponse().getWriter();
+            String jsont= JSONArray.fromObject(payOrderInfo).toString();
+            String jsons = "{\"total\":" + ChanOrderInfo.getOrderTotal() + ",\"rows\":" + jsont + "}";
+            pw.println(jsons);
+            pw.flush();
+            pw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

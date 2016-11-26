@@ -4,9 +4,6 @@ import QimCommon.database.SuperDatabase;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 public class Database extends SuperDatabase {
-    public static void main(String[] args) throws Exception {
-
-    }
 
     static {
         String mybatisConfig = "cc/database/merchant/conf.xml";
