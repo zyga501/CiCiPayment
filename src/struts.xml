@@ -41,6 +41,10 @@
         </global-results>
         <action name="Pay!*" class="cc.action.PayAction" method="{1}">
             <result name="registerPrepare" type="chain">Register!registerPrepare</result>
+            <result name="SwiftPassWeixinPay" type="chain">
+                <param name="actionName">Pay!weixinJsPay</param>
+                <param name="namespace">/swiftpass</param>
+            </result>
             <result name="SwiftPassAliPay" type="chain">
                 <param name="actionName">Pay!aliJsPay</param>
                 <param name="namespace">/swiftpass</param>

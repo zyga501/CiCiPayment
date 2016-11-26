@@ -37,7 +37,7 @@ public class PayAction extends AjaxActionSupport {
         HttpServletRequest request = (HttpServletRequest) ActionContext.getContext().get(org.apache.struts2.StrutsStatics.HTTP_REQUEST);
         String userAgent = request.getHeader("User-Agent").toLowerCase();
         if (userAgent.contains("micromessenger")){
-            return "WeixinPay";
+            return "SwiftPassWeixinPay";
         }
         else if (userAgent.contains("walletclient")){
             return "JDPay";
