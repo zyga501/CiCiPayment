@@ -5,6 +5,15 @@
         SELECT * FROM chanOrderInfo
     </select>
 
+    <select id="getOrderInfoByLimit" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        SELECT a.*,b.name FROM chanOrderInfo a,cicimerchant.merchantinfo b where a.merchantid=b.id
+        <if test="null!=name" > and b.name like CONCAT('%',#{name},'%') </if>limit ${ps},${pe}
+    </select>
+
+    <select id="getOrderTotal"  resultType="Long">
+        SELECT count(*) as total from chanOrderInfo
+    </select>
+
     <insert id="insertOrderInfo" parameterType="cc.database.order.ChanOrderInfo">
         INSERT INTO chanOrderInfo(merchantId, payTradeNo, tradeNo, tradeAmount, tradeTime)
         VALUE (#{merchantId},#{payTradeNo},#{tradeNo},#{tradeAmount},#{tradeTime})
