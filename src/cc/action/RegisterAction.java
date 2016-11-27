@@ -1,6 +1,5 @@
 package cc.action;
 
-import cc.ProjectLogger;
 import cc.ProjectSettings;
 import cc.database.merchant.CardInfo;
 import cc.database.merchant.MerchantInfo;
@@ -235,12 +234,11 @@ public class RegisterAction extends AjaxActionSupport {
             }
 
             long merchantId = IdConvert.DecryptionId(Long.parseLong(getParameter("cid").toString()));
-            ProjectLogger.error(String.valueOf(merchantId));
             CardInfo cardInfo = CardInfo.getCardInfoById(merchantId);
             if (cardInfo == null) {
                 return "page404";
             }
-            ProjectLogger.error("1");
+
             PendingMerchant pendingMerchant =  PendingMerchant.getPendingMerchantById(merchantId, getParameter("openid").toString());
             if (pendingMerchant == null) {
                 pendingMerchant = new PendingMerchant();
