@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class CardInfo {
     public static void main(String[] args) throws Exception {
+        CardInfo cardInfo = CardInfo.getCardInfoById(1939750548015104L);
         System.exit(0);
     }
 
@@ -34,11 +35,11 @@ public class CardInfo {
         this.agentId_ = agentId;
     }
 
-    public Timestamp getCreateDate() {
+    public Timestamp getCreateTime() {
         return createTime_;
     }
 
-    public void setCreateDate(Timestamp createTime) {
+    public void setCreateTime(Timestamp createTime) {
         this.createTime_ = createTime;
     }
 
