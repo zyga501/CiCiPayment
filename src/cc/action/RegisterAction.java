@@ -1,5 +1,6 @@
 package cc.action;
 
+import cc.ProjectLogger;
 import cc.ProjectSettings;
 import cc.database.merchant.CardInfo;
 import cc.database.merchant.MerchantInfo;
@@ -248,6 +249,7 @@ public class RegisterAction extends AjaxActionSupport {
                 getRequest().setAttribute("reginfo",pendingMerchant);
             }
 
+            getRequest().getSession().setAttribute("openid", getParameter("openid").toString());
             getRequest().setAttribute("reginfo", pendingMerchant);
             return "registerStep1";
         }
@@ -257,32 +259,30 @@ public class RegisterAction extends AjaxActionSupport {
     }
 
     public String registerStep1(){
-        try {
-            if (null==getAttribute("openid"))
-                return "User!wxlogin";
+        if (null==getRequest().getSession().getAttribute("openid"))
+            return "User!wxlogin";
 
-            CardInfo cardInfo = CardInfo.getCardInfoById(Long.parseLong(getParameter("cid").toString()));
-            if (cardInfo.getAgentId().compareTo(getParameter("uname").toString()) != 0) {
-                return "registerStep1";
-            }
-
-            PendingMerchant pendingMerchant =  PendingMerchant.getPendingMerchantById(Long.parseLong(getParameter("cid").toString()), getRequest().getSession().getAttribute("openid").toString());
-            pendingMerchant.setName(getParameter("name").toString());
-            MerchantInfo.ExternInfo externInfo = pendingMerchant.new ExternInfo();
-            externInfo.setAddress(getParameter("address").toString());
-            externInfo.setContactName(getParameter("contactName").toString());
-            externInfo.setContactPhone(getParameter("contactPhone").toString());
-            externInfo.setIdCard(getParameter("idCard").toString());
-            pendingMerchant.setExternInfo(externInfo.toString());
-            if (!PendingMerchant.updatePendingMerchant(pendingMerchant))
-                return AjaxActionComplete(false);
-            getRequest().setAttribute("reginfo", pendingMerchant);
-            return "registerStep2";
+        CardInfo cardInfo = CardInfo.getCardInfoById(Long.parseLong(getParameter("cid").toString()));
+        if (cardInfo.getAgentId().compareTo(getParameter("uname").toString()) != 0) {
+            return "registerStep1";
         }
-        catch (Exception e){
-            e.printStackTrace();
+
+        ProjectLogger.error(getParameter("cid").toString());
+        ProjectLogger.error(getRequest().getSession().getAttribute("openid").toString());
+        PendingMerchant pendingMerchant =  PendingMerchant.getPendingMerchantById(Long.parseLong(getParameter("cid").toString()), getRequest().getSession().getAttribute("openid").toString());
+        pendingMerchant.setName(getParameter("name").toString());
+        MerchantInfo.ExternInfo externInfo = pendingMerchant.new ExternInfo();
+        externInfo.setAddress(getParameter("address").toString());
+        externInfo.setContactName(getParameter("contactName").toString());
+        externInfo.setContactPhone(getParameter("contactPhone").toString());
+        externInfo.setIdCard(getParameter("idCard").toString());
+        pendingMerchant.setExternInfo(externInfo.toString());
+        ProjectLogger.error("1");
+        if (!PendingMerchant.updatePendingMerchant(pendingMerchant))
             return AjaxActionComplete(false);
-        }
+        ProjectLogger.error("2");
+        getRequest().setAttribute("reginfo", pendingMerchant);
+        return "registerStep2";
     }
     public String registerStep2() {
         try {
