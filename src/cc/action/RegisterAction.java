@@ -248,7 +248,7 @@ public class RegisterAction extends AjaxActionSupport {
                 getRequest().setAttribute("reginfo",pendingMerchant);
             }
 
-            getRequest().setAttribute("reginfo", pendingMerchant);
+            getRequest().setAttribute("reginfo", pendingMerchant.getExternInfo());
             return "registerStep1";
         }
         catch (Exception e) {

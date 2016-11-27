@@ -45,37 +45,37 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">商户住址：</label>
                     <div class="col-sm-8">
-                        <input type="text" name="address" placeholder="商户住址" class="form-control" value="${reginfo.address}">
+                        <input type="text" name="address" placeholder="商户住址" class="form-control" value="${reginfo.externInfo.address}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">联系人：</label>
                     <div class="col-sm-8">
-                        <input type="text" placeholder="联系人" name="contact" class="form-control"  value="${reginfo.contactName}">
+                        <input type="text" placeholder="联系人" name="contact" class="form-control"  value="${reginfo.externInfo.contactName}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">身份证：</label>
                     <div class="col-sm-8">
-                        <input type="text" name="idcardno" id="idcardno" placeholder="身份证" class="form-control"  value="${reginfo.idCard}">
+                        <input type="text" name="idcardno" id="idcardno" placeholder="身份证" class="form-control"  value="${reginfo.externInfo.idCard}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">手机号：</label>
                     <div class="col-sm-8">
-                        <input type="text" name="tel" id="tel" placeholder="手机号" class="form-control" value="${reginfo.contactPhone}" >
+                        <input type="text" name="tel" id="tel" placeholder="手机号" class="form-control" value="${reginfo.externInfo.contactPhone}" >
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">推广号：</label>
                     <div class="col-sm-8">
-                        <input type="text" name="uname" placeholder="推广号" class="form-control" value="${reginfo.idCard}">
+                        <input type="text" name="uname" placeholder="推广号" class="form-control" value="${reginfo.externInfo.idCard}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">开户名：</label>
                     <div class="col-sm-8">
-                        <input type="text" placeholder="开户名" name="acountname" class="form-control" value="${reginfo.contactName}">
+                        <input type="text" placeholder="开户名" name="acountname" class="form-control" value="${reginfo.externInfo.contactName}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -150,7 +150,7 @@
     <tr>
         <td>
             <img class="img" id="fsfzz" style="width: 100px;height: 80px" src="#" ><p>身份证正面</p>
-            <p>${reginfo.idCard}</p>
+            <p>${reginfo.externInfo.idCard}</p>
         </td>
     </tr><tr>
         <td>

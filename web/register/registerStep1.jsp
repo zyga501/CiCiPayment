@@ -30,25 +30,25 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">商户住址：</label>
                     <div class="col-sm-8">
-                        <input type="text" name="address" placeholder="商户住址" class="form-control" value="${reginfo.address}">
+                        <input type="text" name="address" placeholder="商户住址" class="form-control" value="${reginfo.externInfo.address}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">联系人：</label>
                     <div class="col-sm-8">
-                        <input type="text" placeholder="联系人" name="contactName" class="form-control" value="${reginfo.contactName}">
+                        <input type="text" placeholder="联系人" name="contactName" class="form-control" value="${reginfo.externInfo.contactName}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">身份证：</label>
                     <div class="col-sm-8">
-                        <input type="text" name="idCard" id="idCard" placeholder="身份证" class="form-control" value="${reginfo.idCard}">
+                        <input type="text" name="idCard" id="idCard" placeholder="身份证" class="form-control" value="${reginfo.externInfo.idCard}">
                     </div>
                 </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">手机号：</label>
                         <div class="col-sm-8">
-                            <input type="text" name="contactPhone" id="contactPhone" placeholder="手机号" class="form-control" value="${reginfo.contactPhone}">
+                            <input type="text" name="contactPhone" id="contactPhone" placeholder="手机号" class="form-control" value="${reginfo.externInfo.contactPhone}">
                         </div>
                     </div>
                     <div class="form-group">
