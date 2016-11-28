@@ -106,9 +106,9 @@
           success: function (data) {
               data =  $.parseJSON(data.replace(/<.*?>/ig,""));
               var json =  eval("(" + data + ")");
-              if ( json.msgstr !="") {
-                  alert(json.msgstr);
-                  history.go(-1);
+              if ( json.ErrorMsg !="") {
+                  alert(json.ErrorMsg);
+                  history.go(0);
               }
               else{
                   layer.confirm("请关注公众号等待审核消息<br><img style='width:200px;height:200px' src='<%=request.getContextPath()%>/img/gzh.jpg'>", {

@@ -19,7 +19,7 @@
         <div class="ibox-content">
             <form action="Register!registerStep1" method="post" class="form-horizontal">
                 <input type="hidden" name="cid" value="${reginfo.id}">
-                <input type="text"  value="${reginfo.id}">
+                <input type="text"  id="msg"  value="${reginfo.id}">
                 <div class="form-group">
                     <div class="form-group">
                     <label class="col-sm-3 control-label">商户名称：</label>
@@ -54,7 +54,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">推广号：</label>
                         <div class="col-sm-8">
-                            <input type="text" name="uname" placeholder="推广号" class="form-control"value="${uname}">
+                            <input type="text" name="uname" id="uname" placeholder="推广号" class="form-control"value="${uname}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -71,6 +71,10 @@
 <script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
 <script src="<%=request.getContextPath()%>/js/IDValidator.js"></script>
 <script>
+    $().ready(function () {
+        <s:if test="#session.ErrorMsg!=null">alert("${session.ErrorMsg}");
+        history.go(-1);</s:if>
+    });
     function checkvalidator(){
         var idv = new IDValidator();
         if (!idv.isValid($("#idCard").val())){
@@ -81,6 +85,11 @@
         if (!idv.checkMobile($("#contactPhone").val())){
             alert("手机号码不符合要求");
             $("#contactPhone").focus();
+            return;
+        }
+        if ($("#uname").val().trim()==""){
+            alert("推广号不能为空");
+            $("#uname").focus();
             return;
         }
         $('form').submit();
@@ -95,8 +104,8 @@
             success: function (data) {
                 var json =  eval("(" + data + ")");
                 if ( json.resultCode =="Failed") {
-                    if ( json.msg!="undefined" )
-                      alert(json.msg);
+                    if ( json.ErrorMsg!="undefined" )
+                      alert(json.ErrorMsg);
                     else
                       alert("请检查信息是否规范");
                 }

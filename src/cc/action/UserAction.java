@@ -1,5 +1,6 @@
 package cc.action;
 
+import cc.ProjectLogger;
 import cc.ProjectSettings;
 import cc.database.merchant.CardInfo;
 import cc.database.merchant.MenuTree;
@@ -22,21 +23,38 @@ import java.util.Map;
 
 public class UserAction extends AjaxActionSupport {
 
-    public void fetchWxCode() throws IOException {
-        String appid = ProjectSettings.getMapData("weixinServerInfo").get("appid").toString();
-        String redirect_uri =  getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + "/User!fetchWxOpenid";
-        String fetchOpenidUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
-                        "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=%s#wechat_redirect",
-                appid, redirect_uri, getParameter("redirect_url").toString());
-        getResponse().sendRedirect(fetchOpenidUri);
+    public void fetchWxCode()  {
+        try {
+            String appid = ProjectSettings.getMapData("weixinServerInfo").get("appid").toString();
+            String redirect_uri = getRequest().getScheme() + "://" + getRequest().getServerName() + getRequest().getContextPath() + "/User!fetchWxOpenid";
+            String fetchOpenidUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
+                            "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=%s#wechat_redirect",
+                    appid, redirect_uri, getParameter("redirect_url").toString());
+            getResponse().sendRedirect(fetchOpenidUri);
+        }
+        catch (Exception e){
+            ProjectLogger.error("fetchwxcode:"+e.getMessage());
+        }
     }
 
-    public void fetchWxOpenid() throws Exception {
-        String appid =  ProjectSettings.getMapData("weixinServerInfo").get("appid").toString();
-        String appsecret =  ProjectSettings.getMapData("weixinServerInfo").get("appSecret").toString();
-        OpenId weixinOpenId = new OpenId(appid, appsecret, getParameter("code").toString());
-        if (weixinOpenId.getRequest()) {
-            getResponse().sendRedirect(getParameter("state").toString() + "&openid=" + weixinOpenId.getOpenId());
+    public void fetchWxOpenid()  {
+        try {
+            String appid = ProjectSettings.getMapData("weixinServerInfo").get("appid").toString();
+            String appsecret = ProjectSettings.getMapData("weixinServerInfo").get("appSecret").toString();
+            OpenId weixinOpenId = new OpenId(appid, appsecret, getParameter("code").toString());
+            if (weixinOpenId.getRequest()) {
+                getResponse().sendRedirect(getParameter("state").toString() + "&openid=" + weixinOpenId.getOpenId());
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            StringBuffer sb = new StringBuffer();
+            StackTraceElement[] stackArray = e.getStackTrace();
+            for (int i = 0; i < stackArray.length; i++) {
+                StackTraceElement element = stackArray[i];
+                sb.append(element.toString() + "\n");
+            }
+            ProjectLogger.error("fetchWxOpenid:"+sb);
         }
     }
 
@@ -200,6 +218,7 @@ public class UserAction extends AjaxActionSupport {
             e.printStackTrace();
         }
     }
+
     public void fetchChanorderList() {
         try {
             int pageSize = Math.max(1,Integer.parseInt(getParameter("pageSize").toString()));

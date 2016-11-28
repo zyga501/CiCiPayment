@@ -228,6 +228,7 @@ public class RegisterAction extends AjaxActionSupport {
     }
 
     public String registerPrepare() {
+        getRequest().getSession().removeAttribute("ErrorMsg");
         if (StringUtils.convertNullableString(getParameter("openid")).length() == 0) {
             setParameter("redirect_url","Register!registerPrepare?cid=" + getParameter("cid").toString());
             return "fetchWxCode";
@@ -258,6 +259,7 @@ public class RegisterAction extends AjaxActionSupport {
 
         CardInfo cardInfo = CardInfo.getCardInfoById(Long.parseLong(getParameter("cid").toString()));
         if (cardInfo.getAgentId().compareTo(getParameter("uname").toString()) != 0) {
+            getRequest().getSession().setAttribute("ErrorMsg","请填写正确的推广号");
             return "registerStep1";
         }
 
@@ -293,7 +295,7 @@ public class RegisterAction extends AjaxActionSupport {
     }
 
     public String uploadIDCard() {
-        String msg="";
+        String ErrorMsg="";
         try {
             File ff = (File) getParameter("fsfzz");//fdphy,fyhkf,fyhkz,fsfzf,fsfzz
             File fm = new File(ProjectSettings.getCachePath() +getParameter("cid").toString()
@@ -301,7 +303,7 @@ public class RegisterAction extends AjaxActionSupport {
             if (null != ff && ff.length() > 1000) {
                 PublicFunc.copyFile(ff.getAbsolutePath(), fm.getAbsolutePath(), true);
             } else if (null == ff || fm.length()<100)
-                msg = "身份证正面照文件不对";
+                ErrorMsg = "身份证正面照文件不对";
             ff = (File) getParameter("fsfzf");//fdphy,fyhkf,fyhkz,fsfzf,fsfzz
             fm = new File(ProjectSettings.getCachePath() +(getParameter("cid").toString())
                     + getRequest().getSession().getAttribute("openid") + "sfzf.jpg");
@@ -310,7 +312,7 @@ public class RegisterAction extends AjaxActionSupport {
                     PublicFunc.copyFile(ff.getAbsolutePath(), fm.getAbsolutePath(), true);
                 }
             } else  if (null == ff || fm.length()<100)
-                msg = "身份证反面照文件不对";
+                ErrorMsg = "身份证反面照文件不对";
             ff = (File) getParameter("fscsfz");//fdphy,fyhkf,fyhkz,fsfzf,fsfzz
             fm = new File(ProjectSettings.getCachePath() +(getParameter("cid").toString())
                     + getRequest().getSession().getAttribute("openid") + "scsfz.jpg");
@@ -319,7 +321,7 @@ public class RegisterAction extends AjaxActionSupport {
                     PublicFunc.copyFile(ff.getAbsolutePath(), fm.getAbsolutePath(), true);
                 }
             } else  if (null == ff || fm.length()<1000)
-                msg = "手持身份证照文件不对";
+                ErrorMsg = "手持身份证照文件不对";
             ff = (File) getParameter("fyhk");//fdphy,fyhkf,fyhkz,fsfzf,fsfzz
             fm = new File(ProjectSettings.getCachePath() +(getParameter("cid").toString())
                     + getRequest().getSession().getAttribute("openid") + "yhk.jpg");
@@ -328,7 +330,7 @@ public class RegisterAction extends AjaxActionSupport {
                     PublicFunc.copyFile(ff.getAbsolutePath(), fm.getAbsolutePath(), true);
                 }
             } else if (null == ff || fm.length()<1000)
-                msg = "银行卡正面照文件不对";
+                ErrorMsg = "银行卡正面照文件不对";
         }
         catch (Exception e){
             e.printStackTrace();
@@ -336,7 +338,7 @@ public class RegisterAction extends AjaxActionSupport {
         finally {
             getResponse().setContentType("text/html");
             Map map = new HashMap<>();
-            map.put("msgstr", msg);
+            map.put("ErrorMsg", ErrorMsg);
             return AjaxActionComplete(true,map);
         }
     }
