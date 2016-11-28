@@ -228,37 +228,31 @@ public class RegisterAction extends AjaxActionSupport {
     }
 
     public String registerPrepare() {
-        try {
-            if (StringUtils.convertNullableString(getParameter("openid")).length() == 0) {
-                setParameter("redirect_url","Register!registerPrepare?cid=" + getParameter("cid").toString());
-                return "fetchWxCode";
-            }
-
-            long merchantId = IdConvert.DecryptionId(Long.parseLong(getParameter("cid").toString()));
-            CardInfo cardInfo = CardInfo.getCardInfoById(merchantId);
-            if (cardInfo == null) {
-                return "page404";
-            }
-
-            PendingMerchant pendingMerchant =  PendingMerchant.getPendingMerchantById(merchantId, getParameter("openid").toString());
-            if (pendingMerchant == null) {
-                pendingMerchant = new PendingMerchant();
-                pendingMerchant.setId(merchantId);
-                pendingMerchant.setOpenid(getParameter("openid").toString());
-                PendingMerchant.insertPendingMerchant(pendingMerchant);
-                getRequest().setAttribute("reginfo",pendingMerchant);
-            }
-
-            getRequest().getSession().setAttribute("openid", getParameter("openid").toString());
-            getRequest().setAttribute("reginfo", pendingMerchant);
-            return "registerStep1";
+        if (StringUtils.convertNullableString(getParameter("openid")).length() == 0) {
+            setParameter("redirect_url","Register!registerPrepare?cid=" + getParameter("cid").toString());
+            return "fetchWxCode";
         }
-        catch (Exception e) {
+
+        long merchantId = IdConvert.DecryptionId(Long.parseLong(getParameter("cid").toString()));
+        CardInfo cardInfo = CardInfo.getCardInfoById(merchantId);
+        if (cardInfo == null) {
             return "page404";
         }
+
+        PendingMerchant pendingMerchant =  PendingMerchant.getPendingMerchantById(merchantId, getParameter("openid").toString());
+        if (pendingMerchant == null) {
+            pendingMerchant = new PendingMerchant();
+            pendingMerchant.setId(merchantId);
+            pendingMerchant.setOpenid(getParameter("openid").toString());
+            PendingMerchant.insertPendingMerchant(pendingMerchant);
+        }
+
+        getRequest().getSession().setAttribute("openid", getParameter("openid").toString());
+        getRequest().setAttribute("reginfo", pendingMerchant);
+        return "registerStep1";
     }
 
-    public String registerStep1(){
+    public String registerStep1() {
         if (null==getRequest().getSession().getAttribute("openid"))
             return "User!wxlogin";
 
@@ -272,10 +266,10 @@ public class RegisterAction extends AjaxActionSupport {
         PendingMerchant pendingMerchant =  PendingMerchant.getPendingMerchantById(Long.parseLong(getParameter("cid").toString()), getRequest().getSession().getAttribute("openid").toString());
         pendingMerchant.setName(getParameter("name").toString());
         MerchantInfo.ExternInfo externInfo = pendingMerchant.new ExternInfo();
-        externInfo.setAddress(getParameter("address").toString());
-        externInfo.setContactName(getParameter("contactName").toString());
-        externInfo.setContactPhone(getParameter("contactPhone").toString());
-        externInfo.setIdCard(getParameter("idCard").toString());
+        pendingMerchant.setAddress(getParameter("address").toString());
+        pendingMerchant.setContactName(getParameter("contactName").toString());
+        pendingMerchant.setContactPhone(getParameter("contactPhone").toString());
+        pendingMerchant.setIdCard(getParameter("idCard").toString());
         pendingMerchant.setExternInfo(externInfo.toString());
         ProjectLogger.error("1");
         if (!PendingMerchant.updatePendingMerchant(pendingMerchant))
@@ -284,22 +278,18 @@ public class RegisterAction extends AjaxActionSupport {
         getRequest().setAttribute("reginfo", pendingMerchant);
         return "registerStep2";
     }
+
     public String registerStep2() {
-        try {
-            PendingMerchant pendingMerchant =  PendingMerchant.getPendingMerchantById(Long.parseLong(getParameter("cid").toString()), getRequest().getSession().getAttribute("openid").toString());
-            pendingMerchant.setBankCity(getParameter("bankCity").toString());
-            pendingMerchant.setAccountName(getParameter("accountName").toString());
-            pendingMerchant.setAccountNo(getParameter("accountNo").toString());
-            pendingMerchant.setBankName(getParameter("bankName").toString());
-            pendingMerchant.setBankCode(getParameter("bankCode").toString());
-            if (!PendingMerchant.updatePendingMerchant(pendingMerchant))
-                return AjaxActionComplete(false);
-            getRequest().setAttribute("reginfo",pendingMerchant);
-            return "registerStep3";
-        } catch (Exception e) {
-            e.printStackTrace();
+        PendingMerchant pendingMerchant =  PendingMerchant.getPendingMerchantById(Long.parseLong(getParameter("cid").toString()), getRequest().getSession().getAttribute("openid").toString());
+        pendingMerchant.setBankCity(getParameter("bankCity").toString());
+        pendingMerchant.setAccountName(getParameter("accountName").toString());
+        pendingMerchant.setAccountNo(getParameter("accountNo").toString());
+        pendingMerchant.setBankName(getParameter("bankName").toString());
+        pendingMerchant.setBankCode(getParameter("bankCode").toString());
+        if (!PendingMerchant.updatePendingMerchant(pendingMerchant))
             return AjaxActionComplete(false);
-        }
+        getRequest().setAttribute("reginfo",pendingMerchant);
+        return "registerStep3";
     }
 
     public String uploadIDCard() {

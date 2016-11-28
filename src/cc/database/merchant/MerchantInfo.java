@@ -41,6 +41,38 @@ public class MerchantInfo {
         this.name_ = name;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+
+    public String getContactPhone() {
+        return contactPhone;
+    }
+
+    public void setContactPhone(String contactPhone) {
+        this.contactPhone = contactPhone;
+    }
+
+    public String getIdCard() {
+        return idCard;
+    }
+
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
+    }
+
     public Timestamp getRegisterDate() {
         return registerDate_;
     }
@@ -204,10 +236,6 @@ public class MerchantInfo {
                 return;
             }
 
-            address = StringUtils.convertNullableString(resultMap.get("address"));
-            contactName = StringUtils.convertNullableString(resultMap.get("contactName"));
-            contactPhone = StringUtils.convertNullableString(resultMap.get("contactPhone"));
-            idCard = StringUtils.convertNullableString(resultMap.get("idCard"));
             idCardPF = StringUtils.convertNullableString(resultMap.get("idCardPF"));
             idCardPB = StringUtils.convertNullableString(resultMap.get("idCardPB"));
             idCardPC = StringUtils.convertNullableString(resultMap.get("idCardPC"));
@@ -215,38 +243,6 @@ public class MerchantInfo {
 
         public String toString() {
             return JSONObject.fromObject(this).toString();
-        }
-
-        public String getAddress() {
-            return address;
-        }
-
-        public void setAddress(String address) {
-            this.address = address;
-        }
-
-        public String getContactName() {
-            return contactName;
-        }
-
-        public void setContactName(String contactName) {
-            this.contactName = contactName;
-        }
-
-        public String getContactPhone() {
-            return contactPhone;
-        }
-
-        public void setContactPhone(String contactPhone) {
-            this.contactPhone = contactPhone;
-        }
-
-        public String getIdCard() {
-            return idCard;
-        }
-
-        public void setIdCard(String idCard) {
-            this.idCard = idCard;
         }
 
         public String getIdCardPF() {
@@ -273,10 +269,6 @@ public class MerchantInfo {
             this.idCardPC = idCardPC;
         }
 
-        private String address;
-        private String contactName;
-        private String contactPhone;
-        private String idCard;
         private String idCardPF;
         private String idCardPB;
         private String idCardPC;
@@ -284,6 +276,10 @@ public class MerchantInfo {
 
     private long id_;
     private String name_;
+    private String address;
+    private String contactName;
+    private String contactPhone;
+    private String idCard;
     private Timestamp registerDate_;
     private boolean paymentStatus_;
     private boolean wxStatus_;

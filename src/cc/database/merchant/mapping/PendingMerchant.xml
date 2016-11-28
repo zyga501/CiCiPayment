@@ -16,15 +16,15 @@
     </select>
 
     <insert id="insertPendingMerchant" parameterType="cc.database.merchant.PendingMerchant">
-        INSERT INTO pendingmerchant(id,name,paymentStatus,
+        INSERT INTO pendingmerchant(id,name,address,contactName,contactPhone,idCard,paymentStatus,
         wxStatus,wxRate,aliStatus,aliRate,jdStatus,jdRate,bestStatus,bestRate,bankCity,bankName,bankGeneralName,accountNo,accountName,accountPhone,openid,externInfo)
-        VALUE (#{id},#{name},#{paymentStatus},
+        VALUE (#{id},#{name},#{address},#{contactName},#{contactPhone},#{idCard},#{paymentStatus},
         #{wxStatus},#{wxRate},#{aliStatus},#{aliRate},#{jdStatus},#{jdRate},#{bestStatus},#{bestRate},#{bankCity},#{bankName},#{bankGeneralName},#{accountNo},#{accountName},#{accountPhone},#{openid},#{externInfo})
     </insert>
 
     <update id="updatePendingMerchant" parameterType="cc.database.merchant.PendingMerchant">
         UPDATE pendingmerchant
-        SET name=#{name},paymentStatus=#{paymentStatus},wxStatus=#{wxStatus},wxRate=#{wxRate},aliStatus=#{aliStatus},aliRate=#{aliRate},jdStatus=#{jdStatus},jdRate=#{jdRate},bestStatus=#{bestStatus},bestRate=#{bestRate},
+        SET name=#{name},address=#{address},contactName=#{contactName},contactPhone=#{contactPhone},idCard=#{idCard},paymentStatus=#{paymentStatus},wxStatus=#{wxStatus},wxRate=#{wxRate},aliStatus=#{aliStatus},aliRate=#{aliRate},jdStatus=#{jdStatus},jdRate=#{jdRate},bestStatus=#{bestStatus},bestRate=#{bestRate},
         bankCity=#{bankCity},bankName=#{bankName},bankGeneralName=#{bankGeneralName},accountNo=#{accountNo},accountName=#{accountName},accountPhone=#{accountPhone},bankCode=#{bankCode},externInfo=#{externInfo}
         where id = #{id} and OPENid =#{openid}
     </update>
@@ -36,6 +36,9 @@
     <resultMap type="cc.database.merchant.PendingMerchant" id="pendingMerchantResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="name" column="name" jdbcType="VARCHAR" />
+        <result property="address" column="address" jdbcType="VARCHAR" />
+        <result property="contactPhone" column="contactPhone" jdbcType="VARCHAR" />
+        <result property="idCard" column="idCard" jdbcType="VARCHAR" />
         <result property="registerDate" column="registerDate" jdbcType="TIMESTAMP" />
         <result property="paymentStatus" column="paymentStatus" jdbcType="TINYINT" />
         <result property="wxStatus" column="wxStatus" jdbcType="TINYINT" />

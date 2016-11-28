@@ -15,14 +15,17 @@
     </select>
 
     <insert id="insertMerchantInfo" parameterType="cc.database.merchant.MerchantInfo">
-        INSERT INTO merchantinfo(id,name,paymentStatus,
+        INSERT INTO merchantinfo(id,name,address,contactName,contactPhone,idCard,paymentStatus,
         wxStatus,wxRate,aliStatus,aliRate,jdStatus,jdRate,bestStatus,bestRate,bankCity,bankName,bankGeneralName,bankCode,accountNo,accountName,accountPhone,openid,externInfo)
-        VALUE (#{id},#{name},#{paymentStatus},#{wxStatus},#{wxRate},#{aliStatus},#{aliRate},#{jdStatus},#{jdRate},#{bestStatus},#{bestRate},#{bankCity},#{bankCode},#{bankName},#{bankGeneralName},#{accountNo},#{accountName},#{accountPhone},#{openid},#{externInfo})
+        VALUE (#{id},#{name},#{address},#{contactName},#{contactPhone},#{idCard},#{paymentStatus},#{wxStatus},#{wxRate},#{aliStatus},#{aliRate},#{jdStatus},#{jdRate},#{bestStatus},#{bestRate},#{bankCity},#{bankCode},#{bankName},#{bankGeneralName},#{accountNo},#{accountName},#{accountPhone},#{openid},#{externInfo})
     </insert>
 
     <resultMap type="cc.database.merchant.MerchantInfo" id="merchantInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="name" column="name" jdbcType="VARCHAR" />
+        <result property="address" column="address" jdbcType="VARCHAR" />
+        <result property="contactPhone" column="contactPhone" jdbcType="VARCHAR" />
+        <result property="idCard" column="idCard" jdbcType="VARCHAR" />
         <result property="registerDate" column="registerDate" jdbcType="TIMESTAMP" />
         <result property="paymentStatus" column="paymentStatus" jdbcType="TINYINT" />
         <result property="wxStatus" column="wxStatus" jdbcType="TINYINT" />
