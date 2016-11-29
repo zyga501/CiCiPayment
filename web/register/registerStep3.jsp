@@ -29,36 +29,36 @@
 <body>
 <form>
     <input type="hidden" name="cid" value="${reginfo.id}">
-<table class="table table-bordered" >
-    <tbody>
-    <tr>
-        <td>
-            <input type="file" class="infile" name="fsfzz" id="fsfzz" style="display:none">
-            <img class="img" style="width: 100px;height: 80px" src="Register!checkInfo?picname=sfzz&cid=${reginfo.id}" onclick="openBrowse('fsfzz')"><p>身份证正面</p></td>
-        <td>
-            <input type="file" class="infile" name="fsfzf" id="fsfzf" style="display:none">
-            <img class="img" style="width: 100px;height: 80px"src="Register!checkInfo?picname=sfzf&cid=${reginfo.id}" onclick="openBrowse('fsfzf')"><p>身份证反面</p>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <input type="file" class="infile" name="fscsfz" id="fscsfz" style="display:none">
-            <img  class="img" style="width: 80px;height: 80px"src="Register!checkInfo?picname=scsfz&cid=${reginfo.id}" onclick="openBrowse('fscsfz')" ><p>手持身份证</p></td>
-        <td>
-            <input type="file" class="infile" name="fyhk" id="fyhk" style="display:none">
-            <img  class="img" style="width: 100px;height: 80px"src="Register!checkInfo?picname=yhk&cid=${reginfo.id}" onclick="openBrowse('fyhk')"><p>银行卡</p></td>
-    </tr>
-    <tr >
-        <td colspan="2">
-        <div class="form-group">
-            <div  >
-                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="uploadinfo()">提交审核</button>
-            </div>
-        </div>
-        </td>
-    </tr>
-    </tbody>
-</table>
+    <table class="table table-bordered" >
+        <tbody>
+        <tr>
+            <td>
+                <input type="file" class="infile" name="fsfzz" id="fsfzz" style="display:none">
+                <img class="img" style="width: 100px;height: 80px" src="Register!checkInfo?picname=sfzz&cid=${reginfo.id}" onclick="openBrowse('fsfzz')"><p>身份证正面</p></td>
+            <td>
+                <input type="file" class="infile" name="fsfzf" id="fsfzf" style="display:none">
+                <img class="img" style="width: 100px;height: 80px"src="Register!checkInfo?picname=sfzf&cid=${reginfo.id}" onclick="openBrowse('fsfzf')"><p>身份证反面</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="file" class="infile" name="fscsfz" id="fscsfz" style="display:none">
+                <img  class="img" style="width: 80px;height: 80px"src="Register!checkInfo?picname=scsfz&cid=${reginfo.id}" onclick="openBrowse('fscsfz')" ><p>手持身份证</p></td>
+            <td>
+                <input type="file" class="infile" name="fyhk" id="fyhk" style="display:none">
+                <img  class="img" style="width: 100px;height: 80px"src="Register!checkInfo?picname=yhk&cid=${reginfo.id}" onclick="openBrowse('fyhk')"><p>银行卡</p></td>
+        </tr>
+        <tr >
+            <td colspan="2">
+                <div class="form-group">
+                    <div  >
+                        <button class="btn btn-lg btn-primary btn-block" type="button" onclick="uploadinfo()">提交审核</button>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </form>
 <script src="<%=request.getContextPath()%>/js/ajaxfileupload.js"></script>
 <script>
@@ -71,18 +71,15 @@
         });
         return obj;
     };
-
     function openBrowse(obj){
         $("#"+obj).click();
     }
-
     $(function() {
         $(".infile").on("change",function() {
             var srcs = getObjectURL(this.files[0]); //获取路径
             $(this).nextAll(".img").attr("src",srcs); //this指的是input
         })
     })
-
     function getObjectURL(file) {
         var url = null;
         if (window.createObjectURL != undefined) { // basic
@@ -94,36 +91,40 @@
         }
         return url;
     }
-
     function uploadinfo(){
-      $.ajaxFileUpload({
-          url: "Register!uploadIDCard",
-          secureuri: false,
-          fileElementId: ['fsfzf','fsfzz','fscsfz','fyhk'],
-          dataType: 'multipart/form-data',
-          data: $("form").serializeObject(),
-          type: 'POST',
-          success: function (data) {
-              data =  $.parseJSON(data.replace(/<.*?>/ig,""));
-              var json =  eval("(" + data + ")");
-              if ( json.ErrorMsg !="") {
-                  alert(json.ErrorMsg);
-                  history.go(0);
-              }
-              else{
-                  layer.confirm("请关注公众号等待审核消息<br><img style='width:200px;height:200px' src='<%=request.getContextPath()%>/img/gzh.jpg'>", {
-                      btn: ['已经关注'] //按钮
-                  }, function(){
-                      WeixinJSBridge.call('closeWindow');
-                      window.close();
-                  })};
-          },
-          error:function(data,status,e){
-              alert(e);
-          }
-      });
+        layer.msg("正在上传中");
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'],
+            time: 20000
+        });
+        $.ajaxFileUpload({
+            url: "Register!uploadIDCard",
+            secureuri: false,
+            fileElementId: ['fsfzf','fsfzz','fscsfz','fyhk'],
+            dataType: 'multipart/form-data',
+            data: $("form").serializeObject(),
+            type: 'POST',
+            success: function (data) {
+                layer.close(index);
+                data =  $.parseJSON(data.replace(/<.*?>/ig,""));
+                var json =  eval("(" + data + ")");
+                if ( json.ErrorMsg !="") {
+                    alert(json.ErrorMsg);
+                    history.go(0);
+                }
+                else{
+                    layer.confirm("请关注公众号等待审核消息<br><img style='width:200px;height:200px' src='<%=request.getContextPath()%>/img/gzh.jpg'>", {
+                        btn: ['已经关注'] //按钮
+                    }, function(){
+                        WeixinJSBridge.call('closeWindow');
+                        window.close();
+                    })};
+            },
+            error:function(data,status,e){
+                alert(e);
+            }
+        });
     }
 </script>
 </body>
 </html>
-

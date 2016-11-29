@@ -6,6 +6,7 @@ import cc.chanpay.api.SinglePay;
 import cc.database.merchant.MerchantInfo;
 import cc.database.order.ChanOrderInfo;
 import cc.database.order.PayOrderInfo;
+import cc.message.WeixinMessage;
 import cc.utils.IdConvert;
 import QimCommon.struts.AjaxActionSupport;
 import QimCommon.utils.StringUtils;
@@ -41,10 +42,11 @@ public class CallbackAction extends AjaxActionSupport {
         ProjectLogger.error("Swiftpass Callback Error!");
     }
 
-    private boolean doChanPay(Map<String,Object> responseResult, String tradeType) {
+    private boolean doChanPay(Map<String,Object> responseResult, String tradeType) throws Exception {
         long merchantId = IdConvert.DecryptionId(Long.parseLong(responseResult.get("attach").toString()));
         int total_fee = Integer.parseInt(responseResult.get("total_fee").toString());
         String tradeNo = StringUtils.convertNullableString(responseResult.get("out_trade_no"));
+        String timeEnd = StringUtils.convertNullableString(responseResult.get("time_end"));
 
         MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(merchantId);
         if (merchantInfo == null) {
@@ -79,10 +81,11 @@ public class CallbackAction extends AjaxActionSupport {
 
         }
         finally {
+            WeixinMessage.sendTemplateMessage(merchantInfo.getOpenid(), timeEnd, total_fee / 100.0, merchantInfo.getName(), "企盟支付", tradeNo, "");
             savePayOrder(merchantId, total_fee,
                     tradeNo,
                     tradeType,
-                    StringUtils.convertNullableString(responseResult.get("time_end")),
+                    timeEnd,
                     merchantInfo.getWxRate(),
                     paid);
         }
