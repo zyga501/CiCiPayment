@@ -96,6 +96,11 @@
     }
 
     function uploadinfo(){
+        layer.msg("正在上传中");
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'],
+            time: 20000
+        });
       $.ajaxFileUpload({
           url: "Register!uploadIDCard",
           secureuri: false,
@@ -104,6 +109,7 @@
           data: $("form").serializeObject(),
           type: 'POST',
           success: function (data) {
+              layer.close(index);
               data =  $.parseJSON(data.replace(/<.*?>/ig,""));
               var json =  eval("(" + data + ")");
               if ( json.ErrorMsg !="") {

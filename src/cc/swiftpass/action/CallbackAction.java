@@ -6,11 +6,13 @@ import cc.chanpay.api.SinglePay;
 import cc.database.merchant.MerchantInfo;
 import cc.database.order.ChanOrderInfo;
 import cc.database.order.PayOrderInfo;
+import cc.message.WeixinMessage;
 import cc.utils.IdConvert;
 import QimCommon.struts.AjaxActionSupport;
 import QimCommon.utils.StringUtils;
 import QimCommon.utils.XMLParser;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class CallbackAction extends AjaxActionSupport {
@@ -79,6 +81,21 @@ public class CallbackAction extends AjaxActionSupport {
 
         }
         finally {
+            Map mapparam =new HashMap<>();
+            MerchantInfo m=MerchantInfo.getMerchantInfoById(merchantId);
+            if (m!=null) {
+                mapparam.put("openid", m.getOpenid());
+                mapparam.put("totalfee", total_fee);
+                mapparam.put("tradeno", tradeNo);
+                mapparam.put("paytype", tradeType);
+                mapparam.put("storename", m.getName());
+                mapparam.put("timeend", StringUtils.convertNullableString(responseResult.get("time_end")));
+                try {
+                    WeixinMessage.sendTemplateMessage(mapparam);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             savePayOrder(merchantId, total_fee,
                     tradeNo,
                     tradeType,
