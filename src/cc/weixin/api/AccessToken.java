@@ -65,7 +65,8 @@ public class AccessToken extends HttpClient {
     public static void AccessTokenInit(String appid, String appSecret) {
         appid_ = appid;
         appSecret_ = appSecret;
-        accessTokenMap_.put(appid,"");
+        if (accessTokenMap_.isEmpty())
+          accessTokenMap_.put(appid,"");
     }
 
     @Override
