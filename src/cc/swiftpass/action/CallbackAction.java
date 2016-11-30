@@ -22,6 +22,7 @@ public class CallbackAction extends AjaxActionSupport {
     public final static String SUCCESS = "success";
     public final static String WEIXINPJSPAY = "SwiftPass.WeixinJsPay";
     public final static String ALIJSPAY = "SwiftPass.AliJsPay";
+    public final static Object syncObject = new Object();
 
     public void weixinJsPay() throws Exception {
         handlerCallback(WEIXINPJSPAY);
@@ -37,7 +38,9 @@ public class CallbackAction extends AjaxActionSupport {
         Map<String,Object> responseResult = XMLParser.convertMapFromXml(getInputStreamAsString());
         if (responseResult.get("result_code").toString().compareTo("0") == 0 &&
             responseResult.get("pay_result").toString().compareTo("0") == 0) {
-            doChanPay(responseResult, tradeType);
+            synchronized (syncObject) {
+                doChanPay(responseResult, tradeType);
+            }
             return;
         }
 
@@ -49,6 +52,10 @@ public class CallbackAction extends AjaxActionSupport {
         int total_fee = Integer.parseInt(responseResult.get("total_fee").toString());
         String tradeNo = StringUtils.convertNullableString(responseResult.get("out_trade_no"));
         String timeEnd = StringUtils.convertNullableString(responseResult.get("time_end"));
+
+        if (PayOrderInfo.getOrderInfoByTradeNo(tradeNo) != null) {
+            return true;
+        }
 
         MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(merchantId);
         if (merchantInfo == null) {

@@ -5,6 +5,10 @@
         SELECT * FROM payOrderInfo
     </select>
 
+    <select id="getOrderInfoByTradeNo" parameterType="String" resultMap="orderInfoResult">
+        SELECT * FROM payOrderInfo where tradeNo=#{tradeNo}
+    </select>
+
     <select id="getOrderInfoByLimit" parameterType="java.util.HashMap" resultType="java.util.HashMap">
         SELECT a.*,b.name FROM payOrderInfo a,cicimerchant.merchantinfo b where a.merchantid=b.id
           <if test="null!=name" > and b.name like CONCAT('%',#{name},'%') </if>limit ${ps},${pe}
