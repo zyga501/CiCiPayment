@@ -13,6 +13,7 @@ import QimCommon.utils.StringUtils;
 import QimCommon.utils.XMLParser;
 import cc.utils.PublicFunc;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class CallbackAction extends AjaxActionSupport {
@@ -35,7 +36,7 @@ public class CallbackAction extends AjaxActionSupport {
     private void handlerCallback(String tradeType) throws Exception {
         Map<String,Object> responseResult = XMLParser.convertMapFromXml(getInputStreamAsString());
         if (responseResult.get("result_code").toString().compareTo("0") == 0 &&
-                responseResult.get("pay_result").toString().compareTo("0") == 0) {
+            responseResult.get("pay_result").toString().compareTo("0") == 0) {
             doChanPay(responseResult, tradeType);
             return;
         }
@@ -43,11 +44,10 @@ public class CallbackAction extends AjaxActionSupport {
         ProjectLogger.error("Swiftpass Callback Error!");
     }
 
-    private boolean doChanPay(Map<String,Object> responseResult, String tradeType) throws Exception {
+    private boolean doChanPay(Map<String,Object> responseResult, String tradeType) {
         long merchantId = IdConvert.DecryptionId(Long.parseLong(responseResult.get("attach").toString()));
         int total_fee = Integer.parseInt(responseResult.get("total_fee").toString());
         String tradeNo = StringUtils.convertNullableString(responseResult.get("out_trade_no"));
-        String timeEnd = StringUtils.convertNullableString(responseResult.get("time_end"));
 
         MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(merchantId);
         if (merchantInfo == null) {
@@ -82,11 +82,26 @@ public class CallbackAction extends AjaxActionSupport {
 
         }
         finally {
-            WeixinMessage.sendTemplateMessage(merchantInfo.getOpenid(), timeEnd, total_fee / 100.0, merchantInfo.getName(), PublicFunc.payTypeEx(tradeType), tradeNo, "");
+            Map mapparam =new HashMap<>();
+            MerchantInfo m=MerchantInfo.getMerchantInfoById(merchantId);
+            if (m!=null) {
+                mapparam.put("openid", m.getOpenid());
+                mapparam.put("totalfee", total_fee);
+                mapparam.put("tradeno", tradeNo);
+                mapparam.put("paytype", tradeType);
+                mapparam.put("storename", m.getName());
+                mapparam.put("timeend", StringUtils.convertNullableString(responseResult.get("time_end")));
+                try {
+                    WeixinMessage.sendTemplateMessage(mapparam);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
             savePayOrder(merchantId, total_fee,
                     tradeNo,
                     tradeType,
-                    timeEnd,
+                    StringUtils.convertNullableString(responseResult.get("time_end")),
                     merchantInfo.getWxRate(),
                     paid);
         }

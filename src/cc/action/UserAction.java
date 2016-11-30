@@ -245,7 +245,7 @@ public class UserAction extends AjaxActionSupport {
     }
 
     public void testmsg(){
-       /* String accessToken = new String();
+        String accessToken = new String();
         AccessToken.AccessTokenInit(ProjectSettings.getMapData("weixinServerInfo").get("appid").toString(),ProjectSettings.getMapData("weixinServerInfo").get("appSecret").toString());
         try {
             accessToken = AccessToken.getAccessToken(ProjectSettings.getMapData("weixinServerInfo").get("appid").toString());
@@ -288,6 +288,6 @@ public class UserAction extends AjaxActionSupport {
                 ProjectLogger.error("fetchWxOpenid:"+sb);
             }
             return ;
-        }*/
+        }
     }
 }

@@ -1,6 +1,7 @@
 package cc.weixin.api;
 
 import QimCommon.utils.HttpClient;
+import cc.ProjectSettings;
 import net.sf.json.JSONObject;
 
 public class TemplateMessage extends HttpClient {
@@ -31,12 +32,9 @@ public class TemplateMessage extends HttpClient {
                     return true;
                 }
                 case "40001": {
-                    AccessToken accessToken = AccessToken.getAccessTokenByAccessToken(accessToken_);
-                    if (accessToken == null) {
-                        return false;
-                    }
-
-                    accessToken_ = AccessToken.updateAccessToken(accessToken, accessToken_);
+                    AccessToken.AccessTokenInit(ProjectSettings.getMapData("weixinServerInfo").get("appid").toString(),
+                            ProjectSettings.getMapData("weixinServerInfo").get("appSecret").toString());
+                    accessToken_ = AccessToken.getAccessToken(ProjectSettings.getMapData("weixinServerInfo").get("appid").toString());
                     return postRequest(postData_);
                 }
                 default: {
