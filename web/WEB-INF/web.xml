@@ -30,4 +30,11 @@
         <error-code>404</error-code>
         <location>/page404.jsp</location>
     </error-page>
+        <servlet>
+            <servlet-name>WeixinAccessToken</servlet-name>
+            <servlet-class>
+                cc.weixin.servlet.AccessTokenServlet
+            </servlet-class>
+            <load-on-startup>0</load-on-startup>
+        </servlet>
 </web-app>
