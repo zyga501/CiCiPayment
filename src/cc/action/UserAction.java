@@ -9,12 +9,9 @@ import cc.database.merchant.UserInfo;
 import cc.database.order.ChanOrderInfo;
 import cc.database.order.PayOrderInfo;
 import cc.message.WeixinMessage;
-import cc.weixin.api.AccessToken;
 import cc.weixin.api.OpenId;
 import QimCommon.struts.AjaxActionSupport;
 import QimCommon.utils.IdWorker;
-import cc.weixin.api.RequestBean.TemplateMessageRequestData;
-import cc.weixin.api.TemplateMessage;
 import net.sf.json.JSONArray;
 
 import java.io.IOException;
@@ -241,53 +238,6 @@ public class UserAction extends AjaxActionSupport {
             pw.close();
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    public void testmsg(){
-        String accessToken = new String();
-        AccessToken.AccessTokenInit(ProjectSettings.getMapData("weixinServerInfo").get("appid").toString(),ProjectSettings.getMapData("weixinServerInfo").get("appSecret").toString());
-        try {
-            accessToken = AccessToken.getAccessToken(ProjectSettings.getMapData("weixinServerInfo").get("appid").toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            StringBuffer sb = new StringBuffer();
-            StackTraceElement[] stackArray = e.getStackTrace();
-            for (int i = 0; i < stackArray.length; i++) {
-                StackTraceElement element = stackArray[i];
-                sb.append(element.toString() + "\n");
-            }
-            ProjectLogger.error("fetchWxOpenid:"+sb);
-        }
-        ProjectLogger.error("accessToken:"+accessToken);
-        if (!accessToken.isEmpty()) {
-            TemplateMessageRequestData templateMessageRequestData = new TemplateMessageRequestData();
-            templateMessageRequestData.template_id = ProjectSettings.getMapData("weixinServerInfo").get("templateId").toString();
-            templateMessageRequestData.nickName = "尊敬的商户，您成功收到CiCi二维码消费付款：";
-            templateMessageRequestData.timeEnd = "2016-1-1";
-            templateMessageRequestData.totalFee =20.1;
-            templateMessageRequestData.storeName = "hh";
-            templateMessageRequestData.paytype = "weixinPay";
-            templateMessageRequestData.orderno = "sdfjiosdf890890890890890";
-            templateMessageRequestData.remark = "";
-
-            TemplateMessage templateMessage = new TemplateMessage(accessToken);
-            templateMessageRequestData.touser = "oBhD-wi-1wOs_8VYB227-VcIf0fo";
-            try {
-
-                ProjectLogger.error("templateMessageRequestData.buildRequestData():"+templateMessageRequestData.buildRequestData());
-                templateMessage.postRequest(templateMessageRequestData.buildRequestData());
-            } catch (Exception e) {
-                e.printStackTrace();
-                StringBuffer sb = new StringBuffer();
-                StackTraceElement[] stackArray = e.getStackTrace();
-                for (int i = 0; i < stackArray.length; i++) {
-                    StackTraceElement element = stackArray[i];
-                    sb.append(element.toString() + "\n");
-                }
-                ProjectLogger.error("fetchWxOpenid:"+sb);
-            }
-            return ;
         }
     }
 }

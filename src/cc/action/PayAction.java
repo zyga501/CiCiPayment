@@ -36,7 +36,6 @@ public class PayAction extends AjaxActionSupport {
     String choogPayment() throws IOException {
         HttpServletRequest request = (HttpServletRequest) ActionContext.getContext().get(org.apache.struts2.StrutsStatics.HTTP_REQUEST);
         String userAgent = request.getHeader("User-Agent").toLowerCase();
-        ProjectLogger.error(userAgent);
         if (userAgent.contains("micromessenger")){
             return "SwiftPassWeixinPay";
         }

@@ -11,13 +11,13 @@ import java.util.Map;
 public class AccessToken extends HttpClient {
     private final static String ACCESS_TOKEN_API = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s";
 
-    private static  Map<String, String> accessTokenMap_ = new HashMap<>();
+    private static Map<String, AccessToken> accessTokenMap_ = new HashMap<>();
 
-    public  static String getAccessTokenByAccessToken(String accessToken) {
+    public static AccessToken getAccessTokenByAccessToken(String accessToken) {
         synchronized(accessTokenMap_) {
             if (accessTokenMap_.containsValue(accessToken)) {
-                for (Map.Entry<String, String> entry : accessTokenMap_.entrySet()) {
-                    if (entry.getValue().compareTo(accessToken) == 0) {
+                for (Map.Entry<String, AccessToken> entry : accessTokenMap_.entrySet()) {
+                    if (entry.getValue().getAccessToken().compareTo(accessToken) == 0) {
                         return entry.getValue();
                     }
                 }
@@ -30,31 +30,33 @@ public class AccessToken extends HttpClient {
     public static String getAccessToken(String appid) throws Exception {
         synchronized(accessTokenMap_) {
             if (accessTokenMap_.get(appid) != null) {
-                if (accessTokenMap_.get(appid).toString().equals(""))
-                    updateAccessToken(appid);
-                return accessTokenMap_.get(appid);
+                return accessTokenMap_.get(appid).getAccessToken();
             }
 
             throw new NoSuchFieldException("Unknown Appid!");
         }
     }
 
-    public static void updateAccessToken(String appid) throws Exception {
+    public static void updateAccessToken(AccessToken accessToken) throws Exception {
         synchronized(accessTokenMap_) {
-            String appsecret = new String();
-            appsecret = appSecret_;
-
-            if (!appsecret.isEmpty()) {
-                AccessToken accessToken = new AccessToken();
-                accessToken.AccessTokenInit(appid, appsecret);
-                if (accessToken.getRequest()) {
-                    accessTokenMap_.put(appid,accessToken_);
-                }
+            if (accessToken.getRequest()) {
+                accessTokenMap_.put(accessToken.getAppid(), accessToken);
             }
         }
     }
 
-    public  void updateAccessToken(List<String> accessTokenList) throws Exception {
+    public static String updateAccessToken(AccessToken accessToken, String invalidAccessToken) throws Exception {
+        synchronized(accessTokenMap_) {
+            if (!accessTokenMap_.containsValue(invalidAccessToken)) {
+                return getAccessToken(accessToken.getAppid());
+            }
+
+            updateAccessToken(accessToken);
+            return getAccessToken(accessToken.getAppid());
+        }
+    }
+
+    public static void updateAccessToken(List<AccessToken> accessTokenList) throws Exception {
         synchronized(accessTokenMap_) {
             for (int index = 0; index < accessTokenList.size(); ++index) {
                 updateAccessToken(accessTokenList.get(index));
@@ -62,11 +64,20 @@ public class AccessToken extends HttpClient {
         }
     }
 
-    public static void AccessTokenInit(String appid, String appSecret) {
+    public AccessToken(String appid, String appSecret) {
         appid_ = appid;
         appSecret_ = appSecret;
-        if (accessTokenMap_.isEmpty())
-          accessTokenMap_.put(appid,"");
+    }
+
+    public String getAccessToken() { return accessToken_; }
+
+
+    public String getAppid() {
+        return appid_;
+    }
+
+    public String getAppSecret() {
+        return appSecret_;
     }
 
     @Override
@@ -83,7 +94,6 @@ public class AccessToken extends HttpClient {
         }
         return false;
     }
-
 
     private String appid_;
     private String appSecret_;
