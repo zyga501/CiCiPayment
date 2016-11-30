@@ -13,7 +13,7 @@ public class WeixinMessage {
         if (!accessToken.isEmpty()) {
             TemplateMessageRequestData templateMessageRequestData = new TemplateMessageRequestData();
             templateMessageRequestData.template_id = ProjectSettings.getMapData("weixinServerInfo").get("templateId").toString();
-            templateMessageRequestData.nickName = "尊敬的商户，您成功收到"+openid.substring(20,24)+"的消费付款：";
+            templateMessageRequestData.nickName = "尊敬的商户，您成功收到CiCi消费付款：";
             templateMessageRequestData.timeEnd = timeEnd;
             templateMessageRequestData.totalFee = totalFee;
             templateMessageRequestData.storeName = storeName;

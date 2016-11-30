@@ -62,4 +62,12 @@ public class PublicFunc {
             }
         }
     }
+
+    public static String payTypeEx(String paytype){
+        if (paytype.equals("SwiftPass.WeixinJsPay"))
+            return "微信支付";
+        if (paytype.equals("SwiftPass.AliJsPay"))
+            return "支付宝";
+        return paytype;
+    }
 }

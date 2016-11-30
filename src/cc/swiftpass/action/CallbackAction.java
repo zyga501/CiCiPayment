@@ -11,6 +11,7 @@ import cc.utils.IdConvert;
 import QimCommon.struts.AjaxActionSupport;
 import QimCommon.utils.StringUtils;
 import QimCommon.utils.XMLParser;
+import cc.utils.PublicFunc;
 
 import java.util.Map;
 
@@ -81,7 +82,7 @@ public class CallbackAction extends AjaxActionSupport {
 
         }
         finally {
-            WeixinMessage.sendTemplateMessage(merchantInfo.getOpenid(), timeEnd, total_fee / 100.0, merchantInfo.getName(), "企盟支付", tradeNo, "");
+            WeixinMessage.sendTemplateMessage(merchantInfo.getOpenid(), timeEnd, total_fee / 100.0, merchantInfo.getName(), PublicFunc.payTypeEx(tradeType), tradeNo, "");
             savePayOrder(merchantId, total_fee,
                     tradeNo,
                     tradeType,
@@ -89,7 +90,6 @@ public class CallbackAction extends AjaxActionSupport {
                     merchantInfo.getWxRate(),
                     paid);
         }
-
         return false;
     }
 
