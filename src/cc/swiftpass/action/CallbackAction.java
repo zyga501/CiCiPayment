@@ -11,7 +11,9 @@ import cc.utils.IdConvert;
 import QimCommon.struts.AjaxActionSupport;
 import QimCommon.utils.StringUtils;
 import QimCommon.utils.XMLParser;
+import cc.utils.PublicFunc;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class CallbackAction extends AjaxActionSupport {
@@ -89,7 +91,6 @@ public class CallbackAction extends AjaxActionSupport {
                     merchantInfo.getWxRate(),
                     paid);
         }
-
         return false;
     }
 
