@@ -84,7 +84,8 @@ public class AccessToken extends HttpClient {
         return false;
     }
 
-    private static String appid_;
-    private static String appSecret_;
-    private static String accessToken_;
+
+    private String appid_;
+    private String appSecret_;
+    private String accessToken_;
 }
