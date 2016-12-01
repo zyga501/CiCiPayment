@@ -18,6 +18,7 @@ public class PendingMerchant extends MerchantInfo {
         String statement = "cc.database.merchant.mapping.pendingMerchant.getPendingMerchant";
         return Database.Instance().selectList(statement, map);
     }
+
     public static boolean insertPendingMerchant(PendingMerchant pendingMerchant) {
         String statement = "cc.database.merchant.mapping.pendingMerchant.insertPendingMerchant";
         return Database.Instance().insert(statement, pendingMerchant) == 1;

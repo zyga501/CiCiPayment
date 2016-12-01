@@ -14,10 +14,21 @@
         SELECT * FROM merchantinfo where id=#{id}
     </select>
 
+    <update id="updateMerchantPayMethodId" parameterType="java.util.HashMap">
+        UPDATE merchantinfo
+        SET payMethodId=#{payMethodId}
+        where id = #{id}
+    </update>
+
     <insert id="insertMerchantInfo" parameterType="cc.database.merchant.MerchantInfo">
-        INSERT INTO merchantinfo(id,name,address,contactName,contactPhone,idCard,paymentStatus,
-        wxStatus,wxRate,aliStatus,aliRate,jdStatus,jdRate,bestStatus,bestRate,bankCity,bankName,bankGeneralName,bankCode,accountNo,accountName,accountPhone,openid,externInfo)
-        VALUE (#{id},#{name},#{address},#{contactName},#{contactPhone},#{idCard},#{paymentStatus},#{wxStatus},#{wxRate},#{aliStatus},#{aliRate},#{jdStatus},#{jdRate},#{bestStatus},#{bestRate},#{bankCity},#{bankCode},#{bankName},#{bankGeneralName},#{accountNo},#{accountName},#{accountPhone},#{openid},#{externInfo})
+        INSERT INTO merchantinfo(id,name,address,contactName,contactPhone,idCard,
+        paymentStatus,wxStatus,wxRate,aliStatus,aliRate,jdStatus,jdRate,bestStatus,bestRate,
+        bankCity,bankName,bankGeneralName,bankCode,accountNo,accountName,accountPhone,
+        openid,payMethodId,externInfo)
+        VALUE (#{id},#{name},#{address},#{contactName},#{contactPhone},#{idCard},
+        #{paymentStatus},#{wxStatus},#{wxRate},#{aliStatus},#{aliRate},#{jdStatus},#{jdRate},#{bestStatus},#{bestRate},
+        #{bankCity},#{bankCode},#{bankName},#{bankGeneralName},#{accountNo},#{accountName},#{accountPhone},
+        #{openid},#{payMethodId},#{externInfo})
     </insert>
 
     <resultMap type="cc.database.merchant.MerchantInfo" id="merchantInfoResult">
@@ -44,6 +55,7 @@
         <result property="accountName" column="accountName" jdbcType="VARCHAR" />
         <result property="accountPhone" column="accountPhone" jdbcType="VARCHAR" />
         <result property="openid" column="openid" jdbcType="VARCHAR" />
+        <result property="payMethodId" column="payMethodId" jdbcType="BIGINT" />
         <result property="externInfo" column="externInfo" jdbcType="VARCHAR" />
     </resultMap>
 </mapper>

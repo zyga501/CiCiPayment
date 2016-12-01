@@ -5,6 +5,7 @@ import QimCommon.utils.StringUtils;
 import net.sf.json.JSONObject;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,11 @@ public class MerchantInfo {
     public static MerchantInfo getMerchantInfoById(long id) {
         String statement = "cc.database.merchant.mapping.merchantInfo.getMerchantInfoById";
         return Database.Instance().selectOne(statement, id);
+    }
+
+    public static boolean updateMerchantPayMethodId(long id, long payMethonId) {
+        String statement = "cc.database.merchant.mapping.merchantInfo.updateMerchantPayMethodId";
+        return Database.Instance().update(statement, new HashMap<String, Object>(){{put("id", id);put("payMethonId", payMethonId);}}) == 1;
     }
 
     public static boolean insertMerchantInfo(MerchantInfo merchantInfo) {
