@@ -1,6 +1,11 @@
 package cc.database.merchant;
 
 public class PayMethod {
+    public static PayMethod getPayMethodById(int id) {
+        String statement = "cc.database.merchant.mapping.payMethod.getPayMethodById";
+        return Database.Instance().selectOne(statement, id);
+    }
+
     public int getId() {
         return id_;
     }
@@ -17,11 +22,11 @@ public class PayMethod {
         this.mode_ = mode;
     }
 
-    public String getMerchantId() {
+    public long getMerchantId() {
         return merchantId_;
     }
 
-    public void setMerchantId(String merchantId) {
+    public void setMerchantId(long merchantId) {
         this.merchantId_ = merchantId;
     }
 
@@ -35,6 +40,6 @@ public class PayMethod {
 
     private int id_;
     private String mode_;
-    private String merchantId_;
+    private long merchantId_;
     private String method_;
 }

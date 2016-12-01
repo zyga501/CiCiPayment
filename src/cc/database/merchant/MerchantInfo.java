@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 public class MerchantInfo {
-
     public static List<MerchantInfo> getMerchantInfoByMap(Map map) {
         String statement = "cc.database.merchant.mapping.merchantInfo.getMerchantInfoByMap";
         return Database.Instance().selectList(statement, map);
@@ -223,12 +222,12 @@ public class MerchantInfo {
         this.openid_ = openid_;
     }
 
-    public long getPayMethonId() {
-        return payMethonId_;
+    public int getPayMethodId() {
+        return payMethodId_;
     }
 
-    public void setPayMethonId(long payMethonId) {
-        payMethonId_ = payMethonId;
+    public void setPayMethodId(int payMethodId) {
+        payMethodId_ = payMethodId;
     }
 
     public String getExternInfo() {
@@ -312,6 +311,6 @@ public class MerchantInfo {
     private String accountName_;
     private String accountPhone_;
     private String openid_;
-    private long payMethonId_;
+    private int payMethodId_;
     private String externInfo_;
 }
