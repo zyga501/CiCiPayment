@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.database.merchant.mapping.payMethod">
+    <select id="getPayMethodById" parameterType="long" resultMap="payMethodResult">
+        SELECT * FROM merchantinfo where id=#{id}
+    </select>
+
+    <resultMap type="cc.database.merchant.PayMethod" id="payMethodResult">
+        <id property="id" column="id" jdbcType="INTEGER" />
+        <result property="mode" column="mode" jdbcType="VARCHAR" />
+        <result property="merchantId" column="merchantId" jdbcType="BIGINT" />
+        <result property="methodType" column="methodType" jdbcType="VARCHAR" />
+    </resultMap>
+</mapper>
