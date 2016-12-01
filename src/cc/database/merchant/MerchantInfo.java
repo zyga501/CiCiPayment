@@ -217,6 +217,14 @@ public class MerchantInfo {
         this.openid_ = openid_;
     }
 
+    public long getPayMethonId() {
+        return payMethonId_;
+    }
+
+    public void setPayMethonId(long payMethonId) {
+        payMethonId_ = payMethonId;
+    }
+
     public String getExternInfo() {
         return externInfo_;
     }
@@ -298,5 +306,6 @@ public class MerchantInfo {
     private String accountName_;
     private String accountPhone_;
     private String openid_;
+    private long payMethonId_;
     private String externInfo_;
 }
