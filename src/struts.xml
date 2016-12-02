@@ -41,14 +41,9 @@
         </global-results>
         <action name="Pay!*" class="cc.action.PayAction" method="{1}">
             <result name="registerPrepare" type="chain">Register!registerPrepare</result>
-            <result name="SwiftPassWeixinPay" type="chain">
-                <param name="actionName">Pay!weixinJsPay</param>
-                <param name="namespace">/swiftpass</param>
-            </result>
-            <result name="SwiftPassAliPay" type="chain">
-                <param name="actionName">Pay!aliJsPay</param>
-                <param name="namespace">/swiftpass</param>
-            </result>
+            <result name="payPage">./payPage.jsp</result>
+        </action>
+        <action name="Callback!*" class="cc.action.CallbackAction" method="{1}">
         </action>
         <action name="User!*" class="cc.action.UserAction" method="{1}">
             <result name="agentPage">agentpage.jsp</result>
@@ -66,11 +61,9 @@
             <result name="registerStep3">./register/registerStep3.jsp</result>
             <result name="registerall">./register/registerall.jsp</result>
             <result name="merchantlist">./register/merchantlist.jsp</result>
-            <result name="paypage">./welcome.html</result>
         </action>
     </package>
     <constant name="struts.custom.i18n.resources" value="cc/mui/resources"/>
 
-    <include file="cc/swiftpass/struts-swiftpass.xml" />
     <include file="cc/chanpay/struts-chanpay.xml" />
 </struts>
