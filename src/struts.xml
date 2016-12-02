@@ -43,7 +43,7 @@
             <result name="registerPrepare" type="chain">Register!registerPrepare</result>
             <result name="payPage">./payPage.jsp</result>
         </action>
-        <action name="Callback!*" class="cc.action.PayAction.CallbackAction" method="{1}">
+        <action name="Callback!*" class="cc.action.CallbackAction" method="{1}">
         </action>
         <action name="User!*" class="cc.action.UserAction" method="{1}">
             <result name="agentPage">agentpage.jsp</result>

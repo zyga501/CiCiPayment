@@ -1,6 +1,7 @@
 package cc.action;
 
 import QimCommon.struts.AjaxActionSupport;
+import QimCommon.utils.JsonUtils;
 import QimCommon.utils.StringUtils;
 import QimCommon.utils.XMLParser;
 import cc.ProjectLogger;
@@ -13,6 +14,7 @@ import cc.database.order.PayOrderInfo;
 import cc.message.WeixinMessage;
 import cc.utils.IdConvert;
 import cc.utils.PublicFunc;
+import net.sf.json.JSONObject;
 
 import java.util.Map;
 
@@ -25,13 +27,16 @@ public class CallbackAction extends AjaxActionSupport {
     }
 
     private void handlerCallback() throws Exception {
-        Map<String,Object> responseResult = XMLParser.convertMapFromXml(getInputStreamAsString());
+        Map<String,Object> responseResult = JsonUtils.toMap(getInputStreamAsString(), true);
         if (responseResult == null) {
             return;
         }
 
         synchronized (syncObject) {
-            long merchantId = IdConvert.DecryptionId(Long.parseLong(responseResult.get("data").toString()));
+            JSONObject jsonObject = JSONObject.fromObject(responseResult.get("attach").toString());
+            String mode = jsonObject.get("mode").toString().toLowerCase();
+            String method = jsonObject.get("method").toString().toLowerCase();
+            long merchantId = IdConvert.DecryptionId(Long.parseLong(jsonObject.get("cid").toString()));
             int total_fee = Integer.parseInt(responseResult.get("total_fee").toString());
             String tradeNo = StringUtils.convertNullableString(responseResult.get("out_trade_no"));
             String timeEnd = StringUtils.convertNullableString(responseResult.get("time_end"));
@@ -61,7 +66,15 @@ public class CallbackAction extends AjaxActionSupport {
                     singlePayRequestData.accountNo = merchantInfo.getAccountNo();
                     singlePayRequestData.accountName = merchantInfo.getAccountName();
                     singlePayRequestData.tel = merchantInfo.getAccountPhone();
-                    singlePayRequestData.amount = total_fee;
+                    if (mode.indexOf("weixin") != -1 || method.indexOf("weixin") != -1) {
+                        singlePayRequestData.amount = (int)(total_fee * (1 - merchantInfo.getWxRate()));
+                    }
+                    else if (mode.indexOf("ali") != -1) {
+                        singlePayRequestData.amount = (int)(total_fee * (1 - merchantInfo.getAliRate()));
+                    }
+                    else {
+                        singlePayRequestData.amount = total_fee;
+                    }
                     SinglePay singlePay = new SinglePay(singlePayRequestData);
                     if (paid = singlePay.postRequest()) {
                         saveChanOrder(merchantId, tradeNo, singlePayRequestData.amount, singlePay.getReqSn(), singlePay.getTimeStamp());

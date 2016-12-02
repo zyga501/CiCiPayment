@@ -58,7 +58,10 @@ public class PayAction extends AjaxActionSupport {
         String requestUrl = getRequest().getRequestURL().toString();
         requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + CallbackAction.JSPAYCALLBACK;
         jsPayData.redirect_uri = requestUrl;
-        jsPayData.data = getParameter("cid").toString();
+        jsPayData.data =  String.format("{'cid':'%s','mode':'%s','method':'%s'}",
+                getParameter("cid").toString(),
+                payMethod.getMode(),
+                payMethod.getMethod());
         jsPayData.sign = Signature.generateSign(jsPayData, jsPayData.id);
         XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
         String postDataXML = xStreamForRequestPostData.toXML(jsPayData);
