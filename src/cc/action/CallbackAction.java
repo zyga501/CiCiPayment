@@ -80,17 +80,6 @@ public class CallbackAction extends AjaxActionSupport {
                         saveChanOrder(merchantId, tradeNo, singlePayRequestData.amount, singlePay.getReqSn(), singlePay.getTimeStamp());
                     }
                 }
-                SinglePayRequestData singlePayRequestData = new SinglePayRequestData();
-                singlePayRequestData.bankGeneralName = merchantInfo.getBankGeneralName();
-                singlePayRequestData.bankName = merchantInfo.getBankName();
-                singlePayRequestData.bankCode = merchantInfo.getBankCode();
-                singlePayRequestData.accountType = "00";
-                singlePayRequestData.accountNo = merchantInfo.getAccountNo();
-                singlePayRequestData.accountName = merchantInfo.getAccountName();
-                singlePayRequestData.tel = merchantInfo.getAccountPhone();
-                singlePayRequestData.amount = total_fee;
-                SinglePay singlePay = new SinglePay(singlePayRequestData);
-
             }
             catch (Exception exception) {
 
