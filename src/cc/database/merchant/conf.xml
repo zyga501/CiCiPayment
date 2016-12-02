@@ -26,6 +26,7 @@
     <mappers>
         <mapper resource="cc/database/merchant/mapping/MerchantInfo.xml" />
         <mapper resource="cc/database/merchant/mapping/PendingMerchant.xml" />
+        <mapper resource="cc/database/merchant/mapping/PayMethod.xml" />
         <mapper resource="cc/database/merchant/mapping/CardInfo.xml" />
         <mapper resource="cc/database/merchant/mapping/AgentInfo.xml" />
         <mapper resource="cc/database/merchant/mapping/UserInfo.xml" />

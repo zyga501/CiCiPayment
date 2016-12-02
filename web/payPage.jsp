@@ -151,9 +151,8 @@
 <body>
 <input type="hidden" name="hideparam" id="hideparam" value=""/>
 
-<form action="<%=request.getContextPath()%>/swiftpass/Pay!aliJsPay" method="post">
-    <input type="hidden" value=<%=request.getParameter("state")%> name="state" id="state"/>
-    <input type="hidden" value=<%=request.getParameter("auth_code")%> name="auth_code" id="auth_code" />
+<form action="<%=request.getContextPath()%>/Pay!jsPay" method="post">
+    <input type="hidden" value=<%=request.getParameter("cid")%> name="cid" id="cid"/>
     <input type="hidden" value="" name="total_amount" id="total_amount"/>
     <div class="Layer1">
         <div class="dv1">
@@ -170,7 +169,7 @@
   	  <label>实付金额: </label>
   	</span>
             <label id="paynum" class="paynum"></label><br><br>
-            <input type="submit" class="but" id="butpaynum"  disabled="disabled" value="支付宝支付"/>
+            <input type="submit" class="but" id="butpaynum"  disabled="disabled" value="支付"/>
         </div>
     </div>
 </form>

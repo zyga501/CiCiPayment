@@ -10,6 +10,11 @@ public class PayOrderInfo {
         return Database.Instance().selectList(statement);
     }
 
+    public static PayOrderInfo getOrderInfoByTradeNo(String tradeNo) {
+        String statement = "cc.database.order.mapping.payOrderInfo.getOrderInfoByTradeNo";
+        return Database.Instance().selectOne(statement, tradeNo);
+    }
+
     public static List<Map> getOrderInfoByLimit(Map map) {
         String statement = "cc.database.order.mapping.payOrderInfo.getOrderInfoByLimit";
         return Database.Instance().selectList(statement, map);
