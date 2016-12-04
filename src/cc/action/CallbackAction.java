@@ -3,8 +3,6 @@ package cc.action;
 import QimCommon.struts.AjaxActionSupport;
 import QimCommon.utils.JsonUtils;
 import QimCommon.utils.StringUtils;
-import QimCommon.utils.XMLParser;
-import cc.ProjectLogger;
 import cc.chanpay.api.RequestBean.SinglePayRequestData;
 import cc.chanpay.api.SinglePay;
 import cc.database.merchant.MerchantInfo;
@@ -13,8 +11,6 @@ import cc.database.order.ChanOrderInfo;
 import cc.database.order.PayOrderInfo;
 import cc.message.WeixinMessage;
 import cc.utils.IdConvert;
-import cc.utils.PublicFunc;
-import net.sf.json.JSONObject;
 
 import java.util.Map;
 
@@ -33,10 +29,10 @@ public class CallbackAction extends AjaxActionSupport {
         }
 
         synchronized (syncObject) {
-            JSONObject jsonObject = JSONObject.fromObject(responseResult.get("attach").toString());
-            String mode = jsonObject.get("mode").toString().toLowerCase();
-            String method = jsonObject.get("method").toString().toLowerCase();
-            long merchantId = IdConvert.DecryptionId(Long.parseLong(jsonObject.get("cid").toString()));
+            String[] attatch = responseResult.get("data").toString().split("&");
+            long merchantId = IdConvert.DecryptionId(Long.parseLong(attatch[0]));
+            String mode = attatch[1];
+            String method = attatch[2];
             int total_fee = Integer.parseInt(responseResult.get("total_fee").toString());
             String tradeNo = StringUtils.convertNullableString(responseResult.get("out_trade_no"));
             String timeEnd = StringUtils.convertNullableString(responseResult.get("time_end"));
