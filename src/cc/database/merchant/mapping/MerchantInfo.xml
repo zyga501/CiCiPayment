@@ -71,7 +71,10 @@
         <result property="accountName" column="accountName" jdbcType="VARCHAR" />
         <result property="accountPhone" column="accountPhone" jdbcType="VARCHAR" />
         <result property="openid" column="openid" jdbcType="VARCHAR" />
-        <result property="payMethodId" column="payMethodId" jdbcType="NUMERIC" />
+        <result property="payMethodWeixinId" column="payMethodWeixinId" jdbcType="NUMERIC" />
+        <result property="payMethodAliId" column="payMethodAliId" jdbcType="NUMERIC" />
+        <result property="payMethodJDId" column="payMethodJDId" jdbcType="NUMERIC" />
+        <result property="payMethodBestId" column="payMethodBestId" jdbcType="NUMERIC" />
         <result property="externInfo" column="externInfo" jdbcType="VARCHAR" />
     </resultMap>
 </mapper>
