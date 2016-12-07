@@ -60,6 +60,7 @@
             <result name="registerStep2">./register/registerStep2.jsp</result>
             <result name="registerStep3">./register/registerStep3.jsp</result>
             <result name="registerall">./register/registerall.jsp</result>
+            <result name="merchantquery">./register/merchantquery.jsp</result>
             <result name="merchantlist">./register/merchantlist.jsp</result>
         </action>
     </package>

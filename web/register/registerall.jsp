@@ -66,7 +66,7 @@
                         <input type="text" name="tel" id="tel" placeholder="手机号" class="form-control" value="${reginfo.contactPhone}" >
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="display: none">
                     <label class="col-sm-3 control-label">推广号：</label>
                     <div class="col-sm-8">
                         <input type="text" name="uname" placeholder="推广号" class="form-control">
@@ -120,16 +120,21 @@
         <tbody>
         <tr>
             <td>
-                <input type="checkbox" checked id="wxpay" name="wxpay"><label for="wxpay">微信支付</label></td>
+                <input type="checkbox" checked id="wxpay" name="wxpay"><label for="wxpay">微信支付</label>
+            <br><label>费率</label><input type="number"   id="wxrate" name="wxrate" placeholder="微信费率" step="0.001" value="0.006">
+            </td>
             <td>
-                <input type="checkbox" checked id="alipay" name="alipay"><label for="alipay">支付宝支付</label></td>
+                <input type="checkbox" checked id="alipay" name="alipay"><label for="alipay">支付宝支付</label>
+                <br><label>费率</label><input type="number"   id="alirate" name="alirate" placeholder="支付宝费率" step="0.001" value="0.006"></td>
             </td>
         </tr>
         <tr>
             <td>
-                <input type="checkbox" checked id="jdpay" name="jdpay"><label for="jdpay">京东支付</label></td>
+                <input type="checkbox" checked id="jdpay" name="jdpay"><label for="jdpay">京东支付</label>
+                <br><label>费率</label><input type="number"   id="jdrate" name="jdrate" placeholder="京东支付费率" step="0.001" value="0.006"></td>
             <td>
-                <input type="checkbox" checked id="bestpay" name="bestpay"><label for="bestpay">翼支付</label></td>
+                <input type="checkbox" checked id="bestpay" name="bestpay"><label for="bestpay">翼支付</label>
+                <br><label>费率</label><input type="number"   id="bestrate" name="bestrate" placeholder="翼支付费率" step="0.001" value="0.006"></td>
         </tr>
         <tr >
             <td colspan="2">
@@ -168,7 +173,7 @@
         <td colspan="2">
             <div class="form-group">
                 <div  >
-                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="checkone()">审核通过</button>
+                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="checkone()">确认</button>
                 </div>
             </div>
         </td>
@@ -214,6 +219,7 @@
             }));
         });
     }
+
     function checkone () {
         $.ajax({
             type: 'post',
