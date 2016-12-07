@@ -1,13 +1,13 @@
 package cc.action;
 
+import QimCommon.struts.AjaxActionSupport;
 import QimCommon.utils.HttpUtils;
+import QimCommon.utils.StringUtils;
 import cc.ProjectLogger;
 import cc.action.RequestData.JsPayData;
 import cc.database.merchant.MerchantInfo;
 import cc.database.merchant.PayMethod;
 import cc.utils.IdConvert;
-import QimCommon.struts.AjaxActionSupport;
-import QimCommon.utils.StringUtils;
 import cc.weixin.utils.Signature;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
@@ -58,7 +58,7 @@ public class PayAction extends AjaxActionSupport {
         String requestUrl = getRequest().getRequestURL().toString();
         requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + CallbackAction.JSPAYCALLBACK;
         jsPayData.redirect_uri = requestUrl;
-        jsPayData.data =  String.format("{'cid':'%s','mode':'%s','method':'%s'}",
+        jsPayData.data = String.format("%s&%s&%s",
                 getParameter("cid").toString(),
                 payMethod.getMode(),
                 payMethod.getMethod());
