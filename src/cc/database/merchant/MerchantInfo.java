@@ -21,8 +21,8 @@ public class MerchantInfo {
     }
 
     public static List<Map> getMerchantInfoByQuery(Map map) {
-        String statement = "cc.database.merchant.mapping.merchantInfo.getMerchantInfoByQuery";
-        return Database.Instance().selectList(statement, map);
+       String statement = "cc.database.merchant.mapping.merchantInfo.getMerchantInfoByQuery";
+       return Database.Instance().selectList(statement, map);
     }
 
     public static boolean updateMerchantPayMethodId(long id, long payMethonId) {
