@@ -86,7 +86,7 @@ public class MerchantInfo {
         this.registerDate_ = registerDate;
     }
 
-    public boolean isPaymentStatus() {
+    public boolean getPaymentStatus() {
         return paymentStatus_;
     }
 
@@ -94,7 +94,7 @@ public class MerchantInfo {
         this.paymentStatus_ = paymentStatus;
     }
 
-    public boolean isWxStatus() {
+    public boolean getWxStatus() {
         return wxStatus_;
     }
 
@@ -110,7 +110,7 @@ public class MerchantInfo {
         this.wxRate_ = wxRate;
     }
 
-    public boolean isAliStatus() {
+    public boolean getAliStatus() {
         return aliStatus_;
     }
 
@@ -126,7 +126,7 @@ public class MerchantInfo {
         this.aliRate_ = aliRate;
     }
 
-    public boolean isJdStatus() {
+    public boolean getJdStatus() {
         return jdStatus_;
     }
 
@@ -142,7 +142,7 @@ public class MerchantInfo {
         this.jdRate_ = jdRate;
     }
 
-    public boolean isBestStatus() {
+    public boolean getBestStatus() {
         return bestStatus_;
     }
 
@@ -222,12 +222,36 @@ public class MerchantInfo {
         this.openid_ = openid_;
     }
 
-    public int getPayMethodId() {
-        return payMethodId_;
+    public int getPayMethodWeixinId() {
+        return payMethodWeixinId_;
     }
 
-    public void setPayMethodId(int payMethodId) {
-        payMethodId_ = payMethodId;
+    public void setPayMethodWeixinId(int payMethodWeixinId) {
+        payMethodWeixinId_ = payMethodWeixinId;
+    }
+
+    public int getPayMethodAliId() {
+        return payMethodAliId_;
+    }
+
+    public void setPayMethodAliId(int payMethodAliId) {
+        this.payMethodAliId_ = payMethodAliId;
+    }
+
+    public int getPayMethodJDId() {
+        return payMethodJDId_;
+    }
+
+    public void setPayMethodJDId(int payMethodJDId) {
+        this.payMethodJDId_ = payMethodJDId;
+    }
+
+    public int getPayMethodBestId() {
+        return payMethodBestId_;
+    }
+
+    public void setPayMethodBestId_(int payMethodBestId) {
+        this.payMethodBestId_ = payMethodBestId;
     }
 
     public String getExternInfo() {
@@ -311,6 +335,9 @@ public class MerchantInfo {
     private String accountName_;
     private String accountPhone_;
     private String openid_;
-    private int payMethodId_;
+    private int payMethodWeixinId_;
+    private int payMethodAliId_;
+    private int payMethodJDId_;
+    private int payMethodBestId_;
     private String externInfo_;
 }

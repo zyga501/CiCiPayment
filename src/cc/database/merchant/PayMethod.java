@@ -11,6 +11,21 @@ public class PayMethod {
         return Database.Instance().selectOne(statement, id);
     }
 
+    public static PayType payTypeValueOf(int value) {
+        switch (value) {
+            case 1:
+                return PayType.WEIXIN;
+            case 2:
+                return PayType.ALI;
+            case 3:
+                return PayType.JD;
+            case 4:
+                return PayType.BEST;
+        }
+
+        return PayType.UNKNOWN;
+    }
+
     public int getId() {
         return id_;
     }
@@ -43,7 +58,7 @@ public class PayMethod {
         this.method_ = method;
     }
 
-    public boolean isPrivateQualification() {
+    public boolean getPrivateQualification() {
         return privateQualification_;
     }
 
@@ -76,7 +91,8 @@ public class PayMethod {
         WEIXIN,
         ALI,
         JD,
-        BEST
+        BEST,
+        UNKNOWN
     };
     private PayType payType_;
     private String comment_;

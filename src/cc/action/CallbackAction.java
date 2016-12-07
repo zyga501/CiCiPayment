@@ -31,6 +31,8 @@ public class CallbackAction extends AjaxActionSupport {
         synchronized (syncObject) {
             String[] attatch = responseResult.get("data").toString().split("&");
             long merchantId = IdConvert.DecryptionId(Long.parseLong(attatch[0]));
+            boolean privateQualification = Integer.parseInt(attatch[1]) == 1;
+            PayMethod.PayType payType = PayMethod.payTypeValueOf(Integer.parseInt(attatch[2]));
             String mode = attatch[1];
             String method = attatch[2];
             int total_fee = Integer.parseInt(responseResult.get("total_fee").toString());
@@ -46,14 +48,9 @@ public class CallbackAction extends AjaxActionSupport {
                 return;
             }
 
-            PayMethod payMethod = PayMethod.getPayMethodById(merchantInfo.getPayMethodId());
-            if (payMethod == null) {
-                return;
-            }
-
             boolean paid = false;
             try {
-                if (payMethod.getMerchantId() == 1999999999999999L) {
+                if (!privateQualification) {
                     SinglePayRequestData singlePayRequestData = new SinglePayRequestData();
                     singlePayRequestData.bankGeneralName = merchantInfo.getBankGeneralName();
                     singlePayRequestData.bankName = merchantInfo.getBankName();
@@ -84,7 +81,7 @@ public class CallbackAction extends AjaxActionSupport {
                 WeixinMessage.sendTemplateMessage(merchantInfo.getOpenid(), timeEnd, total_fee / 100.0, merchantInfo.getName(), "CiCi卡支付", tradeNo, "");
                 savePayOrder(merchantId, total_fee,
                         tradeNo,
-                        payMethod.getMode(),
+                        payType.toString(),
                         timeEnd,
                         merchantInfo.getWxRate(),
                         paid);

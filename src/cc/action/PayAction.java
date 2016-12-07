@@ -9,6 +9,7 @@ import cc.database.merchant.MerchantInfo;
 import cc.database.merchant.PayMethod;
 import cc.utils.IdConvert;
 import cc.weixin.utils.Signature;
+import com.opensymphony.xwork2.ActionContext;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
@@ -16,6 +17,8 @@ import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class PayAction extends AjaxActionSupport {
     public String payAdapter() {
@@ -41,13 +44,10 @@ public class PayAction extends AjaxActionSupport {
     }
 
     public void jsPay() throws Exception {
-        long cardId = Long.parseLong(getParameter("cid").toString());
-        MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(IdConvert.DecryptionId(cardId));
-        if (merchantInfo == null) {
+        PayMethod payMethod = choosePayMethod(Long.parseLong(getParameter("cid").toString()));
+        if (payMethod == null) {
             return;
         }
-
-        PayMethod payMethod = PayMethod.getPayMethodById(merchantInfo.getPayMethodId());
 
         JsPayData jsPayData = new JsPayData();
         jsPayData.mode = payMethod.getMode();
@@ -58,10 +58,10 @@ public class PayAction extends AjaxActionSupport {
         String requestUrl = getRequest().getRequestURL().toString();
         requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + CallbackAction.JSPAYCALLBACK;
         jsPayData.redirect_uri = requestUrl;
-        jsPayData.data = String.format("%s&%s&%s",
+        jsPayData.data = String.format("%s&%d&%s",
                 getParameter("cid").toString(),
-                payMethod.getMode(),
-                payMethod.getMethod());
+                payMethod.getPrivateQualification(),
+                payMethod.getPayType());
         jsPayData.sign = Signature.generateSign(jsPayData, jsPayData.id);
         XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
         String postDataXML = xStreamForRequestPostData.toXML(jsPayData);
@@ -82,5 +82,37 @@ public class PayAction extends AjaxActionSupport {
         finally {
             httpPost.abort();
         }
+    }
+
+    private PayMethod choosePayMethod(long cardId) {
+        MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(IdConvert.DecryptionId(cardId));
+        if (merchantInfo == null) {
+            return null;
+        }
+
+        HttpServletRequest request = (HttpServletRequest) ActionContext.getContext().get(org.apache.struts2.StrutsStatics.HTTP_REQUEST);
+        String userAgent = request.getHeader("User-Agent").toLowerCase();
+        if (userAgent.contains("micromessenger")) {
+            if (merchantInfo.getWxStatus()) {
+                return PayMethod.getPayMethodById(merchantInfo.getPayMethodWeixinId());
+            }
+        }
+        else if (userAgent.contains("walletclient")){
+            if (merchantInfo.getJdStatus()) {
+                return PayMethod.getPayMethodById(merchantInfo.getPayMethodJDId());
+            }
+        }
+        else if (userAgent.contains("alipayclient")){
+            if (merchantInfo.getAliStatus()) {
+                return PayMethod.getPayMethodById(merchantInfo.getPayMethodAliId());
+            }
+        }
+        else if (userAgent.contains("bestpay")){
+            if (merchantInfo.getBestStatus()) {
+                return PayMethod.getPayMethodById(merchantInfo.getPayMethodBestId());
+            }
+        }
+
+        return null;
     }
 }
