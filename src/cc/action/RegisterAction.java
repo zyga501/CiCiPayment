@@ -411,7 +411,7 @@ public class RegisterAction extends AjaxActionSupport {
         return AjaxActionComplete(list);
     }
 
-    public String fetchMerchant(){
+    public String fetchPendingMerchant(){
         Map<Object, Object> param= new HashMap<>();
         List<Map> allmerchantlist = null;
         if (null!=getParameter("item").toString() && (!getParameter("item").toString().trim().equals(""))){
@@ -425,6 +425,31 @@ public class RegisterAction extends AjaxActionSupport {
         return  AjaxActionComplete(allmerchantlist);
     }
 
+    public String fetchMerchant(){
+        Map<Object, Object> param= new HashMap<>();
+        List<Map> allmerchantlist = null;
+        if (null!=getParameter("cid").toString() && (!getParameter("cid").toString().trim().equals(""))){
+            param.put("cid",getParameter("cid"));
+        }
+        if (null!=getParameter("name").toString() && (!getParameter("name").toString().trim().equals(""))){
+            param.put("name",getParameter("name"));
+        }
+        if (null!=getParameter("agentname").toString() && (!getParameter("agentname").toString().trim().equals(""))){
+            param.put("agentname",getParameter("agentname"));
+        }
+        if (null!=getParameter("createtime1").toString() && (!getParameter("createtime1").toString().trim().equals(""))){
+            param.put("createtime1",getParameter("createtime1"));
+        }
+        if (null!=getParameter("createtime2").toString() && (!getParameter("createtime2").toString().trim().equals(""))){
+            param.put("createtime2",getParameter("createtime2"));
+        }
+        // TODO
+        allmerchantlist =MerchantInfo.getMerchantInfoByQuery(param);
+        Map map=new HashMap<>();
+        map.put("totalcount",allmerchantlist.size());
+        allmerchantlist.add(0, map);
+        return  AjaxActionComplete(allmerchantlist);
+    }
 
     public String selectOne(){
         try {
@@ -443,17 +468,67 @@ public class RegisterAction extends AjaxActionSupport {
         }
     }
 
+    public String selectOneMerchant(){
+        try {
+            Map map = new HashMap<>();
+            map.put("cid", getParameter("cid"));
+            MerchantInfo merchantInfo =  MerchantInfo.getMerchantInfoById(IdConvert.DecryptionId(Long.parseLong( getParameter("cid").toString())));
+            Map mapp = new HashMap<>();
+            getRequest().setAttribute("reginfo",merchantInfo);
+            getRequest().setAttribute("openid", merchantInfo.getOpenid());
+            getRequest().setAttribute("cid", getParameter("cid"));
+            return "registerall";
+        }
+        catch (Exception e){
+            return "page404";
+        }
+    }
     public String checkOne() {
         try {
             PendingMerchant pendingMerchant =  PendingMerchant.getPendingMerchantById(Long.parseLong(getParameter("cid").toString()), getParameter("openid").toString());
+            if (pendingMerchant==null){
+                pendingMerchant = new PendingMerchant();
+                pendingMerchant.setId(Long.parseLong(getParameter("cid").toString()));
+            }
             pendingMerchant.setWxStatus((null!=getParameter("wxpay"))&&(getParameter("wxpay").equals("on")));
             pendingMerchant.setJdStatus((null!=getParameter("jdpay"))&&(getParameter("jdpay").equals("on")));
             pendingMerchant.setAliStatus((null!=getParameter("alipay"))&&(getParameter("alipay").equals("on")));
             pendingMerchant.setBestStatus((null!=getParameter("bestpay"))&&(getParameter("bestpay").equals("on")));
             pendingMerchant.setPaymentStatus((null!=getParameter("canpay"))&&(getParameter("canpay").equals("on")));
+            try {
+                if (null != getParameter("wxrate"))
+                    pendingMerchant.setWxRate(Float.parseFloat(getParameter("wxrate").toString()));
+            }
+            catch (Exception e){
+                ProjectLogger.error("wxrate number Error!");
+            }
+            try {
+                if (null != getParameter("alirate"))
+                    pendingMerchant.setAliRate(Float.parseFloat(getParameter("alirate").toString()));
+            }
+            catch (Exception e){
+                ProjectLogger.error("alirate number Error!");
+            }
+            try {
+                if (null != getParameter("jdrate"))
+                    pendingMerchant.setJdRate(Float.parseFloat(getParameter("jdrate").toString()));
+            }
+            catch (Exception e){
+                ProjectLogger.error("jdrate number Error!");
+            }
+            try {
+                if (null != getParameter("bestrate"))
+                    pendingMerchant.setBestRate(Float.parseFloat(getParameter("bestrate").toString()));
+            }
+            catch (Exception e){
+                ProjectLogger.error("bestrate number Error!");
+            }
             if (PendingMerchant.updatePendingMerchant(pendingMerchant)){
                 PendingMerchant.deletePendingMerchant(pendingMerchant);
                 return AjaxActionComplete(MerchantInfo.insertMerchantInfo(pendingMerchant));
+            }
+            else{
+                return AjaxActionComplete(MerchantInfo.updateMerchantPayBycheck(pendingMerchant));
             }
         }
         catch (Exception e){
@@ -464,5 +539,8 @@ public class RegisterAction extends AjaxActionSupport {
 
     public String goMerchantList(){
         return "merchantlist";
+    }
+    public String goMerchantQuery(){
+        return "merchantquery";
     }
 }

@@ -15,6 +15,11 @@ public class MerchantInfo {
         return Database.Instance().selectList(statement, map);
     }
 
+    public static List<Map> getMerchantInfoByQuery(Map map) {
+        String statement = "cc.database.merchant.mapping.merchantInfo.getMerchantInfoByQuery";
+        return Database.Instance().selectList(statement, map);
+    }
+
     public static MerchantInfo getMerchantInfoById(long id) {
         String statement = "cc.database.merchant.mapping.merchantInfo.getMerchantInfoById";
         return Database.Instance().selectOne(statement, id);
@@ -25,6 +30,10 @@ public class MerchantInfo {
         return Database.Instance().update(statement, new HashMap<String, Object>(){{put("id", id);put("payMethonId", payMethonId);}}) == 1;
     }
 
+    public static boolean updateMerchantPayBycheck(MerchantInfo merchantInfo) {
+        String statement = "cc.database.merchant.mapping.merchantInfo.updateMerchantPayBycheck";
+        return Database.Instance().update(statement, merchantInfo) == 1;
+    }
     public static boolean insertMerchantInfo(MerchantInfo merchantInfo) {
         String statement = "cc.database.merchant.mapping.merchantInfo.insertMerchantInfo";
         return Database.Instance().insert(statement, merchantInfo)==1;
