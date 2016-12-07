@@ -1,9 +1,29 @@
 package cc.database.merchant;
 
 public class PayMethod {
+    public static void main(String[] args) throws Exception {
+        PayMethod payMethod = PayMethod.getPayMethodById(2);
+        System.out.print("");
+    }
+
     public static PayMethod getPayMethodById(int id) {
         String statement = "cc.database.merchant.mapping.payMethod.getPayMethodById";
         return Database.Instance().selectOne(statement, id);
+    }
+
+    public static PayType payTypeValueOf(int value) {
+        switch (value) {
+            case 1:
+                return PayType.WEIXIN;
+            case 2:
+                return PayType.ALI;
+            case 3:
+                return PayType.JD;
+            case 4:
+                return PayType.BEST;
+        }
+
+        return PayType.UNKNOWN;
     }
 
     public int getId() {
@@ -38,8 +58,42 @@ public class PayMethod {
         this.method_ = method;
     }
 
+    public boolean getPrivateQualification() {
+        return privateQualification_;
+    }
+
+    public void setPrivateQualification(boolean privateQualification) {
+        this.privateQualification_ = privateQualification;
+    }
+
+    public PayType getPayType() {
+        return payType_;
+    }
+
+    public void setPayType(PayType payType) {
+        this.payType_ = payType;
+    }
+
+    public String getComment() {
+        return comment_;
+    }
+
+    public void setComment(String comment) {
+        this.comment_ = comment;
+    }
+
     private int id_;
     private String mode_;
     private long merchantId_;
     private String method_;
+    private boolean privateQualification_;
+    public enum PayType {
+        WEIXIN,
+        ALI,
+        JD,
+        BEST,
+        UNKNOWN
+    };
+    private PayType payType_;
+    private String comment_;
 }

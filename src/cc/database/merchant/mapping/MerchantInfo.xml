@@ -10,6 +10,10 @@
         </if></where>
     </select>
 
+    <select id="getMerchantInfoById" parameterType="long" resultMap="merchantInfoResult">
+        SELECT * FROM merchantinfo where id=#{id}
+    </select>
+
     <select id="getMerchantInfoByQuery" parameterType="java.util.HashMap" resultType="java.util.HashMap">
         SELECT a.*,b.saltcode as cid,c.name as agentname FROM merchantinfo a,cardinfo b,agentinfo c where a.id=b.id and c.id=b.agentid
         <if test="null!=cid"> and b.id =#{cid}</if>
@@ -17,10 +21,6 @@
         <if test="null!=agentname"> and c.name =#{agentname}</if>
         <if test="null!=createtime1"> and registerDate &gt;  #{createtime1}</if>
         <if test="null!=createtime2"> and registerDate &lt;   #{createtime2}</if>
-    </select>
-
-    <select id="getMerchantInfoById" parameterType="long" resultMap="merchantInfoResult">
-        SELECT * FROM merchantinfo where id=#{id}
     </select>
 
     <update id="updateMerchantPayMethodId" parameterType="java.util.HashMap">
@@ -71,7 +71,10 @@
         <result property="accountName" column="accountName" jdbcType="VARCHAR" />
         <result property="accountPhone" column="accountPhone" jdbcType="VARCHAR" />
         <result property="openid" column="openid" jdbcType="VARCHAR" />
-        <result property="payMethodId" column="payMethodId" jdbcType="NUMERIC" />
+        <result property="payMethodWeixinId" column="payMethodWeixinId" jdbcType="NUMERIC" />
+        <result property="payMethodAliId" column="payMethodAliId" jdbcType="NUMERIC" />
+        <result property="payMethodJDId" column="payMethodJDId" jdbcType="NUMERIC" />
+        <result property="payMethodBestId" column="payMethodBestId" jdbcType="NUMERIC" />
         <result property="externInfo" column="externInfo" jdbcType="VARCHAR" />
     </resultMap>
 </mapper>

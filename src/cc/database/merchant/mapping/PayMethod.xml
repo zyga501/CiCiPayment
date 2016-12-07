@@ -10,5 +10,8 @@
         <result property="mode" column="mode" jdbcType="VARCHAR" />
         <result property="merchantId" column="merchantId" jdbcType="BIGINT" />
         <result property="methodType" column="methodType" jdbcType="VARCHAR" />
+        <result property="privateQualification" column="privateQualification" jdbcType="TINYINT" />
+        <result property="payType" column="payType" jdbcType="NUMERIC" />
+        <result property="comment" column="comment" jdbcType="VARCHAR" />
     </resultMap>
 </mapper>
