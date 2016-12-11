@@ -20,6 +20,6 @@
         <result property="username" column="username" jdbcType="VARCHAR" />
         <result property="password" column="password" jdbcType="VARCHAR" />
         <result property="openid" column="openid" jdbcType="VARCHAR" />
-        <result property="typeid" column="typeid" jdbcType="INTEGER" />
+        <result property="roletype" column="roletype" jdbcType="INTEGER" />
     </resultMap>
 </mapper>

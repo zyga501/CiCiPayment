@@ -1,14 +1,10 @@
 package cc.database.merchant;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Map;
 
 public class CardInfo {
-    public static void main(String[] args) throws Exception {
-        CardInfo cardInfo = CardInfo.getCardInfoById(1939750548015104L);
-        System.exit(0);
-    }
-
     public static boolean insertCardInfo(Map map) {
         String statement = "cc.database.merchant.mapping.cardInfo.insertCardInfo";
         return Database.Instance().insert(statement, map)==1;
@@ -17,6 +13,11 @@ public class CardInfo {
     public static CardInfo getCardInfoById(long id) {
         String statement = "cc.database.merchant.mapping.cardInfo.getCardInfoById";
         return Database.Instance().selectOne(statement, id);
+    }
+
+    public static List<String> getCardInfoByOrder(String ord) {
+        String statement = "cc.database.merchant.mapping.cardInfo.getCardInfoByOrder";
+        return Database.Instance().selectList(statement, ord);
     }
 
     public long getId() {
@@ -43,7 +44,25 @@ public class CardInfo {
         this.createTime_ = createTime;
     }
 
+    public String getOrderno() {
+        return orderno_;
+    }
+
+    public void setOrderno(String orderno_) {
+        this.orderno_ = orderno_;
+    }
+
+    public String getSaltcode() {
+        return saltcode_;
+    }
+
+    public void setSaltcode(String saltcode_) {
+        this.saltcode_ = saltcode_;
+    }
+
     private long id_;
     private String agentId_;
     private Timestamp createTime_;
+    private String saltcode_;
+    private String orderno_;
 }

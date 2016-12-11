@@ -63,6 +63,9 @@
             <result name="merchantquery">./register/merchantquery.jsp</result>
             <result name="merchantlist">./register/merchantlist.jsp</result>
         </action>
+        <action name="Flow!*" class="cc.action.FlowAction" method="{1}">
+            <result name="ccmakeorder">ccmakeorder.jsp</result>
+        </action>
     </package>
     <constant name="struts.custom.i18n.resources" value="cc/mui/resources"/>
 

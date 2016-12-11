@@ -17,6 +17,7 @@
     <link href="<%=request.getContextPath()%>/css/bootstrap-combobox.css" rel="stylesheet" type="text/css"/>
     <script src="<%=request.getContextPath()%>/js/jquery/jquery.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/layer.min.js"></script>
+    <script src="<%=request.getContextPath()%>/js/jquery-qrcode-0.14.0.js"></script>
 </head>
 <body>
 <form>
@@ -54,6 +55,7 @@
 <div id="idslist"></div>
 <script src="/js/bootstrap-combobox.js" type="text/javascript"></script>
 <script type="text/javascript">
+    var codear;
     //<![CDATA[
     $(document).ready(function () {
         $('.combobox').combobox()
@@ -71,11 +73,53 @@
                 if (json.resultCode == 'Succeed') {
                     layer.msg('操作成功', {icon: 1});
                     $("#idslist").text(json.idslist);
+                    codear = json.idslist.split(",");
+                    var htmlStr = "<table class='table table-striped table-bordered table-hover'>";
+                    htmlStr += "<tbody>";alert( Math.ceil(codear.length / 5));
+                    for (var i = 0, l = Math.ceil(codear.length / 5); i < l; i++) {
+                        htmlStr += "<tr>";
+                        for (var j=i*5;j<Math.min(codear.length,(i+1)*5);j++)
+                            htmlStr += "<td id="+"code".concat(codear[j])+">" + codear[j]+ "</td>"
+                        htmlStr += "</tr>";
+                    }
+                    htmlStr += "</tobdy></table>";
+                    htmlStr += "<button onclick='mkqcode()'>生成二维码</button>";
+                    htmlStr += "<button onclick='downqcode()'>直接打包下载</button>";
+                    $("#idslist").html(htmlStr);
+
                 }
                 else
                     layer.msg('操作失败', {icon: 2});
             }
         })
+    }
+    function downqcode() {
+        $("#idslist").text("");
+        $.ajax({
+            type: 'post',
+            url: 'User!downQcode',
+            dataType: "json",
+            data: $("form").serialize(),
+            success: function (data) {
+                var json = eval("(" + data + ")");
+            }
+        })
+    }
+
+    function mkqcode(){
+        var options;
+        for (var i = 0 ; i <  codear.length; i++) {
+            if (codear[i] != "") {
+                options = null;
+                options = {
+                    text: "www.jeanhk.top/CiCiPayment/Pay!payAdapter?cid="+codear[i], //二维码的链接
+                    dom: "#code" + codear[i],//二维码生成的位置
+                    size: 100,
+                    render: "image"//设置生成的二维码是canvas格式，也有image、div格式
+                }
+                $(options.dom).qrcode(options);
+            }
+        }
     }
 </script>
 </body>

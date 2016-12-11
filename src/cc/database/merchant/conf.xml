@@ -31,5 +31,6 @@
         <mapper resource="cc/database/merchant/mapping/AgentInfo.xml" />
         <mapper resource="cc/database/merchant/mapping/UserInfo.xml" />
         <mapper resource="cc/database/merchant/mapping/MenuTree.xml" />
+        <mapper resource="cc/database/merchant/mapping/SaleInfo.xml" />
     </mappers>
 </configuration>

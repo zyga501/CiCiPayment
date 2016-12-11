@@ -102,10 +102,7 @@ public class UserAction extends AjaxActionSupport {
 
 
     public String login() {
-        Map map = new HashMap<>();
-        map.put("username",getParameter("username"));
-        map.put("password",getParameter("password"));
-        List<UserInfo> lu= UserInfo.getUserInfoByMap(map);
+        List<UserInfo> lu= UserInfo.getUserInfoByMap(getParameter("username").toString(),getParameter("password").toString(),null,null);
         if (lu.size()!=1)
             return AjaxActionComplete(false);
         setAttribute("roletype",lu.get(0).getRoletype());
@@ -171,9 +168,7 @@ public class UserAction extends AjaxActionSupport {
     public String makeCardPage(){
         if ((!getAttribute("roletype").equals("1"))&&(!getAttribute("roletype").equals("111")))
             return "";
-        Map map = new HashMap<>();
-        map.put("roletype",0);
-        List<UserInfo> lu =  UserInfo.getUserInfoByMap(map);
+        List<UserInfo> lu =  UserInfo.getUserInfoByMap(null,null,"0",null);
         setAttribute("userList",lu);
         return "makeCard";
     }
@@ -189,11 +184,11 @@ public class UserAction extends AjaxActionSupport {
             map.put("agentid",getParameter("agentid"));
             if (CardInfo.insertCardInfo(map)) {
                 long after = (before * 100 + System.currentTimeMillis() % 100) ^ 1361753741828L;
-                rtnstr += String.valueOf(after) + "<br>";
+                rtnstr += String.valueOf(after) + ",";
             }
         }
         map.clear();
-        map.put("idslist",rtnstr);
+        map.put("idslist",rtnstr.substring(0,rtnstr.length()-1));
         return AjaxActionComplete(true,map);
     }
 

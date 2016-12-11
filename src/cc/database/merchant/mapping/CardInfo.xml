@@ -4,6 +4,9 @@
     <select id="getCardInfoById" parameterType="long" resultMap="cardInfoResult">
         SELECT * FROM cardInfo where id=#{id}
     </select>
+    <select id="getCardInfoByOrder" parameterType="string" resultType="string">
+        SELECT saltcode FROM cardInfo where orderno=#{_parameter}
+    </select>
     <insert id="insertCardInfo" parameterType="java.util.HashMap">
         INSERT INTO cardInfo (id,agentid) VALUES (#{id},#{agentid})
     </insert>
@@ -11,5 +14,7 @@
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="agentId" column="agentId" jdbcType="VARCHAR" />
         <result property="createTime" column="createTime" jdbcType="TIMESTAMP" />
+        <result property="saltcode" column="saltcode" jdbcType="VARCHAR" />
+        <result property="orderno" column="orderno" jdbcType="VARCHAR" />
     </resultMap>
 </mapper>
