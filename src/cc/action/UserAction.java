@@ -100,6 +100,10 @@ public class UserAction extends AjaxActionSupport {
         }
     }
 
+    public String  Logout(){
+        getRequest().getSession().invalidate();
+        return "loginjsp";
+    }
 
     public String login() {
         List<UserInfo> lu= UserInfo.getUserInfoByMap(getParameter("username").toString(),getParameter("password").toString(),null,null);

@@ -46,6 +46,7 @@
         <action name="Callback!*" class="cc.action.CallbackAction" method="{1}">
         </action>
         <action name="User!*" class="cc.action.UserAction" method="{1}">
+            <result name="loginjsp">login.jsp</result>
             <result name="agentPage">agentpage.jsp</result>
             <result name="adminPage">adminpage.jsp</result>
             <result name="agentRegister">agentreg.jsp</result>

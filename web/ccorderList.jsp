@@ -155,8 +155,9 @@
                 success: function (data) {
                     var json = eval("(" + data + ")");
                     if (json.resultCode=="Succeed"){
-                        $(obj).html("<a shh='" + json[i]['orderno'] + "' href='#' onclick='showinfos(this)'>查看</a>");
+                        $(obj).html("查看");
                         $(obj).attr("onclick","showinfos(this)");
+                        alert("审核通过");
                     }
                 }
             })
@@ -210,7 +211,7 @@
         var options;
         if (v != "") {
             options = {
-                text: "www.jeanhk.top/CiCiPayment/Pay!payAdapter?cid="+v, //二维码的链接
+                text: "http://www.jeanhk.top/CiCiPayment/Pay!payAdapter?cid="+v, //二维码的链接
                 size: 100,
                 render: "image"//设置生成的二维码是canvas格式，也有image、div格式
             }

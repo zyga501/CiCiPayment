@@ -41,7 +41,7 @@ public class FlowAction extends AjaxActionSupport {
     public String fetchCiCiOrderNo(){
         Map<Object, Object> param= new HashMap<>();
         List<SaleInfo> allmerchantlist = null;
-        allmerchantlist =SaleInfo.getsaleInfoByOrderNo(StringUtils.convertNullableString(getParameter("orderno"),""));
+        allmerchantlist =SaleInfo.getsaleInfoByOrderNo(StringUtils.convertNullableString(getParameter("ord"),""));
         Map map=new HashMap<>();
         map.put("totalcount",allmerchantlist.size());
         map.put("rtlist",allmerchantlist);

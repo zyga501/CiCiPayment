@@ -22,16 +22,9 @@
     <div class="container">
         <div class="row">
             <div class="form-group">
-                <label class="col-sm-2">卡号</label>
-                <div class="col-sm-4">
-                    <input class="form-control" name="cid">
-                </div>
-                <label class="col-sm-2">注册时间</label>
-                <div class="col-sm-2"><input name="createtime1" id="startdate" class="form-control layer-date" placeholder="开始日期"
-                                             onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
-                </div>
-                <div class="col-sm-2"><input name="createtime2" id="enddate" class="form-control layer-date" placeholder="开始日期"
-                                             onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+                <label class="col-sm-2 col-sm-offset-2">订单号</label>
+                <div class="col-sm-6">
+                    <input class="form-control" name="ord">
                 </div>
             </div>
             <div class="form-group">
@@ -188,7 +181,7 @@
         var options;
         if (v != "") {
             options = {
-                text: "www.jeanhk.top/CiCiPayment/Pay!payAdapter?cid="+v, //二维码的链接
+                text: "http://www.jeanhk.top/CiCiPayment/Pay!payAdapter?cid="+v, //二维码的链接
                 size: 100,
                 render: "image"//设置生成的二维码是canvas格式，也有image、div格式
             }

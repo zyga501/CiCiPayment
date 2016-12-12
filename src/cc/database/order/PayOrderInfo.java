@@ -94,11 +94,11 @@ public class PayOrderInfo {
         paid_ = paid;
     }
 
-    public Timestamp getCreateTime() {
+    public Timestamp getCreatetime() {
         return createTime_;
     }
 
-    public void setCreateTime(Timestamp createTime) {
+    public void setCreatetime(Timestamp createTime) {
         this.createTime_ = createTime;
     }
 

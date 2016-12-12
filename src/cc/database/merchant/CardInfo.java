@@ -36,11 +36,11 @@ public class CardInfo {
         this.agentid_ = agentId;
     }
 
-    public Timestamp getCreateTime() {
+    public Timestamp getCreatetime() {
         return createtime_;
     }
 
-    public void setCreateTime(Timestamp createTime) {
+    public void setCreatetime(Timestamp createTime) {
         this.createtime_ = createTime;
     }
 
