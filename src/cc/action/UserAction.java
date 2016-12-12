@@ -107,6 +107,7 @@ public class UserAction extends AjaxActionSupport {
             return AjaxActionComplete(false);
         setAttribute("roletype",lu.get(0).getRoletype());
         setAttribute("userid",lu.get(0).getId());
+        setAttribute("unick",getParameter("username").toString());
         List<MenuTree> menutreelist = MenuTree.getMenuNodeByUid(Long.parseLong(getRequest().getSession().getAttribute("roletype").toString()));
         List<Object> menulist = new ArrayList<>();
         for (MenuTree m : menutreelist) {

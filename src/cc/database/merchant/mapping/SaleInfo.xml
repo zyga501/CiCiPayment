@@ -6,13 +6,13 @@
         a.orderno=b.orderno where a.orderno  like  CONCAT('%','${_parameter}','%' )
     </select>
     <select id="getsaleInfoByName" parameterType="string" resultMap="saleInfoResult">
-        SELECT a.* FROM saleInfo a,agentinfo b where a.agentid=b.id and b.name like  CONCAT('%','${_parameter}','%' )
+        SELECT a.* FROM saleInfo a,agentinfo b where a.agentid=b.id and b.name like  CONCAT('%','${_parameter}','%' )  order by a.orderno  desc
     </select>
     <select id="getsaleInfoByMap" parameterType="java.util.HashMap" resultType="java.util.HashMap">
         SELECT a.*,b.name as uname,c.total FROM saleInfo a inner join agentinfo b on  a.agentid=b.id left join
         (select count(*) total,orderno from cardinfo group by orderno) c on    a.orderno=c.orderno <where>
-        <if test="uname!=null" > and b.name like  CONCAT('%','${uname}','%' )</if>
-        <if test="orderno!=null" > and a.orderno like  CONCAT('%','${orderno}','%' )</if></where>
+        <if test="agent!=null" > and b.name like  CONCAT('%','${agent}','%' )</if>
+        <if test="orderno!=null" > and a.orderno like  CONCAT('%','${orderno}','%' )</if></where>  order by a.orderno  desc
     </select>
     <insert id="insertSaleInfo" parameterType="cc.database.merchant.SaleInfo">
        insert into saleInfo (agentid,priceper,num,paytype,orderno,memo) VALUES (#{agentid},#{priceper},#{num},#{paytype},#{orderno},#{memo})

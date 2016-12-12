@@ -154,6 +154,10 @@
                 async: false,
                 success: function (data) {
                     var json = eval("(" + data + ")");
+                    if (json.resultCode=="Succeed"){
+                        $(obj).html("<a shh='" + json[i]['orderno'] + "' href='#' onclick='showinfos(this)'>查看</a>");
+                        $(obj).attr("onclick","showinfos(this)");
+                    }
                 }
             })
         }

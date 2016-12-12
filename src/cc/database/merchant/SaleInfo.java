@@ -10,9 +10,9 @@ public class SaleInfo {
         return Database.Instance().selectList(statement, no);
     }
 
-    public static List<Map> getsaleInfoByMap(String uname,String orderno) {
+    public static List<Map> getsaleInfoByMap(String agent,String orderno) {
         String statement = "cc.database.merchant.mapping.saleInfo.getsaleInfoByMap";
-        return Database.Instance().selectList(statement, new HashMap(){{put("name",uname);put("orderno",orderno);}});
+        return Database.Instance().selectList(statement, new HashMap(){{put("agent",agent);put("orderno",orderno);}});
     }
 
     public static List<SaleInfo> getsaleInfoByName(String uname) {

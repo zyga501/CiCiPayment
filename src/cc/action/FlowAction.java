@@ -65,8 +65,8 @@ public class FlowAction extends AjaxActionSupport {
         Map<Object, Object> param= new HashMap<>();
 
         List<Map> allmerchantlist = null;
-        allmerchantlist =SaleInfo.getsaleInfoByMap(StringUtils.convertNullableString(getParameter("uname")),StringUtils.
-                convertNullableString(getParameter("orderno")));
+        allmerchantlist =SaleInfo.getsaleInfoByMap(StringUtils.convertNullableString(getParameter("agent")),StringUtils.
+                convertNullableString(getParameter("ord")));
         if ((!getAttribute("roletype").equals("111")))
             return AjaxActionComplete(false);
         Map map=new HashMap<>();
