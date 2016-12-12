@@ -106,7 +106,7 @@
         })
     }
 
-    function mkqcode(){
+    function mkqcode(obj){
         var options;
         for (var i = 0 ; i <  codear.length; i++) {
             if (codear[i] != "") {

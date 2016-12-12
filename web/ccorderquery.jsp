@@ -46,11 +46,12 @@
 <div style="float:left" id="pagecountdiv"></div>
 <div style="float:right;text-align: center" id="navigatediv"></div>
 <center><div id="contentdiv"></div></center>
+<div id="divimg" style="text-align: center" ></div>
 </body>
 <script src="<%=request.getContextPath()%>/js/jquery/jquery.min.js"></script>
 <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap.min.js"></script>
 <script src="<%=request.getContextPath()%>/js/layer.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/dateRangeUtil.js"></script>
+<script src="<%=request.getContextPath()%>/js/jquery-qrcode-0.14.0.js"></script>
 <script>
     function search(curr) {
         $("#pagecountdiv").html("");
@@ -66,7 +67,7 @@
                     $("#contentdiv").html(json.errorMessage);
                 }
                 else {
-                    laypage({
+                    /*laypage({
                         cont: 'navigatediv',
                         pages: json[0].pagecount,
                         skip: true,
@@ -74,10 +75,12 @@
                         jump: function (obj, first) {
                             if(!first){
                                 $("#pagecountdiv").html("");
-                                $("#contentdiv").html("<img  src='<%=request.getContextPath()%>/img/loading.gif'>");
+                                $("#contentdiv").html("<img  src='<%=request.getContextPath()%>
+                    /img/loading.gif'>");
                                 $.ajax({
                                     type: 'post',
-                                    url: '<%=request.getContextPath()%>/Flow!fetchCiCiOrderNo',
+                                    url: '<%=request.getContextPath(
+                     )%> /Flow!fetchCiCiOrderNo',
                                     dataType: "json",
                                     data: $("#searchform").serialize() + "&currpagenum=" + obj.curr,
                                     success: function (data) {
@@ -91,7 +94,7 @@
                                             var htmlStr = "<table class='table table-striped table-bordered table-hover'>" + "<thead>";
                                             htmlStr += "<th>订单号</th><th>数量</th><th>单价</th><th>查看明细</th>";
                                             htmlStr += "</thead><tbody>";
-                                            for (var i = 1, l = json.rtlist.length; i < l; i++) {
+                                            for (var i = 0, l = json.rtlist.length; i < l; i++) {
                                                 htmlStr += "<tr shh='" + json.rtlist[i]['orderno'] +"'>";
                                                 htmlStr += "<td>" + json.rtlist[i]['orderno'] + "</td>"
                                                 htmlStr += "<td>" + json.rtlist[i]['num'] + "</td>"
@@ -108,13 +111,13 @@
                                     }
                                 })}
                         }
-                    })
+                    })*/
                     $("#pagecountdiv").html("<span class='label label-success'>" +
                             "总共数据<span class='badge'>" + json.totalcount + " </span></span>");
                     var htmlStr = "<table class='table table-striped table-bordered table-hover'>" + "<thead>";
                     htmlStr += "<th>订单号</th><th>数量</th><th>单价</th><th>查看明细</th>";
                     htmlStr += "</thead><tbody>";
-                    for (var i = 1, l = json.rtlist.length; i < l; i++) {
+                    for (var i = 0, l = json.rtlist.length; i < l; i++) {
                         htmlStr += "<tr shh='" + json.rtlist[i]['orderno'] +"'>";
                         htmlStr += "<td>" + json.rtlist[i]['orderno'] + "</td>"
                         htmlStr += "<td>" + json.rtlist[i]['num'] + "</td>"
@@ -130,6 +133,7 @@
                 }
             }
         })
+        }
         function nulltoempty(val){
             if  (val=="null" || val==null)
                 return "";
@@ -150,12 +154,11 @@
                         for (var i = 0, l = Math.ceil(json.rtlist.length / 5); i < l; i++) {
                             htmlStr += "<tr>";
                             for (var j=i*5;j<Math.min(json.rtlist.length,(i+1)*5);j++)
-                                htmlStr += "<td id="+"code".concat(json.rtlist[j])+">" + json.rtlist[j]+ "</td>"
+                                htmlStr += "<td id="+"code".concat(json.rtlist[j].saltcode)+" onclick='mkqcode(this)'>" + json.rtlist[j].saltcode+ "</td>"
                             htmlStr += "</tr>";
                         }
                         htmlStr += "</tobdy></table>";
-                        htmlStr += "<button onclick='mkqcode()'>生成二维码</button>";
-                        htmlStr += "<button onclick='downqcode()'>直接打包下载</button>";
+                        htmlStr += "<button onclick='downqcode("+ono+")'>打包下载</button>";
                         layer.full(layer.open({
                             type: 1,
                             skin: 'layui-layer-demo', //样式类名
@@ -179,7 +182,29 @@
                 }
             })
         }
+
+    function mkqcode(obj){
+        var v =$(obj).text();
+        var options;
+        if (v != "") {
+            options = {
+                text: "www.jeanhk.top/CiCiPayment/Pay!payAdapter?cid="+v, //二维码的链接
+                size: 100,
+                render: "image"//设置生成的二维码是canvas格式，也有image、div格式
+            }
+            $('#divimg').html("");
+            $('#divimg').qrcode(options);
+        }
+        layer.open({
+            type: 1,
+            title:v,
+            content: $('#divimg') //这里content是一个DOM，这个元素要放在body根节点下
+        });
     }
+    function downqcode(v) {
+         window.open('Flow!downQcode?ord='+v);
+    }
+
     function refresh(){
         searchlist(1);
     }

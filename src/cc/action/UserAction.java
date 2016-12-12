@@ -173,25 +173,6 @@ public class UserAction extends AjaxActionSupport {
         return "makeCard";
     }
 
-    public String sendMakeCardMsg(){
-        IdWorker worker2 = new IdWorker(2);
-        Map map = new HashMap<>();
-        String rtnstr="";
-        for (int i=0;i<Integer.parseInt(getParameter("cardnum").toString());i++) {
-            long before = worker2.nextId();
-            map.clear();
-            map.put("id",before);
-            map.put("agentid",getParameter("agentid"));
-            if (CardInfo.insertCardInfo(map)) {
-                long after = (before * 100 + System.currentTimeMillis() % 100) ^ 1361753741828L;
-                rtnstr += String.valueOf(after) + ",";
-            }
-        }
-        map.clear();
-        map.put("idslist",rtnstr.substring(0,rtnstr.length()-1));
-        return AjaxActionComplete(true,map);
-    }
-
     public void fetchPayorderList() {
         try {
             int pageSize = Math.max(1,Integer.parseInt(getParameter("pageSize").toString()));

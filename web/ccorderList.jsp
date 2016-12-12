@@ -50,18 +50,19 @@
 <div style="float:left" id="pagecountdiv"></div>
 <div style="float:right;text-align: center" id="navigatediv"></div>
 <center><div id="contentdiv"></div></center>
+<div id="divimg" style="text-align: center" ></div>
 </body>
 <script src="<%=request.getContextPath()%>/js/jquery/jquery.min.js"></script>
 <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap.min.js"></script>
 <script src="<%=request.getContextPath()%>/js/layer.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/dateRangeUtil.js"></script>
+<script src="<%=request.getContextPath()%>/js/jquery-qrcode-0.14.0.js"></script>
 <script>
     function search(curr) {
         $("#pagecountdiv").html("");
         $("#contentdiv").html("<img  src='<%=request.getContextPath()%>/img/loading.gif'>");
         $.ajax({
             type: 'post',
-            url: '<%=request.getContextPath()%>/Flow!OrderList',
+            url: '<%=request.getContextPath()%>/Flow!orderList',
             dataType: "json",
             data: $("#searchform").serialize() + "&currpagenum=" + curr,
             success: function (data) {
@@ -76,7 +77,7 @@
                         skip: true,
                         skin: 'yahei',
                         jump: function (obj, first) {
-                            if(!first){
+                            if (!first) {
                                 $("#pagecountdiv").html("");
                                 $("#contentdiv").html("<img  src='<%=request.getContextPath()%>/img/loading.gif'>");
                                 $.ajax({
@@ -96,22 +97,23 @@
                                             htmlStr += "<th>代理</th><th>订单号</th><th>数量</th><th>单价</th><th>操作</th>";
                                             htmlStr += "</thead><tbody>";
                                             for (var i = 1, l = json.length; i < l; i++) {
-                                                htmlStr += "<tr shh='" + json[i]['orderno'] +"'>";
+                                                htmlStr += "<tr shh='" + json[i]['orderno'] + "'>";
                                                 htmlStr += "<td>" + json[i]['uname'] + "</td>"
                                                 htmlStr += "<td>" + json[i]['orderno'] + "</td>"
                                                 htmlStr += "<td>" + json[i]['num'] + "</td>"
                                                 htmlStr += "<td>" + nulltoempty(json[i]['priceper']) + "</td>"
-                                                if (json[i]['total']>0)
-                                                    htmlStr += "<td><a shh='" + json[i]['orderno'] +"' href='#' onclick='showinfos(this)'>查看</a></td>"
+                                                if (json[i]['total'] > 0)
+                                                    htmlStr += "<td><a shh='" + json[i]['orderno'] + "' href='#' onclick='showinfos(this)'>查看</a></td>"
                                                 else
-                                                    htmlStr += "<td><a shh='" + json[i]['orderno'] +"' href='#' onclick='sendok(this)'>通过</a></td>"
+                                                    htmlStr += "<td><a shh='" + json[i]['orderno'] + "' href='#' onclick='sendok(this)'>通过</a></td>"
                                                 htmlStr += "</tr>";
                                             }
                                             htmlStr += "</tobdy></table>";
                                             $("#contentdiv").html(htmlStr);
                                         }
                                     }
-                                })}
+                                })
+                            }
                         }
                     })
                     $("#pagecountdiv").html("<span class='label label-success'>" +
@@ -120,15 +122,15 @@
                     htmlStr += "<th>代理</th><th>订单号</th><th>数量</th><th>单价</th><th>操作</th>";
                     htmlStr += "</thead><tbody>";
                     for (var i = 1, l = json.length; i < l; i++) {
-                        htmlStr += "<tr shh='" + json[i]['orderno'] +"'>";
+                        htmlStr += "<tr shh='" + json[i]['orderno'] + "'>";
                         htmlStr += "<td>" + json[i]['uname'] + "</td>"
                         htmlStr += "<td>" + json[i]['orderno'] + "</td>"
                         htmlStr += "<td>" + json[i]['num'] + "</td>"
                         htmlStr += "<td>" + nulltoempty(json[i]['priceper']) + "</td>"
-                        if (json[i]['total']>0)
-                            htmlStr += "<td><a shh='" + json[i]['orderno'] +"' href='#' onclick='showinfos(this)'>查看</a></td>"
+                        if (json[i]['total'] > 0)
+                            htmlStr += "<td><a shh='" + json[i]['orderno'] + "' href='#' onclick='showinfos(this)'>查看</a></td>"
                         else
-                            htmlStr += "<td><a shh='" + json[i]['orderno'] +"' href='#' onclick='sendok(this)'>通过</a></td>"
+                            htmlStr += "<td><a shh='" + json[i]['orderno'] + "' href='#' onclick='sendok(this)'>通过</a></td>"
                         htmlStr += "</tr>";
                     }
                     htmlStr += "</tobdy></table>";
@@ -136,19 +138,18 @@
                 }
             }
         })
+    }
         function nulltoempty(val){
             if  (val=="null" || val==null)
                 return "";
             else
                 return val;
         }
-
-
         function  sendok(obj) {
-            var ono = $(obj).attr("shh").
+            var ono = $(obj).attr("shh");
             $.ajax({
                 type: 'post',
-                url: "<%=request.getContextPath()%>/Flow!orderturnok?ord=" + ono,
+                url: "<%=request.getContextPath()%>/Flow!orderTurnok?ord=" + ono,
                 dataType: "json",
                 async: false,
                 success: function (data) {
@@ -156,52 +157,69 @@
                 }
             })
         }
-        function  showinfos(obj) {
-            var ono=$(obj).attr("shh").
-            $.ajax({
-                type: 'post',
-                url: "<%=request.getContextPath()%>/Flow!orderDetail?ord=" + ono,
-                dataType: "json",
-                async: false,
-                success: function (data) {
-                    var json = eval("(" + data + ")");
-                    if ((json.resultCode=="Succeed")  &&(json.rtlist.length>0)) {
-                        var htmlStr = "<table class='table table-striped table-bordered table-hover'>";
-                        htmlStr += "<tbody>";
-                        for (var i = 0, l = Math.ceil(json.rtlist.length / 5); i < l; i++) {
-                            htmlStr += "<tr>";
-                            for (var j=i*5;j<Math.min(json.rtlist.length,(i+1)*5);j++)
-                                htmlStr += "<td id="+"code".concat(json.rtlist[j])+">" + json.rtlist[j]+ "</td>"
-                            htmlStr += "</tr>";
-                        }
-                        htmlStr += "</tobdy></table>";
-                        htmlStr += "<button onclick='mkqcode()'>生成二维码</button>";
-                        htmlStr += "<button onclick='downqcode()'>直接打包下载</button>";
-                        layer.full(layer.open({
-                            type: 1,
-                            skin: 'layui-layer-demo', //样式类名
-                            closeBtn: 1, //不显示关闭按钮
-                            shade: 0.8,
-                            area: ['100%', '100%'],
-                            shadeClose: true, //开启遮罩关闭
-                            content: htmlStr
-                        }));
-                    }else{
-                        layer.full(layer.open({
-                            type: 1,
-                            skin: 'layui-layer-demo', //样式类名
-                            closeBtn: 1, //不显示关闭按钮
-                            shade: 0.8,
-                            area: ['100%', '100%'],
-                            shadeClose: true, //开启遮罩关闭
-                            content: '<h1>无结果</h1>'
-                        }));
+    function  showinfos(obj) {
+        var ono=$(obj).attr("shh")
+        $.ajax({
+            type: 'post',
+            url: "<%=request.getContextPath()%>/Flow!orderDetail?ord=" + ono,
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                var json = eval("(" + data + ")");
+                if ((json.resultCode=="Succeed")  &&(json.rtlist.length>0)) {
+                    var htmlStr = "<table class='table table-striped table-bordered table-hover'>";
+                    htmlStr += "<tbody>";
+                    for (var i = 0, l = Math.ceil(json.rtlist.length / 5); i < l; i++) {
+                        htmlStr += "<tr>";
+                        for (var j=i*5;j<Math.min(json.rtlist.length,(i+1)*5);j++)
+                            htmlStr += "<td id="+"code".concat(json.rtlist[j].saltcode)+" onclick='mkqcode(this)'>" + json.rtlist[j].saltcode+ "</td>"
+                        htmlStr += "</tr>";
                     }
+                    htmlStr += "</tobdy></table>";
+                    htmlStr += "<button onclick='downqcode()'>打包下载</button>";
+                    layer.full(layer.open({
+                        type: 1,
+                        skin: 'layui-layer-demo', //样式类名
+                        closeBtn: 1, //不显示关闭按钮
+                        shade: 0.8,
+                        area: ['100%', '100%'],
+                        shadeClose: true, //开启遮罩关闭
+                        content: htmlStr
+                    }));
+                }else{
+                    layer.full(layer.open({
+                        type: 1,
+                        skin: 'layui-layer-demo', //样式类名
+                        closeBtn: 1, //不显示关闭按钮
+                        shade: 0.8,
+                        area: ['100%', '100%'],
+                        shadeClose: true, //开启遮罩关闭
+                        content: '<h1>无结果</h1>'
+                    }));
                 }
-            })
-        }
+            }
+        })
     }
-    function refresh(){
+
+    function mkqcode(obj){
+        var v =$(obj).text();
+        var options;
+        if (v != "") {
+            options = {
+                text: "www.jeanhk.top/CiCiPayment/Pay!payAdapter?cid="+v, //二维码的链接
+                size: 100,
+                render: "image"//设置生成的二维码是canvas格式，也有image、div格式
+            }
+            $('#divimg').html("");
+            $('#divimg').qrcode(options);
+        }
+        layer.open({
+            type: 1,
+            title:v,
+            content: $('#divimg') //这里content是一个DOM，这个元素要放在body根节点下
+        });
+    }
+        function refresh(){
         searchlist(1);
     }
 </script>

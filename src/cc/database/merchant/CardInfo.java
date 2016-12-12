@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 public class CardInfo {
-    public static boolean insertCardInfo(Map map) {
+    public static boolean insertCardInfo(CardInfo cardInfo) {
         String statement = "cc.database.merchant.mapping.cardInfo.insertCardInfo";
-        return Database.Instance().insert(statement, map)==1;
+        return Database.Instance().insert(statement, cardInfo)==1;
     }
 
     public static CardInfo getCardInfoById(long id) {
@@ -15,7 +15,7 @@ public class CardInfo {
         return Database.Instance().selectOne(statement, id);
     }
 
-    public static List<String> getCardInfoByOrder(String ord) {
+    public static List<CardInfo> getCardInfoByOrder(String ord) {
         String statement = "cc.database.merchant.mapping.cardInfo.getCardInfoByOrder";
         return Database.Instance().selectList(statement, ord);
     }
@@ -28,20 +28,20 @@ public class CardInfo {
         this.id_ = id;
     }
 
-    public String getAgentId() {
-        return agentId_;
+    public long getAgentid() {
+        return agentid_;
     }
 
-    public void setAgentId(String agentId) {
-        this.agentId_ = agentId;
+    public void setAgentid(long agentId) {
+        this.agentid_ = agentId;
     }
 
     public Timestamp getCreateTime() {
-        return createTime_;
+        return createtime_;
     }
 
     public void setCreateTime(Timestamp createTime) {
-        this.createTime_ = createTime;
+        this.createtime_ = createTime;
     }
 
     public String getOrderno() {
@@ -61,8 +61,8 @@ public class CardInfo {
     }
 
     private long id_;
-    private String agentId_;
-    private Timestamp createTime_;
+    private long agentid_;
+    private Timestamp createtime_;
     private String saltcode_;
     private String orderno_;
 }
