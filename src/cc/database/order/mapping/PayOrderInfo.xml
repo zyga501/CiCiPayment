@@ -32,6 +32,6 @@
         <result property="tradeTime" column="tradeTime" jdbcType="VARCHAR" />
         <result property="tradeRate" column="tradeRate" jdbcType="DOUBLE" />
         <result property="paid" column="paid" jdbcType="TINYINT" />
-        <result property="createTime" column="createTime" jdbcType="TIMESTAMP" />
+        <result property="createtime" column="createtime" jdbcType="TIMESTAMP" />
     </resultMap>
 </mapper>

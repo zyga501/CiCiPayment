@@ -258,7 +258,7 @@ public class RegisterAction extends AjaxActionSupport {
             return "User!wxlogin";
 
         CardInfo cardInfo = CardInfo.getCardInfoById(Long.parseLong(getParameter("cid").toString()));
-        if (cardInfo.getAgentId().compareTo(getParameter("uname").toString()) != 0) {
+        if (cardInfo.getAgentid()==Long.parseLong(getParameter("uname").toString())) {
             getRequest().getSession().setAttribute("ErrorMsg","请填写正确的推广号");
             return "registerStep1";
         }

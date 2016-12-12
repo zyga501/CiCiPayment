@@ -19,7 +19,6 @@
         <div class="ibox-content">
             <form action="Register!registerStep1" method="post" class="form-horizontal">
                 <input type="hidden" name="cid" value="${reginfo.id}">
-                <input type="text"  id="msg"  value="${reginfo.id}">
                 <div class="form-group">
                     <div class="form-group">
                     <label class="col-sm-3 control-label">商户名称：</label>

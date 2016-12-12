@@ -1,13 +1,15 @@
 package cc.database.merchant;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class UserInfo {
 
-    public static List<UserInfo> getUserInfoByMap(Map map) {
+    public static List<UserInfo> getUserInfoByMap(String  uname,String pwd,String roletype,String idlist ) {
         String statement = "cc.database.merchant.mapping.userinfo.getUserInfoByMap";
-        return Database.Instance().selectList(statement, map);
+        return Database.Instance().selectList(statement, new HashMap(){{put("username",uname);put("password",pwd);
+            put("roletype",roletype);put("idlist",idlist);}});
     }
 
     public static boolean updateUserInfo(Map map) {

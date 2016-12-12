@@ -4,12 +4,17 @@
     <select id="getCardInfoById" parameterType="long" resultMap="cardInfoResult">
         SELECT * FROM cardInfo where id=#{id}
     </select>
+    <select id="getCardInfoByOrder" parameterType="string"  resultMap="cardInfoResult">
+        SELECT saltcode,agentid FROM cardInfo where orderno=#{_parameter}
+    </select>
     <insert id="insertCardInfo" parameterType="java.util.HashMap">
-        INSERT INTO cardInfo (id,agentid) VALUES (#{id},#{agentid})
+        INSERT INTO cardInfo (id,agentid,orderno,saltcode) VALUES (#{id},#{agentid},#{orderno},#{saltcode})
     </insert>
     <resultMap type="cc.database.merchant.CardInfo" id="cardInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
-        <result property="agentId" column="agentId" jdbcType="VARCHAR" />
-        <result property="createTime" column="createTime" jdbcType="TIMESTAMP" />
+        <result property="agentid" column="agentid" jdbcType="BIGINT" />
+        <result property="createtime" column="createtime" jdbcType="TIMESTAMP" />
+        <result property="saltcode" column="saltcode" jdbcType="VARCHAR" />
+        <result property="orderno" column="orderno" jdbcType="VARCHAR" />
     </resultMap>
 </mapper>

@@ -100,16 +100,18 @@ public class UserAction extends AjaxActionSupport {
         }
     }
 
+    public String  Logout(){
+        getRequest().getSession().invalidate();
+        return "loginjsp";
+    }
 
     public String login() {
-        Map map = new HashMap<>();
-        map.put("username",getParameter("username"));
-        map.put("password",getParameter("password"));
-        List<UserInfo> lu= UserInfo.getUserInfoByMap(map);
+        List<UserInfo> lu= UserInfo.getUserInfoByMap(getParameter("username").toString(),getParameter("password").toString(),null,null);
         if (lu.size()!=1)
             return AjaxActionComplete(false);
         setAttribute("roletype",lu.get(0).getRoletype());
         setAttribute("userid",lu.get(0).getId());
+        setAttribute("unick",getParameter("username").toString());
         List<MenuTree> menutreelist = MenuTree.getMenuNodeByUid(Long.parseLong(getRequest().getSession().getAttribute("roletype").toString()));
         List<Object> menulist = new ArrayList<>();
         for (MenuTree m : menutreelist) {
@@ -171,30 +173,9 @@ public class UserAction extends AjaxActionSupport {
     public String makeCardPage(){
         if ((!getAttribute("roletype").equals("1"))&&(!getAttribute("roletype").equals("111")))
             return "";
-        Map map = new HashMap<>();
-        map.put("roletype",0);
-        List<UserInfo> lu =  UserInfo.getUserInfoByMap(map);
+        List<UserInfo> lu =  UserInfo.getUserInfoByMap(null,null,"0",null);
         setAttribute("userList",lu);
         return "makeCard";
-    }
-
-    public String sendMakeCardMsg(){
-        IdWorker worker2 = new IdWorker(2);
-        Map map = new HashMap<>();
-        String rtnstr="";
-        for (int i=0;i<Integer.parseInt(getParameter("cardnum").toString());i++) {
-            long before = worker2.nextId();
-            map.clear();
-            map.put("id",before);
-            map.put("agentid",getParameter("agentid"));
-            if (CardInfo.insertCardInfo(map)) {
-                long after = (before * 100 + System.currentTimeMillis() % 100) ^ 1361753741828L;
-                rtnstr += String.valueOf(after) + "<br>";
-            }
-        }
-        map.clear();
-        map.put("idslist",rtnstr);
-        return AjaxActionComplete(true,map);
     }
 
     public void fetchPayorderList() {
