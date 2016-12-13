@@ -19,30 +19,30 @@
     <div class="list_border">
     	<ul>
         	<li>
-            	微信：<font>1000.67</font>
+            	微信：<font>${payinfo.wx}</font>
             </li>
             <li>
-            	支付宝：<font>300.76</font>
+            	支付宝：<font>${payinfo.ali}</font>
             </li>
             <li>
-            	京东：<font>400.00</font>
+            	京东：<font>${payinfo.jd}</font>
             </li>
             <li>
-            	百度：<font>100.99</font>
+            	百度：<font>${payinfo.bd}</font>
             </li>
             <li>
-            	易付宝：<font>1000.55</font>
+            	易付宝：<font>${payinfo.easy}</font>
             </li>
             <li>
-            	冀支付：<font>500.77</font>
+            	冀支付：<font>${payinfo.best}</font>
             </li>
         </ul>
     </div>
     <div class="clear"></div>
     <div class="list_border">
     	<div class="list_title">
-        	卡号：19999999999999   商户：杭州大酒店 <br>
-			服务专员：TanWeiTing(13666603333)
+        	卡号：${qcode}   商户：${merchantname} <br>
+			服务专员：${agentinfo}
         </div>
         <div class="clear"></div>
         <table>
@@ -130,4 +130,16 @@
     
 </div>
 </body>
+
+<script>
+    function test(){
+        if ("${payinfo.wx}"=="") {
+            window.location.href = "<%=request.getContextPath()%>/page404.jsp?" + Math.random();
+            return;
+        }
+    }
+    $().ready(function (){
+        test();
+    });
+</script>
 </html>

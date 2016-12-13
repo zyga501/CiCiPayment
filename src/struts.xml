@@ -38,6 +38,7 @@
             </result>
             <result name="page404">./page404.jsp</result>
             <result type= "chain" name="wxpayaction">User!wxpayaction</result>
+            <result name="fetchWxCode" type="chain" >User!fetchWxCode</result>
         </global-results>
         <action name="Pay!*" class="cc.action.PayAction" method="{1}">
             <result name="registerPrepare" type="chain">Register!registerPrepare</result>
@@ -53,9 +54,9 @@
             <result name="msgpage">msgpage.jsp</result>
             <result name="makeCard">makecard.jsp</result>
             <result name="mainpagejsp" type="redirect" >mainpage.jsp</result>
+            <result name="mpindex" type="redirect" >mpindex.jsp</result>
         </action>
         <action name="Register!*" class="cc.action.RegisterAction" method="{1}">
-            <result name="fetchWxCode" type="chain" >User!fetchWxCode</result>
             <result name="loginPage">./login.jsp</result>
             <result name="registerStep1">./register/registerStep1.jsp</result>
             <result name="registerStep2">./register/registerStep2.jsp</result>

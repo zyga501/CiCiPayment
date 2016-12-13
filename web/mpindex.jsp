@@ -6,24 +6,25 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
 <meta name = "format-detection" content="telephone = no" />
-<title>首页</title>
+<title>我的CiCi码</title>
 <script type="text/javascript" language="javascript" src="js/fontSize.js"></script>
+    <script src="<%=request.getContextPath()%>/js/jquery/jquery.min.js"></script>
+    <script src="<%=request.getContextPath()%>/js/jquery-qrcode-0.14.0.js"></script>
 <link type="text/css" href="css/mp.css" rel="stylesheet">
 </head>
 
-<body>
+<body onLoad="test();">
 <div class="wrap">
 	<div class="top_text"></div>
     <div class="top_img"></div>
     <div class="code_box">
     	<div class="code_top">
-        	<div class="text1">商户：${merchant.name}</div>
-            <div class="text2">状态：<%= request.getAttribute("") %>正常/暂停</div>
+        	<div class="text1">商户：${merchantname}</div>
+            <div class="text2">状态：${status}</div>
         </div>
         <div class="code_img">
-        	<img src="images/code.png">
         </div>
-        <div class="code_fot">1955031269319788834</div>
+        <div class="code_fot">${qcode}</div>
     </div>
     <div class="index_text1">支持信用卡、零钱</div>
     <div class="index_text2">告别零币 时尚 安全 便捷</div>
@@ -64,5 +65,22 @@
     </div>
     
 </div>
+<script>
+    function test(){
+    if ("${qcode}"=="") {
+        window.location.href = "<%=request.getContextPath()%>/page404.jsp?" + Math.random();
+        return;
+    }
+    }
+    $().ready(function (){
+     var  options = {
+        text: "http://www.jeanhk.top/CiCiPayment/Pay!payAdapter?cid="+"${qcode}", //二维码的链接
+        size: 100,
+        render: "image"//设置生成的二维码是canvas格式，也有image、div格式
+    }
+    $('.code_img').html("");
+    $('.code_img').qrcode(options);
+    });
+</script>
 </body>
 </html>

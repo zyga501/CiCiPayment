@@ -7,9 +7,9 @@ public class AgentInfo {
         System.exit(0);
     }
 
-    public static List<AgentInfo> getAgentInfoById(long id) {
+    public static AgentInfo getAgentInfoById(long id) {
         String statement = "cc.database.merchant.mapping.agentInfo.getAgentInfoById";
-        return Database.Instance().selectList(statement, id);
+        return Database.Instance().selectOne(statement, id);
     }
 
     public static List<AgentInfo> getAgentInfoByName(String  uname) {
