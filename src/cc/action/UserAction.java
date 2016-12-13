@@ -219,14 +219,15 @@ public class UserAction extends AjaxActionSupport {
 
     public String showMyQcode(){
         try {
-            if (getAttribute("openid").equals("") && (StringUtils.convertNullableString(getParameter("openid")).length() == 0)) {
-                setParameter("redirect_url", "User!showMyQcode");
+           // setParameter("openid","oBhD-wi-1wOs_8VYB227-VcIf0fo");
+            if (StringUtils.convertNullableString(getAttribute("openid")).equals("") && (StringUtils.convertNullableString(getParameter("openid")).length() == 0)) {
+                setParameter("redirect_url", "User!showMyQcode?abc=1");
                 return "fetchWxCode";
             }
-            if (getAttribute("openid").equals(""))
+            if (StringUtils.convertNullableString(getAttribute("openid")).equals(""))
                 getRequest().getSession().setAttribute("openid", getParameter("openid").toString());
             Map map = new HashMap<>();
-            map.put("openid", getParameter("openid").toString());
+            map.put("openid", getAttribute("openid").toString());
             List<MerchantInfo> lm = MerchantInfo.getMerchantInfoByMap(map);
             if (lm.size() != 1) {
                 return "page404";
@@ -236,28 +237,22 @@ public class UserAction extends AjaxActionSupport {
             setAttribute("merchantname", lm.get(0).getName());
             setAttribute("status", lm.get(0).getPaymentStatus() ? "开通" : "暂停");
         }
-        catch (Exception e){  e.printStackTrace();
-            StringBuffer sb = new StringBuffer();
-            StackTraceElement[] stackArray = e.getStackTrace();
-            for (int i = 0; i < stackArray.length; i++) {
-                StackTraceElement element = stackArray[i];
-                sb.append(element.toString() + "\n");
-            }
-            ProjectLogger.info("showMyQcode:"+sb);
+        catch (Exception e){
             return "page404";
         }
         return "mpindex";
     }
     public String showMyCiCiInfo(){
+       // setParameter("openid","oBhD-wj1zMF5-FET_9dwK8rI2nt0");
         try {
-            if (getAttribute("openid").equals("") && (StringUtils.convertNullableString(getParameter("openid")).length() == 0)) {
-                setParameter("redirect_url", "User!showMyCiCiInfo");
+            if (StringUtils.convertNullableString(getAttribute("openid")).equals("") && (StringUtils.convertNullableString(getParameter("openid")).length() == 0)) {
+                setParameter("redirect_url", "User!showMyCiCiInfo?abc=1");
                 return "fetchWxCode";
             }
-            if (getAttribute("openid").equals(""))
+            if (StringUtils.convertNullableString(getAttribute("openid")).equals(""))
                 getRequest().getSession().setAttribute("openid", getParameter("openid").toString());
             Map map = new HashMap<>();
-            map.put("openid", getParameter("openid").toString());
+            map.put("openid", getAttribute("openid").toString());
             List<MerchantInfo> lm = MerchantInfo.getMerchantInfoByMap(map);
             if (lm.size() != 1) {
                 return "page404";
@@ -265,7 +260,6 @@ public class UserAction extends AjaxActionSupport {
             CardInfo cardInfo = CardInfo.getCardInfoById(lm.get(0).getId());
             setAttribute("qcode", cardInfo.getSaltcode());
             setAttribute("merchantname", lm.get(0).getName());
-            setAttribute("status", lm.get(0).getPaymentStatus() ? "开通" : "暂停");
             AgentInfo agentInfo = AgentInfo.getAgentInfoById(cardInfo.getAgentid());
             setAttribute("agentinfo", agentInfo.getName()+"("+agentInfo.getcontactPhone()+")");
 
@@ -275,36 +269,31 @@ public class UserAction extends AjaxActionSupport {
             String ctime2 = formatter.format(new Date().getTime())+" 23:59:59";
             paramap.put("createtime1",ctime1);
             paramap.put("createtime2",ctime2);
-            List<Map> lp = PayOrderInfo.getOrderInfoTotalByLimit(paramap);
+            List<PayOrderInfo> lp = PayOrderInfo.getOrderInfoTotalByLimit(paramap);
             Map payinfo = new HashMap<>();
             payinfo.put("wx","---");
             payinfo.put("ali","---");
             payinfo.put("jd","---");
             payinfo.put("best","---");
-            payinfo.put("esay","---");
+            payinfo.put("easy","---");
             payinfo.put("bd","---");
-            for (int i=0;i<lp.size();i++){
-                if (lp.get(i).get("tradetype").equals("WEIXIN"))
-                    payinfo.put("wx",lp.get(i).get("tradeamount"));//'WEIXIN','ALI','JD','BEST'
-                else if (lp.get(i).get("tradetype").equals("ALI"))
-                    payinfo.put("ali",lp.get(i).get("tradeamount"));
-                else if (lp.get(i).get("tradetype").equals("JD"))
-                    payinfo.put("jd",lp.get(i).get("tradeamount"));
-                else if (lp.get(i).get("tradetype").equals("BEST"))
-                    payinfo.put("best",lp.get(i).get("tradeamount"));
+
+            for (int i=0;(i<lp.size()) && (null!=lp.get(i));i++){
+                ProjectLogger.error("lp.get(i).getTradeType():"+lp.get(i).getTradeType());
+                if (lp.get(i).getTradeType().equals("WEIXIN"))
+                    payinfo.put("wx",lp.get(i).getTradeAmount());//'WEIXIN','ALI','JD','BEST'
+                else if (lp.get(i).getTradeType().equals("ALI"))
+                    payinfo.put("ali",lp.get(i).getTradeAmount());
+                else if (lp.get(i).getTradeType().equals("JD"))
+                    payinfo.put("jd",lp.get(i).getTradeAmount());
+                else if (lp.get(i).getTradeType().equals("BEST"))
+                    payinfo.put("best",lp.get(i).getTradeAmount());
             }
             setAttribute("payinfo",payinfo);
         }
-        catch (Exception e){  e.printStackTrace();
-            StringBuffer sb = new StringBuffer();
-            StackTraceElement[] stackArray = e.getStackTrace();
-            for (int i = 0; i < stackArray.length; i++) {
-                StackTraceElement element = stackArray[i];
-                sb.append(element.toString() + "\n");
-            }
-            ProjectLogger.info("showMyQcode:"+sb);
+        catch (Exception e){
             return "page404";
         }
-        return "mpindex";
+        return "mplist";
     }
 }
