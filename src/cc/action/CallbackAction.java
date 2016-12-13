@@ -33,8 +33,6 @@ public class CallbackAction extends AjaxActionSupport {
             long merchantId = IdConvert.DecryptionId(Long.parseLong(attatch[0]));
             boolean privateQualification = Integer.parseInt(attatch[1]) == 1;
             PayMethod.PayType payType = PayMethod.payTypeValueOf(Integer.parseInt(attatch[2]));
-            String mode = attatch[1];
-            String method = attatch[2];
             int total_fee = Integer.parseInt(responseResult.get("total_fee").toString());
             String tradeNo = StringUtils.convertNullableString(responseResult.get("out_trade_no"));
             String timeEnd = StringUtils.convertNullableString(responseResult.get("time_end"));
@@ -59,15 +57,27 @@ public class CallbackAction extends AjaxActionSupport {
                     singlePayRequestData.accountNo = merchantInfo.getAccountNo();
                     singlePayRequestData.accountName = merchantInfo.getAccountName();
                     singlePayRequestData.tel = merchantInfo.getAccountPhone();
-                    if (mode.indexOf("weixin") != -1 || method.indexOf("weixin") != -1) {
-                        singlePayRequestData.amount = (int)(total_fee * (1 - merchantInfo.getWxRate()));
+                    switch (payType) {
+                        case WEIXIN: {
+                            singlePayRequestData.amount = (int) (total_fee * (1 - merchantInfo.getWxRate()));
+                            break;
+                        }
+                        case ALI: {
+                            singlePayRequestData.amount = (int) (total_fee * (1 - merchantInfo.getAliRate()));
+                            break;
+                        }
+                        case JD: {
+                            singlePayRequestData.amount = (int) (total_fee * (1 - merchantInfo.getJdRate()));
+                            break;
+                        }
+                        case BEST: {
+                            singlePayRequestData.amount = (int) (total_fee * (1 - merchantInfo.getBestRate()));
+                            break;
+                        }
+                        default:
+                            singlePayRequestData.amount = total_fee;
                     }
-                    else if (mode.indexOf("ali") != -1) {
-                        singlePayRequestData.amount = (int)(total_fee * (1 - merchantInfo.getAliRate()));
-                    }
-                    else {
-                        singlePayRequestData.amount = total_fee;
-                    }
+
                     SinglePay singlePay = new SinglePay(singlePayRequestData);
                     if (paid = singlePay.postRequest()) {
                         saveChanOrder(merchantId, tradeNo, singlePayRequestData.amount, singlePay.getReqSn(), singlePay.getTimeStamp());

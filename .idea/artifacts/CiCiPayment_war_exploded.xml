@@ -18,6 +18,8 @@
           <element id="library" level="project" name="XStream 1.4.9" />
           <element id="library" level="project" name="AliPay" />
           <element id="library" level="project" name="Taobao" />
+          <element id="library" level="project" name="Ant-1.6.5" />
+          <element id="library" level="project" name="ZXing" />
         </element>
       </element>
     </root>
