@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Junrar-0.7">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/junrar-0.7.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
