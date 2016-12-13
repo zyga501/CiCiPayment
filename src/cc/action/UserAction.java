@@ -1,25 +1,20 @@
 package cc.action;
 
+import QimCommon.utils.StringUtils;
 import cc.ProjectLogger;
 import cc.ProjectSettings;
-import cc.database.merchant.CardInfo;
-import cc.database.merchant.MenuTree;
-import cc.database.merchant.MerchantInfo;
-import cc.database.merchant.UserInfo;
+import cc.database.merchant.*;
 import cc.database.order.ChanOrderInfo;
 import cc.database.order.PayOrderInfo;
 import cc.message.WeixinMessage;
 import cc.weixin.api.OpenId;
 import QimCommon.struts.AjaxActionSupport;
-import QimCommon.utils.IdWorker;
 import net.sf.json.JSONArray;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class UserAction extends AjaxActionSupport {
 
@@ -220,5 +215,96 @@ public class UserAction extends AjaxActionSupport {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public String showMyQcode(){
+        try {
+            if (getAttribute("openid").equals("") && (StringUtils.convertNullableString(getParameter("openid")).length() == 0)) {
+                setParameter("redirect_url", "User!showMyQcode");
+                return "fetchWxCode";
+            }
+            if (getAttribute("openid").equals(""))
+                getRequest().getSession().setAttribute("openid", getParameter("openid").toString());
+            Map map = new HashMap<>();
+            map.put("openid", getParameter("openid").toString());
+            List<MerchantInfo> lm = MerchantInfo.getMerchantInfoByMap(map);
+            if (lm.size() != 1) {
+                return "page404";
+            }
+            CardInfo cardInfo = CardInfo.getCardInfoById(lm.get(0).getId());
+            setAttribute("qcode", cardInfo.getSaltcode());
+            setAttribute("merchantname", lm.get(0).getName());
+            setAttribute("status", lm.get(0).getPaymentStatus() ? "开通" : "暂停");
+        }
+        catch (Exception e){  e.printStackTrace();
+            StringBuffer sb = new StringBuffer();
+            StackTraceElement[] stackArray = e.getStackTrace();
+            for (int i = 0; i < stackArray.length; i++) {
+                StackTraceElement element = stackArray[i];
+                sb.append(element.toString() + "\n");
+            }
+            ProjectLogger.info("showMyQcode:"+sb);
+            return "page404";
+        }
+        return "mpindex";
+    }
+    public String showMyCiCiInfo(){
+        try {
+            if (getAttribute("openid").equals("") && (StringUtils.convertNullableString(getParameter("openid")).length() == 0)) {
+                setParameter("redirect_url", "User!showMyCiCiInfo");
+                return "fetchWxCode";
+            }
+            if (getAttribute("openid").equals(""))
+                getRequest().getSession().setAttribute("openid", getParameter("openid").toString());
+            Map map = new HashMap<>();
+            map.put("openid", getParameter("openid").toString());
+            List<MerchantInfo> lm = MerchantInfo.getMerchantInfoByMap(map);
+            if (lm.size() != 1) {
+                return "page404";
+            }
+            CardInfo cardInfo = CardInfo.getCardInfoById(lm.get(0).getId());
+            setAttribute("qcode", cardInfo.getSaltcode());
+            setAttribute("merchantname", lm.get(0).getName());
+            setAttribute("status", lm.get(0).getPaymentStatus() ? "开通" : "暂停");
+            AgentInfo agentInfo = AgentInfo.getAgentInfoById(cardInfo.getAgentid());
+            setAttribute("agentinfo", agentInfo.getName()+"("+agentInfo.getcontactPhone()+")");
+
+            Map paramap = new HashMap<>();
+            SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd");
+            String ctime1 = formatter.format(new Date().getTime())+" 00:00:01";
+            String ctime2 = formatter.format(new Date().getTime())+" 23:59:59";
+            paramap.put("createtime1",ctime1);
+            paramap.put("createtime2",ctime2);
+            List<Map> lp = PayOrderInfo.getOrderInfoTotalByLimit(paramap);
+            Map payinfo = new HashMap<>();
+            payinfo.put("wx","---");
+            payinfo.put("ali","---");
+            payinfo.put("jd","---");
+            payinfo.put("best","---");
+            payinfo.put("esay","---");
+            payinfo.put("bd","---");
+            for (int i=0;i<lp.size();i++){
+                if (lp.get(i).get("tradetype").equals("WEIXIN"))
+                    payinfo.put("wx",lp.get(i).get("tradeamount"));//'WEIXIN','ALI','JD','BEST'
+                else if (lp.get(i).get("tradetype").equals("ALI"))
+                    payinfo.put("ali",lp.get(i).get("tradeamount"));
+                else if (lp.get(i).get("tradetype").equals("JD"))
+                    payinfo.put("jd",lp.get(i).get("tradeamount"));
+                else if (lp.get(i).get("tradetype").equals("BEST"))
+                    payinfo.put("best",lp.get(i).get("tradeamount"));
+            }
+            setAttribute("payinfo",payinfo);
+        }
+        catch (Exception e){  e.printStackTrace();
+            StringBuffer sb = new StringBuffer();
+            StackTraceElement[] stackArray = e.getStackTrace();
+            for (int i = 0; i < stackArray.length; i++) {
+                StackTraceElement element = stackArray[i];
+                sb.append(element.toString() + "\n");
+            }
+            ProjectLogger.info("showMyQcode:"+sb);
+            return "page404";
+        }
+        return "mpindex";
     }
 }

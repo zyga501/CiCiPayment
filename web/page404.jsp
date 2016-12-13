@@ -1,4 +1,5 @@
 
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
@@ -9,7 +10,7 @@
   <body style="text-align: center">
   <h1 class="grey lighter smaller">
 											<span style="color: #0e9aef">
-												404
+												404${errormsg}
 											</span>
     Page Not Found
   </h1>

@@ -260,7 +260,7 @@ public class MerchantInfo {
         return payMethodBestId_;
     }
 
-    public void setPayMethodBestId_(int payMethodBestId) {
+    public void setPayMethodBestId(int payMethodBestId) {
         this.payMethodBestId_ = payMethodBestId;
     }
 

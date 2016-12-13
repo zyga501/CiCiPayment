@@ -20,6 +20,11 @@ public class PayOrderInfo {
         return Database.Instance().selectList(statement, map);
     }
 
+    public static List<Map> getOrderInfoTotalByLimit(Map map) {
+        String statement = "cc.database.order.mapping.payOrderInfo.getOrderInfoTotalByLimit";
+        return Database.Instance().selectList(statement, map);
+    }
+
     public static Long getOrderTotal() {
         String statement = "cc.database.order.mapping.payOrderInfo.getOrderTotal";
         return Database.Instance().selectOne(statement);
