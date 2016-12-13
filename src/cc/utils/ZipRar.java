@@ -1,13 +1,8 @@
 package cc.utils;
 
 import java.io.*;
-import java.util.Enumeration;
 import org.apache.tools.zip.ZipEntry;
-import org.apache.tools.zip.ZipFile;
 import org.apache.tools.zip.ZipOutputStream;
-
-import com.github.junrar.Archive;
-import com.github.junrar.rarfile.FileHeader;
 
 public class ZipRar {
 
