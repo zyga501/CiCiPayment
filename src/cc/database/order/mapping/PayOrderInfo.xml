@@ -17,12 +17,22 @@
 
     <select id="getOrderInfoTotalByLimit" parameterType="java.util.HashMap" resultMap="orderInfoResult">
         SELECT sum(tradeamount) tradeAmount,tradeType FROM payOrderInfo a,cicimerchant.merchantinfo b where a.merchantid=b.id
+        <if test="null!=merchantid">and merchantid = ${merchantid} </if>
         <if test="null!=createtime1"><![CDATA[and createtime > #{createtime1} ]]> </if><if test="null!=createtime2"><![CDATA[ and createtime <  #{createtime2}]]> </if>
         <if test="null!=name" > and b.name like CONCAT('%',#{name},'%') </if><if test="null!=ps">limit ${ps},${pe}</if> group by tradeType
     </select>
 
     <select id="getOrderTotal"  resultType="Long">
         SELECT count(*) as total from payOrderInfo
+    </select>
+
+    <select id="getPayAndChanAsc" parameterType="java.util.HashMap" resultMap="orderInfoResult">
+        <![CDATA[ select * from (select * from  payorderinfo  where merchantid=#{merchantid} and id > ${id} order by id limit ${pagecontent}) t order by id desc ]]>
+    </select>
+
+    <select id="getPayAndChanDesc" parameterType="java.util.HashMap" resultMap="orderInfoResult">
+        <![CDATA[ select * from payorderinfo where merchantid=#{merchantid}
+          and id<${id} order by id desc  limit ${pagecontent}]]>
     </select>
 
     <insert id="insertOrderInfo" parameterType="cc.database.order.PayOrderInfo">

@@ -243,7 +243,7 @@ public class UserAction extends AjaxActionSupport {
         return "mpindex";
     }
     public String showMyCiCiInfo(){
-       // setParameter("openid","oBhD-wj1zMF5-FET_9dwK8rI2nt0");
+//        setParameter("openid","oBhD-wj1zMF5-FET_9dwK8rI2nt0");
         try {
             if (StringUtils.convertNullableString(getAttribute("openid")).equals("") && (StringUtils.convertNullableString(getParameter("openid")).length() == 0)) {
                 setParameter("redirect_url", "User!showMyCiCiInfo?abc=1");
@@ -267,6 +267,7 @@ public class UserAction extends AjaxActionSupport {
             SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd");
             String ctime1 = formatter.format(new Date().getTime())+" 00:00:01";
             String ctime2 = formatter.format(new Date().getTime())+" 23:59:59";
+            paramap.put("merchantid",lm.get(0).getId());
             paramap.put("createtime1",ctime1);
             paramap.put("createtime2",ctime2);
             List<PayOrderInfo> lp = PayOrderInfo.getOrderInfoTotalByLimit(paramap);
@@ -295,5 +296,25 @@ public class UserAction extends AjaxActionSupport {
             return "page404";
         }
         return "mplist";
+    }
+
+    public String payinfoList(){
+        Map map = new HashMap<>();
+        map.put("openid", getAttribute("openid").toString());
+        List<MerchantInfo> lm = MerchantInfo.getMerchantInfoByMap(map);
+        if (lm.size() != 1) {
+            return "page404";
+        }
+        int tabid = Integer.parseInt(StringUtils.convertNullableString(getParameter("pid"),"0"));
+        List<PayOrderInfo> lplimit = null;
+        if (getParameter("pagetype").toString().compareTo("first")==0)
+            lplimit = PayOrderInfo.getPayAndChanDesc(lm.get(0).getId(),999999999,5);
+        if (getParameter("pagetype").toString().compareTo("next")==0)
+            lplimit = PayOrderInfo.getPayAndChanDesc(lm.get(0).getId(),tabid,5);
+        if (getParameter("pagetype").toString().compareTo("pre")==0)
+            lplimit = PayOrderInfo.getPayAndChanAsc(lm.get(0).getId(),tabid,5);
+        if (getParameter("pagetype").toString().compareTo("last")==0)
+            lplimit = PayOrderInfo.getPayAndChanAsc(lm.get(0).getId(),0,5);
+        return AjaxActionComplete(lplimit);
     }
 }
