@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
 <meta name = "format-detection" content="telephone = no" />
-<title>首页</title>
+<title>我要查账</title>
 <script type="text/javascript" language="javascript" src="js/fontSize.js"></script>
 <link type="text/css" href="css/mp.css" rel="stylesheet">
 </head>

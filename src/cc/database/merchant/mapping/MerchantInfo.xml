@@ -15,8 +15,8 @@
         <if test="null!=cid"> and b.id=#{cid}</if>
         <if test="null!=name"> and a.name=#{name}</if>
         <if test="null!=agentname"> and c.name=#{agentname}</if>
-        <![CDATA[ <if test="null!=createtime1"> and registerDate > #{createtime1}</if> ]]>
-        <![CDATA[ <if test="null!=createtime2"> and registerDate < #{createtime2}</if> ]]>
+        <if test="null!=createtime1"><![CDATA[ and registerDate > #{createtime1}]]></if>
+        <if test="null!=createtime2"> <![CDATA[  and registerDate < #{createtime2}]]></if>
     </select>
 
     <select id="getMerchantInfoById" parameterType="long" resultMap="merchantInfoResult">

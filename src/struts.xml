@@ -55,6 +55,7 @@
             <result name="makeCard">makecard.jsp</result>
             <result name="mainpagejsp" type="redirect" >mainpage.jsp</result>
             <result name="mpindex" type="redirect" >mpindex.jsp</result>
+            <result name="mplist" type="redirect" >mplist.jsp</result>
         </action>
         <action name="Register!*" class="cc.action.RegisterAction" method="{1}">
             <result name="loginPage">./login.jsp</result>

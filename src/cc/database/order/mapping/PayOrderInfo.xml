@@ -11,14 +11,14 @@
 
     <select id="getOrderInfoByLimit" parameterType="java.util.HashMap" resultType="java.util.HashMap">
         SELECT a.*,b.name FROM payOrderInfo a,cicimerchant.merchantinfo b where a.merchantid=b.id
-        <if test="null!=createtime1"> and createtime &gt; #{createtime1}  </if><if test="null!=createtime2"> and createtime &lt;  #{createtime2} </if>
+       <if test="null!=createtime1"> <![CDATA[ and createtime > #{createtime1} ]]> </if><if test="null!=createtime2"> <![CDATA[ and createtime <  #{createtime2}]]> </if>
         <if test="null!=name" > and b.name like CONCAT('%',#{name},'%') </if><if test="null!=ps">limit ${ps},${pe}</if>
     </select>
 
-    <select id="getOrderInfoTotalByLimit" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-        SELECT sum(tradeamount) amount,tradetype FROM payOrderInfo a,cicimerchant.merchantinfo b where a.merchantid=b.id
-        <if test="null!=createtime1"> and createtime &gt; #{createtime1}  </if><if test="null!=createtime2"> and createtime &lt;  #{createtime2} </if>
-        <if test="null!=name" > and b.name like CONCAT('%',#{name},'%') </if><if test="null!=ps">limit ${ps},${pe}</if>
+    <select id="getOrderInfoTotalByLimit" parameterType="java.util.HashMap" resultMap="orderInfoResult">
+        SELECT sum(tradeamount) tradeAmount,tradeType FROM payOrderInfo a,cicimerchant.merchantinfo b where a.merchantid=b.id
+        <if test="null!=createtime1"><![CDATA[and createtime > #{createtime1} ]]> </if><if test="null!=createtime2"><![CDATA[ and createtime <  #{createtime2}]]> </if>
+        <if test="null!=name" > and b.name like CONCAT('%',#{name},'%') </if><if test="null!=ps">limit ${ps},${pe}</if> group by tradeType
     </select>
 
     <select id="getOrderTotal"  resultType="Long">
