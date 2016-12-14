@@ -279,15 +279,15 @@ public class UserAction extends AjaxActionSupport {
             payinfo.put("bd","---");
 
             for (int i=0;(i<lp.size()) && (null!=lp.get(i));i++){
-                ProjectLogger.error("lp.get(i).getTradeType():"+lp.get(i).getTradeType());
+                String v = String.valueOf(lp.get(i).getTradeAmount()/100.00);
                 if (lp.get(i).getTradeType().equals("WEIXIN"))
-                    payinfo.put("wx",lp.get(i).getTradeAmount());//'WEIXIN','ALI','JD','BEST'
+                    payinfo.put("wx",v);
                 else if (lp.get(i).getTradeType().equals("ALI"))
-                    payinfo.put("ali",lp.get(i).getTradeAmount());
+                    payinfo.put("ali",v);
                 else if (lp.get(i).getTradeType().equals("JD"))
-                    payinfo.put("jd",lp.get(i).getTradeAmount());
+                    payinfo.put("jd",v);
                 else if (lp.get(i).getTradeType().equals("BEST"))
-                    payinfo.put("best",lp.get(i).getTradeAmount());
+                    payinfo.put("best",v);
             }
             setAttribute("payinfo",payinfo);
         }
