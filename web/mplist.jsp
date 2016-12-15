@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
 <meta name = "format-detection" content="telephone = no" />
 <title>我要查账</title>
+<script src="<%=request.getContextPath()%>/js/jquery/jquery.min.js"></script>
 <script type="text/javascript" language="javascript" src="js/fontSize.js"></script>
 <link type="text/css" href="css/mp.css" rel="stylesheet">
 </head>
@@ -52,43 +53,15 @@
                 <th>交易类型</th>
                 <th>清算状态</th>
             </tr>
-            <tr>
-            	<td>2016/12/07 17:05:32</td>
-                <td>587.87</td>
-                <td> 微信支付</td>
-                <td>已清算</td>                                                         
-            </tr>
-            <tr>
-            	<td>2016/12/07 17:05:32</td>
-                <td>587.87</td>
-                <td> 微信支付</td>
-                <td>已清算</td>                                                         
-            </tr>
-            <tr>
-            	<td>2016/12/07 17:05:32</td>
-                <td>587.87</td>
-                <td> 微信支付</td>
-                <td>已清算</td>                                                         
-            </tr>
-            <tr>
-            	<td>2016/12/07 17:05:32</td>
-                <td>587.87</td>
-                <td> 微信支付</td>
-                <td>已清算</td>                                                         
-            </tr>
-            <tr>
-            	<td>2016/12/07 17:05:32</td>
-                <td>587.87</td>
-                <td> 微信支付</td>
-                <td>已清算</td>                                                         
-            </tr>
+            <tbody id="tbody">
+            </tbody>
         </table>
         <div class="clear"></div>
         <div class="page">
-        	<a href="javascript:;">首页</a>
-            <a href="javascript:;">上一页</a>
-            <a href="javascript:;">下一页</a>
-            <a href="javascript:;">尾页</a>
+            <a href="javascript:fetchlist('last');">尾页</a>
+            <a href="javascript:fetchlist('next');">下一页</a>
+            <a href="javascript:fetchlist('pre');">上一页</a>
+        	<a href="javascript:fetchlist('first');">首页</a>
         </div>
     </div>
     <div class="index_text2">告别零币 时尚 安全 便捷</div>
@@ -138,8 +111,48 @@
             return;
         }
     }
+
     $().ready(function (){
         test();
+        fetchlist("first");
     });
+
+    var pagepid = 0;
+    var pagenid = 0;
+
+    function fetchlist(typestr){
+        var pagecontent ;
+        if (typestr=="first")
+            pagecontent =pagenid;
+        if (typestr=="next")
+            pagecontent =pagenid;
+        if (typestr=="pre")
+            pagecontent =pagepid;
+        if (typestr=="last")
+            pagecontent =pagepid;
+        $.ajax({
+            type: 'post',
+            url: 'User!payinfoList',
+            dataType :"json",
+            data:{pagetype:typestr,pid:pagecontent},
+            success: function (data) {
+                var json = eval("(" + data + ")");
+                var htmlstr;
+                if (json.length>0) {
+                    pagepid = json[0].id;
+                    pagenid = json[json.length-1].id;
+                    for (var i = 0; i < json.length; i++) {
+                        htmlstr += "<tr>";
+                        htmlstr += "<td>" + json[i].tradeTime + "</td>";
+                        htmlstr += "<td>" + json[i].tradeAmount + "</td>";
+                        htmlstr += "<td>" + json[i].tradeType + "</td>";
+                        htmlstr += "<td>" + json[i].paid + "</td>";
+                        htmlstr += "</tr>";
+                    }
+                    $("#tbody").html(htmlstr);
+                }
+            }
+        })
+    }
 </script>
 </html>

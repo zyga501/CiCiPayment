@@ -1,6 +1,7 @@
 package cc.database.order;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +24,16 @@ public class PayOrderInfo {
     public static List<PayOrderInfo> getOrderInfoTotalByLimit(Map map) {
         String statement = "cc.database.order.mapping.payOrderInfo.getOrderInfoTotalByLimit";
         return Database.Instance().selectList(statement, map);
+    }
+
+    public static List<PayOrderInfo> getPayAndChanAsc(long merchantid,int id,int pagecontent  ) {
+        String statement = "cc.database.order.mapping.payOrderInfo.getPayAndChanAsc";
+        return Database.Instance().selectList(statement, new HashMap(){{put("merchantid",merchantid);put("id",id);put("pagecontent",pagecontent);}});
+    }
+
+    public static List<PayOrderInfo> getPayAndChanDesc(long merchantid,int id,int pagecontent  ) {
+        String statement = "cc.database.order.mapping.payOrderInfo.getPayAndChanDesc";
+        return Database.Instance().selectList(statement, new HashMap(){{put("merchantid",merchantid);put("id",id);put("pagecontent",pagecontent);}});
     }
 
     public static Long getOrderTotal() {
