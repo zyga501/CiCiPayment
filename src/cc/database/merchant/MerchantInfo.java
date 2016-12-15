@@ -25,9 +25,13 @@ public class MerchantInfo {
         return Database.Instance().selectList(statement, map);
     }
 
-    public static boolean updateMerchantPayMethodId(long id, long payMethonId) {
+    public static boolean updateMerchantPayMethodId(long id, long payMethodWeixinId, long payMethodAliId, long payMethodJDId, long payMethodBestId) {
         String statement = "cc.database.merchant.mapping.merchantInfo.updateMerchantPayMethodId";
-        return Database.Instance().update(statement, new HashMap<String, Object>(){{put("id", id);put("payMethonId", payMethonId);}}) == 1;
+        return Database.Instance().update(statement, new HashMap<String, Object>(){{put("id", id);
+            put("payMethodWeixinId", payMethodWeixinId);
+            put("payMethodAliId", payMethodAliId);
+            put("payMethodJDId", payMethodJDId);
+            put("payMethodBestId", payMethodBestId);}}) == 1;
     }
 
     public static boolean updateMerchantPayBycheck(MerchantInfo merchantInfo) {

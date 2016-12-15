@@ -25,7 +25,7 @@
 
     <update id="updateMerchantPayMethodId" parameterType="java.util.HashMap">
         UPDATE merchantinfo
-        SET payMethodId=#{payMethodId}
+        SET payMethodWeixinId=#{payMethodWeixinId},payMethodAliId=#{payMethodAliId},payMethodJDId=#{payMethodJDId},payMethodBestId=#{payMethodBestId}
         where id = #{id}
     </update>
 
@@ -40,11 +40,11 @@
         INSERT INTO merchantinfo(id,name,address,contactName,contactPhone,idCard,
         paymentStatus,wxStatus,wxRate,aliStatus,aliRate,jdStatus,jdRate,bestStatus,bestRate,
         bankCity,bankName,bankGeneralName,bankCode,accountNo,accountName,accountPhone,
-        openid,payMethodId,externInfo)
+        openid,payMethodWeixinId,payMethodAliId,payMethodJDId,payMethodBestId,externInfo)
         VALUE (#{id},#{name},#{address},#{contactName},#{contactPhone},#{idCard},
         #{paymentStatus},#{wxStatus},#{wxRate},#{aliStatus},#{aliRate},#{jdStatus},#{jdRate},#{bestStatus},#{bestRate},
         #{bankCity},#{bankCode},#{bankName},#{bankGeneralName},#{accountNo},#{accountName},#{accountPhone},
-        #{openid},#{payMethodId},#{externInfo})
+        #{openid},#{payMethodWeixinId},#{payMethodAliId},#{payMethodJDId},#{payMethodBestId},#{externInfo})
     </insert>
 
     <resultMap type="cc.database.merchant.MerchantInfo" id="merchantInfoResult">
