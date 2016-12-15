@@ -19,6 +19,9 @@
         <div class="ibox-content">
             <form action="Register!registerStep1" method="post" class="form-horizontal">
                 <input type="hidden" name="cid" value="${reginfo.id}">
+                <select  name="bankCity" id="city" class="form-control"
+                         value="111"><option value="2">222</option><option value="3">333</option></select>
+
                 <div class="form-group">
                     <div class="form-group">
                     <label class="col-sm-3 control-label">商户名称：</label>

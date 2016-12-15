@@ -1,7 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%
-    if ((!request.getSession().getAttribute("roletype").toString().equals("1"))&&
+    if ((!request.getSession().getAttribute("roletype").toString().equals("0"))&&
             (!request.getSession().getAttribute("roletype").toString().equals("111")))
         request.getRequestDispatcher("page404.jsp").forward(request, response);
 %>
@@ -47,7 +47,7 @@
         $("#contentdiv").html("<img  src='<%=request.getContextPath()%>/img/loading.gif'>");
         $.ajax({
             type: 'post',
-            url: '<%=request.getContextPath()%>/Register!fetchMerchant',
+            url: '<%=request.getContextPath()%>/Register!fetchPendingMerchant',
             dataType: "json",
             data: $("#searchform").serialize() + "&currpagenum=" + curr,
             success: function (data) {

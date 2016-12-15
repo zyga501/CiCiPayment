@@ -121,7 +121,7 @@ public class UserAction extends AjaxActionSupport {
     }
 
     public String msgPage(){
-        if ((!getAttribute("roletype").equals("1"))&&(!getAttribute("roletype").equals("111")))
+        if ((!getAttribute("roletype").equals("0"))&&(!getAttribute("roletype").equals("111")))
             return "";
         List<MerchantInfo> lu =  MerchantInfo.getMerchantInfoByMap(null);
         setAttribute("userList",lu);
@@ -143,7 +143,7 @@ public class UserAction extends AjaxActionSupport {
     }
 
     public String wxMsgPage(){
-        if ((!getAttribute("roletype").equals("1"))&&(!getAttribute("roletype").equals("111")))
+        if ((!getAttribute("roletype").equals("0"))&&(!getAttribute("roletype").equals("111")))
             return "";
         List<MerchantInfo> lu =  MerchantInfo.getMerchantInfoByMap(null);
         setAttribute("userList",lu);
@@ -166,7 +166,7 @@ public class UserAction extends AjaxActionSupport {
     }
 
     public String makeCardPage(){
-        if ((!getAttribute("roletype").equals("1"))&&(!getAttribute("roletype").equals("111")))
+        if ((!getAttribute("roletype").equals("0"))&&(!getAttribute("roletype").equals("111")))
             return "";
         List<UserInfo> lu =  UserInfo.getUserInfoByMap(null,null,"0",null);
         setAttribute("userList",lu);
@@ -196,19 +196,23 @@ public class UserAction extends AjaxActionSupport {
     }
 
     public void fetchChanorderList() {
+        if ((!getAttribute("roletype").equals("111")) &&(!getAttribute("roletype").equals("0")))
+            return ;
         try {
             int pageSize = Math.max(1,Integer.parseInt(getParameter("pageSize").toString()));
             int pageNumber = Math.max(1,Integer.parseInt(getParameter("pageNumber").toString()));
             Map map = new HashMap<>();
-            map.put("ps",(pageNumber-1)*pageSize);
-            map.put("pe",(pageNumber)*pageSize);
             if (null!=getParameter("name")&&!getParameter("name").toString().equals(""))
                 map.put("name",getParameter("name").toString());
-            List<Map> payOrderInfo = ChanOrderInfo.getOrderInfoByLimit(map);
+            List<Map> payOrderInfo = PayOrderInfo.getOrderInfoCrossByLimit(map);
+            int total_=payOrderInfo.size();
+            map.put("ps",(pageNumber-1)*pageSize);
+            map.put("pe",(pageNumber)*pageSize);
+            payOrderInfo = PayOrderInfo.getOrderInfoCrossByLimit(map);
             getResponse().setCharacterEncoding("utf-8");
             PrintWriter pw = getResponse().getWriter();
             String jsont= JSONArray.fromObject(payOrderInfo).toString();
-            String jsons = "{\"total\":" + ChanOrderInfo.getOrderTotal() + ",\"rows\":" + jsont + "}";
+            String jsons = "{\"total\":" + total_ + ",\"rows\":" + jsont + "}";
             pw.println(jsons);
             pw.flush();
             pw.close();
