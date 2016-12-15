@@ -2,7 +2,7 @@ package cc.utils;
 
 public class IdConvert {
     public static void main(String[] args) throws Exception {
-        long encryptionId = EncryptionId(1939750496798720L);
+        long encryptionId = EncryptionId(1871367318374400L);
         System.out.println(encryptionId);
     }
 
