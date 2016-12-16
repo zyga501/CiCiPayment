@@ -243,13 +243,13 @@ public class RegisterAction extends AjaxActionSupport {
         PendingMerchant pendingMerchant =  PendingMerchant.getPendingMerchantById(merchantId, getParameter("openid").toString());
         if (pendingMerchant == null) {
             pendingMerchant = new PendingMerchant();
-            pendingMerchant.setId(merchantId);
+            pendingMerchant.setCid(merchantId);
             pendingMerchant.setOpenid(getParameter("openid").toString());
             PendingMerchant.insertPendingMerchant(pendingMerchant);
         }
 
         getRequest().getSession().setAttribute("openid", getParameter("openid").toString());
-        pendingMerchant.setId(Long.parseLong(getParameter("cid").toString()));
+        pendingMerchant.setCid(Long.parseLong(getParameter("cid").toString()));
         getRequest().setAttribute("reginfo", pendingMerchant);
         return "registerStep1";
     }
@@ -259,16 +259,11 @@ public class RegisterAction extends AjaxActionSupport {
             return "User!wxlogin";
 
         CardInfo cardInfo = CardInfo.getCardInfoById(IdConvert.DecryptionId(Long.parseLong(getParameter("cid").toString())));
-        ProjectLogger.error("cid:"+getParameter("cid").toString());
-        ProjectLogger.error("uname:"+getParameter("uname").toString());
-        ProjectLogger.error("cardInfo.getAgentid():"+String.valueOf(cardInfo.getAgentid()));
         if (cardInfo.getAgentid()!=Long.parseLong(getParameter("uname").toString())) {
             getRequest().getSession().setAttribute("ErrorMsg","请填写正确的推广号");
             return "registerStep1";
         }
 
-        ProjectLogger.error(getParameter("cid").toString());
-        ProjectLogger.error(getRequest().getSession().getAttribute("openid").toString());
         PendingMerchant pendingMerchant =  PendingMerchant.getPendingMerchantById(IdConvert.DecryptionId(Long.parseLong(getParameter("cid").toString())), getRequest().getSession().getAttribute("openid").toString());
         pendingMerchant.setName(getParameter("name").toString());
         MerchantInfo.ExternInfo externInfo = pendingMerchant.new ExternInfo();
@@ -279,7 +274,7 @@ public class RegisterAction extends AjaxActionSupport {
         pendingMerchant.setExternInfo(externInfo.toString());
         if (!PendingMerchant.updatePendingMerchant(pendingMerchant))
             return AjaxActionComplete(false);
-        pendingMerchant.setId(IdConvert.EncryptionId(pendingMerchant.getId()));
+        pendingMerchant.setCid(Long.parseLong(getParameter("cid").toString()));
         getRequest().setAttribute("reginfo", pendingMerchant);
         return "registerStep2";
     }
@@ -287,10 +282,6 @@ public class RegisterAction extends AjaxActionSupport {
     public String registerStep2() {
         PendingMerchant pendingMerchant =  PendingMerchant.getPendingMerchantById(IdConvert.DecryptionId(Long.parseLong(getParameter("cid").toString())),
                 getRequest().getSession().getAttribute("openid").toString());
-        if (null==pendingMerchant)
-            ProjectLogger.error("ttttt");
-        else
-            ProjectLogger.error("fffff");
         pendingMerchant.setBankCity(getParameter("bankCity").toString());
         pendingMerchant.setAccountName(getParameter("accountName").toString());
         pendingMerchant.setAccountNo(getParameter("accountNo").toString());
@@ -298,7 +289,7 @@ public class RegisterAction extends AjaxActionSupport {
         pendingMerchant.setBankCode(getParameter("bankCode").toString());
         if (!PendingMerchant.updatePendingMerchant(pendingMerchant))
             return AjaxActionComplete(false);
-        pendingMerchant.setId(IdConvert.EncryptionId(pendingMerchant.getId()));
+        pendingMerchant.setCid(Long.parseLong(getParameter("cid").toString()));
         getRequest().setAttribute("reginfo",pendingMerchant);
         return "registerStep3";
     }
@@ -306,16 +297,16 @@ public class RegisterAction extends AjaxActionSupport {
     public String uploadIDCard() {
         String ErrorMsg="";
         try {
-            String v = String.valueOf(IdConvert.DecryptionId(Long.parseLong(getParameter("cid").toString())));
+            String cid = String.valueOf(IdConvert.DecryptionId(Long.parseLong(getParameter("cid").toString())));
             File ff = (File) getParameter("fsfzz");//fdphy,fyhkf,fyhkz,fsfzf,fsfzz
-            File fm = new File(ProjectSettings.getCachePath() +v
+            File fm = new File(ProjectSettings.getCachePath() +cid
                     + getRequest().getSession().getAttribute("openid") + "sfzz.jpg");
             if (null != ff && ff.length() > 1000) {
                 PublicFunc.copyFile(ff.getAbsolutePath(), fm.getAbsolutePath(), true);
             } else if (null == ff || fm.length()<100)
                 ErrorMsg = "身份证正面照文件不对";
             ff = (File) getParameter("fsfzf");//fdphy,fyhkf,fyhkz,fsfzf,fsfzz
-            fm = new File(ProjectSettings.getCachePath() +v
+            fm = new File(ProjectSettings.getCachePath() +cid
                     + getRequest().getSession().getAttribute("openid") + "sfzf.jpg");
             if (null != ff && ff.length() > 1000) {
                 {
@@ -324,7 +315,7 @@ public class RegisterAction extends AjaxActionSupport {
             } else  if (null == ff || fm.length()<100)
                 ErrorMsg = "身份证反面照文件不对";
             ff = (File) getParameter("fscsfz");//fdphy,fyhkf,fyhkz,fsfzf,fsfzz
-            fm = new File(ProjectSettings.getCachePath() +v
+            fm = new File(ProjectSettings.getCachePath() +cid
                     + getRequest().getSession().getAttribute("openid") + "scsfz.jpg");
             if (null != ff && ff.length() > 1000) {
                 {
@@ -333,7 +324,7 @@ public class RegisterAction extends AjaxActionSupport {
             } else  if (null == ff || fm.length()<1000)
                 ErrorMsg = "手持身份证照文件不对";
             ff = (File) getParameter("fyhk");//fdphy,fyhkf,fyhkz,fsfzf,fsfzz
-            fm = new File(ProjectSettings.getCachePath() +v
+            fm = new File(ProjectSettings.getCachePath() +cid
                     + getRequest().getSession().getAttribute("openid") + "yhk.jpg");
             if (null != ff && ff.length() > 1000) {
                 {
@@ -498,7 +489,7 @@ public class RegisterAction extends AjaxActionSupport {
             PendingMerchant pendingMerchant =  PendingMerchant.getPendingMerchantById(Long.parseLong(getParameter("cid").toString()), getParameter("openid").toString());
             if (pendingMerchant==null){
                 pendingMerchant = new PendingMerchant();
-                pendingMerchant.setId(IdConvert.DecryptionId(Long.parseLong(getParameter("cid").toString())));
+                pendingMerchant.setCid(IdConvert.DecryptionId(Long.parseLong(getParameter("cid").toString())));
             }
             pendingMerchant.setWxStatus((null!=getParameter("wxpay"))&&(getParameter("wxpay").equals("on")));
             pendingMerchant.setJdStatus((null!=getParameter("jdpay"))&&(getParameter("jdpay").equals("on")));

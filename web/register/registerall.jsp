@@ -115,7 +115,7 @@
     </div>
 </div>
 <form>
-    <input type="hidden" name="cid" value="${reginfo.id}">
+    <input type="hidden" name="cid" value="${reginfo.cid}">
     <table class="table table-bordered" >
         <tbody>
         <tr>

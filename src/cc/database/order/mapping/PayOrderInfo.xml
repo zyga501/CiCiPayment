@@ -36,9 +36,12 @@
     </select>
 
     <select id="getOrderInfoCrossByLimit" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-        SELECT c.*,b.name,a.* FROM payorderinfo c inner join cicimerchant.merchantinfo b on c.merchantid=b.id left join  chanOrderInfo a on a.paytradeno=c.tradeno
-        <where> <if test="null!=name" > and c.tradeNo like CONCAT('%',#{name},'%') </if>
-        <if test="null!=name" > and b.name like CONCAT('%',#{name},'%') </if></where><if test="null!=ps">limit ${ps},${pe}</if>
+        SELECT c.*,b.name,a.tradeno as chantradeno FROM payorderinfo c inner join cicimerchant.merchantinfo b on c.merchantid=b.id
+        left join  chanOrderInfo a on a.paytradeno=c.tradeno
+        <where> <if test="null!=fliter" > and (c.tradeno like CONCAT('%',#{fliter},'%') </if>
+            <if test="null!=fliter" > or b.name like CONCAT('%',#{fliter},'%')) </if>
+            <if test="null!=fliter" > or a.tradeno like CONCAT('%',#{fliter},'%')</if>
+            <if test="null!=fliter" > or c.tradetime like CONCAT('%',#{fliter},'%') </if></where><if test="null!=ps">limit ${ps},${pe}</if>
     </select>
 
     <insert id="insertOrderInfo" parameterType="cc.database.order.PayOrderInfo">

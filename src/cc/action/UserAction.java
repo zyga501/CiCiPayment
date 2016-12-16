@@ -202,8 +202,8 @@ public class UserAction extends AjaxActionSupport {
             int pageSize = Math.max(1,Integer.parseInt(getParameter("pageSize").toString()));
             int pageNumber = Math.max(1,Integer.parseInt(getParameter("pageNumber").toString()));
             Map map = new HashMap<>();
-            if (null!=getParameter("name")&&!getParameter("name").toString().equals(""))
-                map.put("name",getParameter("name").toString());
+            if (null!=getParameter("fliter")&&!getParameter("fliter").toString().equals(""))
+                map.put("fliter",getParameter("fliter").toString());
             List<Map> payOrderInfo = PayOrderInfo.getOrderInfoCrossByLimit(map);
             int total_=payOrderInfo.size();
             map.put("ps",(pageNumber-1)*pageSize);
