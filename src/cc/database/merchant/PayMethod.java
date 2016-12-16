@@ -13,13 +13,13 @@ public class PayMethod {
 
     public static PayType payTypeValueOf(int value) {
         switch (value) {
-            case 1:
+            case 0:
                 return PayType.WEIXIN;
-            case 2:
+            case 1:
                 return PayType.ALI;
-            case 3:
+            case 2:
                 return PayType.JD;
-            case 4:
+            case 3:
                 return PayType.BEST;
         }
 
