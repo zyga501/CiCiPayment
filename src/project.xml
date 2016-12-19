@@ -9,10 +9,10 @@
     <ccqcodewebpath>http://www.jeanhk.top/CiCiPayment/Pay!payAdapter?cid=</ccqcodewebpath>
     <ccqcodepath>d:\\</ccqcodepath>
     <weixinServerInfo>
-        <appid>wx866bca62844d900f</appid>
-        <appSecret>9e23e7b99fddf616c5413cbe57db3a0f</appSecret>
-        <templateId>lNqsp_tYXKMQ2MULI9_ORrhrZ3dRSsGPsp4JJyrE8PE</templateId>
-        <noticetemplate_id>XqOGqOHpGq437NxHRGmQBuDk0tntAwm_LfM0RCItL-Y</noticetemplate_id>
+        <appid>wxdc97fb113128b05f</appid>
+        <appSecret>a9f894156d3ce033635fa16a295f1859</appSecret>
+        <templateId>b4auWDZK5vNhb3R1FHas1Pqgu-nqgrMg5Cto82t5MTc</templateId>
+        <noticetemplate_id></noticetemplate_id>
         <editer>CC客服</editer>
     </weixinServerInfo>
     <aliServerInfo>
