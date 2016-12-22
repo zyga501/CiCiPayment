@@ -117,6 +117,7 @@
         -->
     </style>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/qrcode.js"></script>
     <script language="javascript">
         function amount(th) {
             var regStrs = [
@@ -137,13 +138,35 @@
                 $("#paynum").text("￥" + th.value);
             }
             if (th.value != "") {
-                $("#butpaynum").css("background-color", "#2789DC");
-                $("#butpaynum").removeAttr("disabled");
+                $("#jspay").css("background-color", "#2789DC");
+                $("#jspay").removeAttr("disabled");
+                $("#scanpay").css("background-color", "#2789DC");
+                $("#scanpay").removeAttr("disabled");
             }
             else {
-                $("#butpaynum").css("background-color", "#c8c8c8");
-                $("#butpaynum").attr("disabled", "disabled");
+                $("#jspay").css("background-color", "#c8c8c8");
+                $("#jspay").attr("disabled", "disabled");
+                $("#scanpay").css("background-color", "#2789DC");
+                $("#scanpay").removeAttr("disabled");
             }
+        }
+
+        function scanPay() {
+            $.ajax({
+                type: 'post',
+                url: '<%=request.getContextPath()%>/Pay!scanPay',
+                dataType:"json",
+                data:$("form").serialize(),
+                success: function (data) {
+                    var json = eval("(" + data + ")");
+                    var qr = qrcode(10, 'Q');
+                    qr.addData(json.code_url);
+                    qr.make();
+                    var dom=document.createElement('DIV');
+                    dom.innerHTML = qr.createImgTag();
+                    $("#QRCode")[0].appendChild(dom);
+                }
+            })
         }
     </script>
 </head>
@@ -169,7 +192,14 @@
   	  <label>实付金额: </label>
   	</span>
             <label id="paynum" class="paynum"></label><br><br>
-            <input type="submit" class="but" id="butpaynum"  disabled="disabled" value="支付"/>
+            <input type="submit" class="but" id="jspay"  disabled="disabled" value="支付"/>
+            <input type="button" class="but" id="scanpay" disabled="disabled" value="扫码支付" />
+            <tr>
+                <td>
+                    <div  id="QRCode">
+                    </div>
+                </td>
+            </tr>
         </div>
     </div>
 </form>

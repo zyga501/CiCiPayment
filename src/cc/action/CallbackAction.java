@@ -16,9 +16,14 @@ import java.util.Map;
 
 public class CallbackAction extends AjaxActionSupport {
     public final static String JSPAYCALLBACK = "Callback!jsPay";
+    public final static String SCANPAYCALLBACK = "Callback!scanPay";
     public final static Object syncObject = new Object();
 
     public void jsPay() throws Exception {
+        handlerCallback();
+    }
+
+    public void scanPay() throws Exception {
         handlerCallback();
     }
 
