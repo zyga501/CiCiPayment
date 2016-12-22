@@ -276,6 +276,14 @@ public class MerchantInfo {
         externInfo_ = externInfo;
     }
 
+    public long getCid() {
+        return cid_;
+    }
+
+    public void setCid(long cid_) {
+        this.cid_ = cid_;
+    }
+
     public class ExternInfo {
         public ExternInfo() {
 
@@ -326,6 +334,7 @@ public class MerchantInfo {
     }
 
     private long id_;
+    private long cid_;
     private String name_;
     private String address;
     private String contactName;

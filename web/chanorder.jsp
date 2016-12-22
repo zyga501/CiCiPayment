@@ -15,7 +15,7 @@
         <div id="contactlist" >
             <table  id="ctable"  class="table table-striped table-hover table-bordered"> <thead><tr>
             <th  data-checkbox="true" ><th  data-field="index" data-formatter="indexFormatter" >序号</th>
-                <th  data-field="name"  >商家</th><th  data-field="paytradeNo"  >支付订单</th><th  data-field="TradeNo">代付单号</th>
+                <th  data-field="name"  >商家</th><th  data-field="tradeNo"  >支付订单</th><th  data-field="TradeNo">代付单号</th>
             <th  data-field="tradeAmount">代付额</th><th  data-field="tradeTime">代付时间</th></tr></thead>
             </table>
         </div>

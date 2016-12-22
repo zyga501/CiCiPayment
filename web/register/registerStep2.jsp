@@ -22,7 +22,7 @@
     <div class="full-height-scroll">
         <div class="ibox-content">
             <form action="Register!registerStep2" method="post" class="form-horizontal">
-                <input type="hidden" name="cid" value="${reginfo.id}">
+                <input type="hidden" name="cid" value="${reginfo.cid}">
                 <div class="form-group">
                     <label class="col-sm-3 control-label">开户名：</label>
 

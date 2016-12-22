@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    if ((!request.getSession().getAttribute("roletype").toString().equals("1"))&&
+    if ((!request.getSession().getAttribute("roletype").toString().equals("0"))&&
             (!request.getSession().getAttribute("roletype").toString().equals("111")))
         request.getRequestDispatcher("page404.jsp").forward(request, response);
 %>
@@ -115,7 +115,7 @@
     </div>
 </div>
 <form>
-    <input type="hidden" name="cid" value="${reginfo.id}">
+    <input type="hidden" name="cid" value="${reginfo.cid}">
     <table class="table table-bordered" >
         <tbody>
         <tr>
