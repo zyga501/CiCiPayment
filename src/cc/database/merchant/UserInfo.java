@@ -17,6 +17,15 @@ public class UserInfo {
         return Database.Instance().update(statement, map)==1;
     }
 
+    public static boolean initPassWord(long  id) {
+        String statement = "cc.database.merchant.mapping.userinfo.initPassWord";
+        return Database.Instance().update(statement, id)==1;
+    }
+
+    public static boolean insertUserInfo(UserInfo  userInfo) {
+        String statement = "cc.database.merchant.mapping.userinfo.insertUserInfo";
+        return Database.Instance().insert(statement, userInfo)==1;
+    }
     public long getId() {
         return id_;
     }

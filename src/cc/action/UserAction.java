@@ -4,19 +4,20 @@ import QimCommon.utils.StringUtils;
 import cc.ProjectLogger;
 import cc.ProjectSettings;
 import cc.database.merchant.*;
-import cc.database.order.ChanOrderInfo;
 import cc.database.order.PayOrderInfo;
 import cc.message.WeixinMessage;
+import cc.utils.IdConvert;
 import cc.weixin.api.OpenId;
 import QimCommon.struts.AjaxActionSupport;
 import net.sf.json.JSONArray;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class UserAction extends AjaxActionSupport {
+
+    private String cid;
 
     public void fetchWxCode()  {
         try {
@@ -118,6 +119,12 @@ public class UserAction extends AjaxActionSupport {
         }
         getRequest().getSession().setAttribute("menulist" ,menulist );
         return "mainpagejsp";
+    }
+
+    public String initPassword(){
+        if ((!getAttribute("roletype").equals("0"))&&(!getAttribute("roletype").equals("111")))
+            return AjaxActionComplete(false);
+        return AjaxActionComplete(UserInfo.initPassWord(Long.parseLong(getParameter("agentid").toString())));
     }
 
     public String msgPage(){
@@ -223,7 +230,7 @@ public class UserAction extends AjaxActionSupport {
 
     public String showMyQcode(){
         try {
-           // setParameter("openid","oBhD-wi-1wOs_8VYB227-VcIf0fo");
+            //setParameter("openid","oBhD-wj1zMF5-FET_9dwK8rI2nt0");//本地测试用
             if (StringUtils.convertNullableString(getAttribute("openid")).equals("") && (StringUtils.convertNullableString(getParameter("openid")).length() == 0)) {
                 setParameter("redirect_url", "User!showMyQcode?abc=1");
                 return "fetchWxCode";
@@ -237,15 +244,33 @@ public class UserAction extends AjaxActionSupport {
                 return "page404";
             }
             CardInfo cardInfo = CardInfo.getCardInfoById(lm.get(0).getId());
-            setAttribute("qcode", cardInfo.getSaltcode());
-            setAttribute("merchantname", lm.get(0).getName());
-            setAttribute("status", lm.get(0).getPaymentStatus() ? "开通" : "暂停");
+            setCid(cardInfo.getSaltcode());
         }
         catch (Exception e){
+            e.printStackTrace();
+            return "page404";
+        }
+        return "shareMyQcode";
+    }
+
+    public String shareMyQcode(){
+        try {
+            if (StringUtils.convertNullableString(getAttribute("openid")).equals("") && (StringUtils.convertNullableString(getParameter("openid")).length() == 0)) {
+                setParameter("redirect_url", "User!shareMyQcode?cid="+getParameter("cid").toString());
+                return "fetchWxCode";
+            }
+            MerchantInfo  merchantinfo = MerchantInfo.getMerchantInfoById(IdConvert.DecryptionId(Long.parseLong(getParameter("cid").toString())));
+            setAttribute("qcode", getParameter("cid").toString());
+            setAttribute("merchantname", merchantinfo.getName());
+            setAttribute("status", merchantinfo.getPaymentStatus() ? "开通" : "暂停");
+        }
+        catch (Exception e){
+            e.printStackTrace();
             return "page404";
         }
         return "mpindex";
     }
+
     public String showMyCiCiInfo(){
 //        setParameter("openid","oBhD-wj1zMF5-FET_9dwK8rI2nt0");
         try {
@@ -320,5 +345,127 @@ public class UserAction extends AjaxActionSupport {
         if (getParameter("pagetype").toString().compareTo("last")==0)
             lplimit = PayOrderInfo.getPayAndChanAsc(lm.get(0).getId(),0,5);
         return AjaxActionComplete(lplimit);
+    }
+
+    public String fetchAgent(){
+        try {
+            Map map = new HashMap<>();
+            List<AgentInfo> la =  new ArrayList();
+            if ((null != getParameter("agentid")) && (getParameter("agentid").toString().compareTo("")!=0)) {
+                AgentInfo agentInfo = AgentInfo.getAgentInfoById(Long.parseLong(getParameter("agentid").toString()));
+                la.add(agentInfo);
+                map.put("totalcount", agentInfo != null ? 1 : 0);
+                map.put("rtlist",la);
+                return AjaxActionComplete( map);
+            } else if (null != getParameter("agentname")) {
+               la = AgentInfo.getAgentInfoByName(getParameter("agentname").toString());
+                map.put("totalcount", la.size());
+                map.put("rtlist", la);
+                return AjaxActionComplete( map);
+            }
+        }
+        catch (Exception e){
+            return AjaxActionComplete(false);
+        }
+        return AjaxActionComplete(false);
+    }
+
+    public String selectOneAgent(){
+        try {
+            Map map = new HashMap<>();
+            if ((getParameter("dotype").toString().compareTo("insert")==0)) {
+                setAttribute("agentinfo", null);
+                setAttribute("dotype","insert");
+                return "agentinfo";
+            }
+            if ((getParameter("dotype").toString().compareTo("select")==0) && (null != getParameter("id"))
+                    && (getParameter("id").toString().compareTo("") != 0)) {
+                AgentInfo agentInfo = AgentInfo.getAgentInfoById(Long.parseLong(getParameter("id").toString()));
+                setAttribute("agentinfo", agentInfo);
+                setAttribute("dotype","select");
+                return "agentinfo";
+            }
+            if ((getParameter("dotype").toString().compareTo("edit")==0) && (null != getParameter("id"))
+                    && (getParameter("id").toString().compareTo("") != 0)) {
+                AgentInfo agentInfo = AgentInfo.getAgentInfoById(Long.parseLong(getParameter("id").toString()));
+                setAttribute("agentinfo", agentInfo);
+                setAttribute("dotype","edit");
+                return "agentinfo";
+            }
+        }
+        catch (Exception e){
+            return "page404";
+        }
+        return "page404";
+    }
+
+
+    public String insertAgent(){
+        if ((!getAttribute("roletype").equals("0"))&&(!getAttribute("roletype").equals("111")))
+            return AjaxActionComplete(false);
+        AgentInfo agent = new AgentInfo();
+        try {
+            agent.setName(getParameter("agentname").toString());
+            agent.setAccountName(getParameter("accountname").toString());
+            agent.setAccountPhone(getParameter("accountphone").toString());
+            agent.setcontactPhone(getParameter("contactphone").toString());
+            agent.setAccountNo(getParameter("accountno").toString());
+            agent.setBankCity(getParameter("bankcity").toString());
+            agent.setBankCode(getParameter("bankcode").toString());
+            agent.setBankName(getParameter("bankname").toString());
+            agent.setAliCost(Float.parseFloat(getParameter("alicost").toString()));
+            agent.setAliProfit(Float.parseFloat(getParameter("aliprofit").toString()));
+            agent.setJdCost(Float.parseFloat(getParameter("jdcost").toString()));
+            agent.setJdProfit(Float.parseFloat(getParameter("jdprofit").toString()));
+            agent.setWxCost(Float.parseFloat(getParameter("wxcost").toString()));
+            agent.setWxProfit(Float.parseFloat(getParameter("wxprofit").toString()));
+            agent.setBestCost(Float.parseFloat(getParameter("bestcost").toString()));
+            agent.setBestProfit(Float.parseFloat(getParameter("bestprofit").toString()));
+            UserInfo us=new UserInfo();
+            us.setPassword("1234567");
+            us.setUsername(getParameter("agentname").toString());
+            UserInfo.insertUserInfo(us);
+            List<UserInfo> lus = UserInfo.getUserInfoByMap(getParameter("agentname").toString(),"1234567",null,null);
+            agent.setId(lus.get(0).getId());
+            return AjaxActionComplete(AgentInfo.insertAgentInfo(agent));
+        }
+        catch (Exception e){
+            return AjaxActionComplete(false);
+        }
+    }
+
+    public String editAgent(){
+        AgentInfo agent = new AgentInfo();
+        try {
+            agent.setId(Long.parseLong(getParameter("agentid").toString()));
+            agent.setName(getParameter("agentname").toString());
+            agent.setAccountName(getParameter("accountname").toString());
+            agent.setAccountPhone(getParameter("accountphone").toString());
+            agent.setcontactPhone(getParameter("contactphone").toString());
+            agent.setAccountNo(getParameter("accountno").toString());
+            agent.setBankCity(getParameter("bankcity").toString());
+            agent.setBankCode(getParameter("bankcode").toString());
+            agent.setBankName(getParameter("bankname").toString());
+            agent.setAliCost(Float.parseFloat(getParameter("alicost").toString()));
+            agent.setAliProfit(Float.parseFloat(getParameter("aliprofit").toString()));
+            agent.setJdCost(Float.parseFloat(getParameter("jdcost").toString()));
+            agent.setJdProfit(Float.parseFloat(getParameter("jdprofit").toString()));
+            agent.setWxCost(Float.parseFloat(getParameter("wxcost").toString()));
+            agent.setWxProfit(Float.parseFloat(getParameter("wxprofit").toString()));
+            agent.setBestCost(Float.parseFloat(getParameter("bestcost").toString()));
+            agent.setBestProfit(Float.parseFloat(getParameter("bestprofit").toString()));
+            return AjaxActionComplete(AgentInfo.updateAgentInfo(agent));
+        }
+        catch (Exception e){
+            return AjaxActionComplete(false);
+        }
+    }
+
+    public void setCid(String cid) {
+        this.cid = cid;
+    }
+
+    public String getCid() {
+        return cid;
     }
 }
