@@ -1,6 +1,6 @@
 package cc.action.RequestData;
 
-public class JsPayData
+public class JsPayRequestData
 {
     public String mode;
     public String id;
