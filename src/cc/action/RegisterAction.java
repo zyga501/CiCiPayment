@@ -243,7 +243,7 @@ public class RegisterAction extends AjaxActionSupport {
         PendingMerchant pendingMerchant =  PendingMerchant.getPendingMerchantById(merchantId, getParameter("openid").toString());
         if (pendingMerchant == null) {
             pendingMerchant = new PendingMerchant();
-            pendingMerchant.setCid(merchantId);
+            pendingMerchant.setId(merchantId);
             pendingMerchant.setOpenid(getParameter("openid").toString());
             PendingMerchant.insertPendingMerchant(pendingMerchant);
         }

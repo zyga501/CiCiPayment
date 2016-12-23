@@ -42,7 +42,7 @@
     <div class="clear"></div>
     <div class="list_border">
     	<div class="list_title">
-        	卡号：${qcode}   商户：${merchantname} <br>
+            到账卡号：${qcode}   商户：${merchantname} <br>
 			服务专员：${agentinfo}
         </div>
         <div class="clear"></div>

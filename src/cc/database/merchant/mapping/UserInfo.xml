@@ -15,6 +15,12 @@
         update userinfo set  openid=(case openid when '' then  #{openid} else openid end),
           password=(case openid when #{openid} then #{password}  ELSE password end) where username=#{username}
     </select>
+    <update id="initPassWord" parameterType="long">
+        update userinfo set password='1234567' where id=#{id}
+    </update>
+    <insert id="insertUserInfo" parameterType="cc.database.merchant.UserInfo">
+        insert into  userinfo (username,password,openid,roletype) VALUES (#{username},#{password},#{openid},#{roletype});
+    </insert>
     <resultMap type="cc.database.merchant.UserInfo" id="userInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="username" column="username" jdbcType="VARCHAR" />

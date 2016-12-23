@@ -53,9 +53,11 @@
             <result name="agentRegister">agentreg.jsp</result>
             <result name="msgpage">msgpage.jsp</result>
             <result name="makeCard">makecard.jsp</result>
+            <result name="shareMyQcode" type="redirect">User!shareMyQcode?cid=${cid}</result>
             <result name="mainpagejsp" type="redirect" >mainpage.jsp</result>
-            <result name="mpindex" type="redirect" >mpindex.jsp</result>
+            <result name="mpindex"  >mpindex.jsp</result>
             <result name="mplist" type="redirect" >mplist.jsp</result>
+            <result name="agentinfo" type="redirect" >agentreg.jsp</result>
         </action>
         <action name="Register!*" class="cc.action.RegisterAction" method="{1}">
             <result name="loginPage">./login.jsp</result>

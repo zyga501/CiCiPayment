@@ -17,6 +17,15 @@ public class AgentInfo {
         return Database.Instance().selectList(statement, uname);
     }
 
+    public static  boolean updateAgentInfo(AgentInfo  agent) {
+        String statement = "cc.database.merchant.mapping.agentInfo.updateAgentInfo";
+        return Database.Instance().update(statement, agent)==1;
+    }
+
+    public static boolean insertAgentInfo(AgentInfo agentInfo){
+        String statement = "cc.database.merchant.mapping.agentInfo.insertAgentInfo";
+        return Database.Instance().insert(statement, agentInfo)==1;
+    }
     public long getId() {
         return id_;
     }
