@@ -77,6 +77,37 @@ public class ProjectSettings {
         return "";
     }
 
+    public enum SettleMethod
+    {
+        t0,
+        t1
+    };
+    public static SettleMethod getSettleMethod() {
+        try {
+            if (projectSettings_ != null && projectSettings_.get("SettleMethod") != null) {
+                return Long.parseLong(projectSettings_.get("SettleMethod").toString()) == 1 ? SettleMethod.t1 : SettleMethod.t0;
+            }
+        }
+        catch (NumberFormatException exception) {
+
+        }
+
+        return SettleMethod.t0;
+    }
+
+    public static long getSettleLimit() {
+        try {
+            if (projectSettings_ != null && projectSettings_.get("SettleLimit") != null) {
+                return Long.parseLong(projectSettings_.get("SettleLimit").toString());
+            }
+        }
+        catch (NumberFormatException exception) {
+
+        }
+
+        return 0;
+    }
+
     public static Object getData(String key) {
         if (projectSettings_ != null && projectSettings_.containsKey(key)) {
             return projectSettings_.get(key);

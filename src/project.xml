@@ -15,20 +15,6 @@
         <noticetemplate_id></noticetemplate_id>
         <editer>CC客服</editer>
     </weixinServerInfo>
-    <aliServerInfo>
-        <appid>2016062001535511</appid>
-        <privateKey>
-            MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAM0oI20CaIOfWDPXnr38tSModbpeEj1eW/+NIfOT7odgS76uGpHXNQJ00Ugw+015itcrpP0M1wNuDlsPJVqSeKcu18vVJl+1RtqODN+wPAubY/7fV9XB7YWX2vwkIxs5x1Y63QLn9kKiBK5G5fY07vBBB7vx/zDN2EE+hFbprtafAgMBAAECgYEArJHB0tU+wtDLabhK4DbsyykidmTg5Nw1eK3nzDM4Zol6zWc4FEs5XNqUnCwPh2jggARHYVBmoIz36GLCIgCpGT3u3Pcs5VY9r4zw4ZqyINSpcz2qr+3eEMTOUOVqlFEm15gWGc2CP0ulk2po2y8Jdjk2i31A2o56ZQk99rjMvskCQQDyEl8AFDhfPUsdqiSXETnnO2cgXLwoVhNS73u+8nT0pi8/BGN8sbctSwLQxbxhwT29X09gJPnmgz3sIfIX+zu7AkEA2PYF8F9h9+XNyLfsg+NgSxTcklJRSA4tObf4bhcMoWM4m39g1gY8HxNA4sHvWQif3b/Hffh5eKbFDMJwAdi4bQJAZmZFD5h+HDOmcd8GaW0dDGbBghwYcAuxUvUBaM3Rkag29jZaC2Z18U/42e27ebKv9kq6HhamK8+6wwe9DE33fwJBAKrr9vXNTvLq+dl8/DlS8dN0leg4LYykjoCALJkeU3b5Ieluyi0SMF8S3fVGb3cm0jryEQlurNOeHnLU40SxJWkCQDPSz90s3KdguqGv0Qnv3e+i3RjV0tgqjlTilgBA+UKdTvRoCnalBaePwBHGL7qgudqKppY30VrWNBWyySrMpU4=
-        </privateKey>
-        <publicKey>
-            MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB
-        </publicKey>
-    </aliServerInfo>
-    <swiftpass>
-        <merchantId>100530023507</merchantId>
-        <body>企盟支付</body>
-        <apiKey>49e78ffb6d503bda68898ed06a0c98d9</apiKey>
-    </swiftpass>
     <chanPay>
         <CJ_GATEWAY_URL>https://cop-gateway.chanpay.com/crps-gateway/gw01/process01</CJ_GATEWAY_URL>
         <MERCHANT_ID>cp2016091930738</MERCHANT_ID>
@@ -43,4 +29,7 @@
         <FreeSignName>云支付平台</FreeSignName>
         <TemplateCode>SMS_15540606</TemplateCode>
     </SMSInfo>
+    <!-- 结算方式 0 t0 1 t1-->
+    <SettleMethod>0</SettleMethod>
+    <SettleLimit>10</SettleLimit>
 </project>

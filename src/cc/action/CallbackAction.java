@@ -3,6 +3,7 @@ package cc.action;
 import QimCommon.struts.AjaxActionSupport;
 import QimCommon.utils.JsonUtils;
 import QimCommon.utils.StringUtils;
+import cc.ProjectSettings;
 import cc.chanpay.api.RequestBean.SinglePayRequestData;
 import cc.chanpay.api.SinglePay;
 import cc.database.merchant.MerchantInfo;
@@ -83,9 +84,14 @@ public class CallbackAction extends AjaxActionSupport {
                             singlePayRequestData.amount = total_fee;
                     }
 
-                    SinglePay singlePay = new SinglePay(singlePayRequestData);
-                    if (paid = singlePay.postRequest()) {
-                        saveChanOrder(merchantId, tradeNo, singlePayRequestData.amount, singlePay.getReqSn(), singlePay.getTimeStamp());
+                    if (ProjectSettings.getSettleMethod() == ProjectSettings.SettleMethod.t0 && singlePayRequestData.amount >= ProjectSettings.getSettleLimit() * 100) {
+                        SinglePay singlePay = new SinglePay(singlePayRequestData);
+                        if (paid = singlePay.postRequest()) {
+                            saveChanOrder(merchantId, tradeNo, singlePayRequestData.amount, singlePay.getReqSn(), singlePay.getTimeStamp(), true);
+                        }
+                    }
+                    else {
+                        saveChanOrder(merchantId, tradeNo, singlePayRequestData.amount, "", "", false);
                     }
                 }
             }
@@ -101,7 +107,6 @@ public class CallbackAction extends AjaxActionSupport {
                         merchantInfo.getWxRate(),
                         paid);
             }
-            return;
         }
     }
 
@@ -117,13 +122,14 @@ public class CallbackAction extends AjaxActionSupport {
         return PayOrderInfo.insertOrderInfo(payOrderInfo);
     }
 
-    private boolean saveChanOrder(long merchantId, String payTradeNo, int tradeAmount, String tradeNo, String tradeTime) {
+    private boolean saveChanOrder(long merchantId, String payTradeNo, int tradeAmount, String tradeNo, String tradeTime, boolean paid) {
         ChanOrderInfo chanOrderInfo = new ChanOrderInfo();
         chanOrderInfo.setMerchantId(merchantId);
         chanOrderInfo.setPayTradeNo(payTradeNo);
         chanOrderInfo.setTradeNo(tradeNo);
         chanOrderInfo.setTradeAmount(tradeAmount);
         chanOrderInfo.setTradeTime(tradeTime);
+        chanOrderInfo.setPaid(paid);
         return ChanOrderInfo.insertOrderInfo(chanOrderInfo);
     }
 }

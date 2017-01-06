@@ -73,6 +73,14 @@ public class ChanOrderInfo {
         this.tradeTime_ = tradeTime;
     }
 
+    public boolean getPaid() {
+        return paid_;
+    }
+
+    public void setPaid(boolean paid) {
+        paid_ = paid;
+    }
+
     public Timestamp getCreatetime() {
         return createTime_;
     }
@@ -87,5 +95,6 @@ public class ChanOrderInfo {
     private String tradeNo_;
     private int tradeAmount_;
     private String tradeTime_;
+    private boolean paid_;
     private Timestamp createTime_;
 }
