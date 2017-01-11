@@ -15,8 +15,8 @@
     </select>
 
     <insert id="insertOrderInfo" parameterType="cc.database.order.ChanOrderInfo">
-        INSERT INTO chanOrderInfo(merchantId, payTradeNo, tradeNo, tradeAmount, tradeTime)
-        VALUE (#{merchantId},#{payTradeNo},#{tradeNo},#{tradeAmount},#{tradeTime})
+        INSERT INTO chanOrderInfo(merchantId, payTradeNo, tradeNo, tradeAmount, tradeTime, paid)
+        VALUE (#{merchantId},#{payTradeNo},#{tradeNo},#{tradeAmount},#{tradeTime},#{paid})
     </insert>
 
     <resultMap type="cc.database.order.ChanOrderInfo" id="orderInfoResult">
@@ -26,6 +26,7 @@
         <result property="tradeNo" column="tradeNo" jdbcType="VARCHAR" />
         <result property="tradeAmount" column="tradeAmount" jdbcType="NUMERIC" />
         <result property="tradeTime" column="tradeTime" jdbcType="VARCHAR" />
+        <result property="paid" column="paid" jdbcType="TINYINT" />
         <result property="createtime" column="createtime" jdbcType="TIMESTAMP" />
     </resultMap>
 </mapper>

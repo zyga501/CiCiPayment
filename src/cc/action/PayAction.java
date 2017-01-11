@@ -100,6 +100,7 @@ public class PayAction extends AjaxActionSupport {
         scanPayRequestData.mode = payMethod.getMode();
         scanPayRequestData.body = "CiCi卡支付";
         scanPayRequestData.total_fee = getParameter("total_amount").toString();
+        scanPayRequestData.method = payMethod.getMethod();
         String requestUrl = getRequest().getRequestURL().toString();
         requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + CallbackAction.SCANPAYCALLBACK;
         scanPayRequestData.redirect_uri = requestUrl;
