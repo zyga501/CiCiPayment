@@ -2,24 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cc.database.merchant.mapping.pendingMerchant">
     <select id="getPendingMerchantById" parameterType="java.util.HashMap" resultMap="pendingMerchantResult">
-        SELECT * FROM pendingmerchant where id=#{id} <if test="openid!=null"> and openid=#{openid}</if>
+        SELECT a.*,cast(b.saltcode as CHAR ) as cid FROM pendingmerchant a,cardinfo b where a.id=b.id and a.id=#{id} <if test="openid!=null"> and openid=#{openid}</if>
     </select>
 
     <select id="getPendingMerchant" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-        SELECT * FROM pendingmerchant
-        <where><if  test="openid!=null">openid=#{openid}</if>
-        <if test="cid!=null">and  id  =${cid} </if>
+        SELECT a.*,cast(b.saltcode as CHAR) as cid FROM pendingmerchant a,cardinfo b where a.id=b.id
+        <if  test="openid!=null"> and openid=#{openid}</if>
+        <if test="cid!=null"> and  a.id  =${cid} </if>
         <if test="item!=null"> and (name like  CONCAT('%','${item}','%' )
             or   contactPhone like   CONCAT('%','${item}','%' )
-            or id  like  CONCAT('%','${item}','%' ))  </if>
-    </where>
+            or a.id  like  CONCAT('%','${item}','%' ))  </if>
     </select>
 
     <insert id="insertPendingMerchant" parameterType="cc.database.merchant.PendingMerchant">
         INSERT INTO pendingmerchant(id,name,address,contactName,contactPhone,idCard,paymentStatus,
-        wxStatus,wxRate,aliStatus,aliRate,jdStatus,jdRate,bestStatus,bestRate,bankCity,bankName,bankGeneralName,accountNo,accountName,accountPhone,openid,externInfo)
+        wxStatus,wxRate,aliStatus,aliRate,jdStatus,jdRate,bestStatus,bestRate,bankCity,bankName,bankCode,bankGeneralName,accountNo,accountName,accountPhone,openid,externInfo)
         VALUE (#{id},#{name},#{address},#{contactName},#{contactPhone},#{idCard},#{paymentStatus},
-        #{wxStatus},#{wxRate},#{aliStatus},#{aliRate},#{jdStatus},#{jdRate},#{bestStatus},#{bestRate},#{bankCity},#{bankName},#{bankGeneralName},#{accountNo},#{accountName},#{accountPhone},#{openid},#{externInfo})
+        #{wxStatus},#{wxRate},#{aliStatus},#{aliRate},#{jdStatus},#{jdRate},#{bestStatus},#{bestRate},#{bankCity},#{bankName},#{bankCode},#{bankGeneralName},#{accountNo},#{accountName},#{accountPhone},#{openid},#{externInfo})
     </insert>
 
     <update id="updatePendingMerchant" parameterType="cc.database.merchant.PendingMerchant">
@@ -58,5 +57,6 @@
         <result property="accountPhone" column="accountPhone" jdbcType="VARCHAR" />
         <result property="openid" column="openid" jdbcType="VARCHAR" />
         <result property="externInfo" column="externInfo" jdbcType="VARCHAR" />
+        <result property="cid" column="cid" jdbcType="VARCHAR" />
     </resultMap>
 </mapper>

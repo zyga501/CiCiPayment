@@ -11,7 +11,7 @@
     </select>
 
     <select id="getMerchantInfoByQuery" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-        SELECT a.*,b.saltcode as cid,c.name as agentname FROM merchantinfo a,cardinfo b,agentinfo c where a.id=b.id and c.id=b.agentid
+        SELECT a.*,cast(b.saltcode as CHAR)as cid,c.name as agentname FROM merchantinfo a,cardinfo b,agentinfo c where a.id=b.id and c.id=b.agentid
         <if test="null!=cid"> and b.id=#{cid}</if>
         <if test="null!=name"> and a.name=#{name}</if>
         <if test="null!=agentname"> and c.name=#{agentname}</if>

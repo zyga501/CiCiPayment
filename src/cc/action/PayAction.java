@@ -137,7 +137,7 @@ public class PayAction extends AjaxActionSupport {
 
     private PayMethod choosePayMethod(long cardId) {
         MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(IdConvert.DecryptionId(cardId));
-        if (merchantInfo == null) {
+        if (merchantInfo == null || (!merchantInfo.getPaymentStatus())) {
             return null;
         }
 

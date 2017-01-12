@@ -235,6 +235,7 @@ public class UserAction extends AjaxActionSupport {
                 setParameter("redirect_url", "User!showMyQcode?abc=1");
                 return "fetchWxCode";
             }
+            ProjectLogger.error("openid:"+getAttribute("openid"));
             if (StringUtils.convertNullableString(getAttribute("openid")).equals(""))
                 getRequest().getSession().setAttribute("openid", getParameter("openid").toString());
             Map map = new HashMap<>();
@@ -287,7 +288,8 @@ public class UserAction extends AjaxActionSupport {
                 return "page404";
             }
             CardInfo cardInfo = CardInfo.getCardInfoById(lm.get(0).getId());
-            setAttribute("qcode", cardInfo.getSaltcode());
+            setAttribute("accountno", lm.get(0).getAccountNo());
+            setAttribute("bankname", lm.get(0).getBankGeneralName());
             setAttribute("merchantname", lm.get(0).getName());
             AgentInfo agentInfo = AgentInfo.getAgentInfoById(cardInfo.getAgentid());
             setAttribute("agentinfo", agentInfo.getName()+"("+agentInfo.getcontactPhone()+")");
@@ -335,7 +337,7 @@ public class UserAction extends AjaxActionSupport {
             return "page404";
         }
         int tabid = Integer.parseInt(StringUtils.convertNullableString(getParameter("pid"),"0"));
-        List<PayOrderInfo> lplimit = null;
+        List<Map> lplimit = null;
         if (getParameter("pagetype").toString().compareTo("first")==0)
             lplimit = PayOrderInfo.getPayAndChanDesc(lm.get(0).getId(),999999999,5);
         if (getParameter("pagetype").toString().compareTo("next")==0)
@@ -459,6 +461,25 @@ public class UserAction extends AjaxActionSupport {
         catch (Exception e){
             return AjaxActionComplete(false);
         }
+    }
+
+    public String modMyCiCiInfo() {
+        //setParameter("openid","oX2yrxK7iPmdKodGIMYAcDEdQtKc");
+        if (StringUtils.convertNullableString(getAttribute("openid")).equals("") && (StringUtils.convertNullableString(getParameter("openid")).length() == 0)) {
+            setParameter("redirect_url", "User!modMyCiCiInfo?abc=1");
+            return "fetchWxCode";
+        }
+        if (StringUtils.convertNullableString(getAttribute("openid")).equals(""))
+            getRequest().getSession().setAttribute("openid", getParameter("openid").toString());
+
+        Map map = new HashMap<>();
+        map.put("openid",getRequest().getSession().getAttribute("openid").toString());
+        List<MerchantInfo> lp =  MerchantInfo.getMerchantInfoByMap(map);
+        CardInfo cardindo = CardInfo.getCardInfoById((lp.get(0).getId()));
+        lp.get(0).setCid(Long.parseLong(cardindo.getSaltcode()));
+        getRequest().setAttribute("reginfo",lp.get(0));
+
+        return "registermodfiy";
     }
 
     public void setCid(String cid) {

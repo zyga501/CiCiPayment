@@ -67,7 +67,7 @@
                                 $("#contentdiv").html("<img  src='<%=request.getContextPath()%>/img/loading.gif'>");
                                 $.ajax({
                                     type: 'post',
-                                    url: '<%=request.getContextPath()%>/Register!fetchMerchant',
+                                    url: '<%=request.getContextPath()%>/Register!fetchPendingMerchant',
                                     dataType: "json",
                                     data: $("#searchform").serialize() + "&currpagenum=" + obj.curr,
                                     success: function (data) {
@@ -82,8 +82,8 @@
                                             htmlStr += "<th>CC卡号</th><th>店名</th><th>联系电话</th>";
                                             htmlStr += "</thead><tbody>";
                                             for (var i = 1, l = json.length; i < l; i++) {
-                                                htmlStr += "<tr shh='" + json[i]['id'] +"' sh='"+json[i]['openid']+"'>";
-                                                htmlStr += "<td>" + json[i]['id'] + "</td>"
+                                                htmlStr += "<tr shh='" + json[i]['cid'] +"' sh='"+json[i]['openid']+"'>";
+                                                htmlStr += "<td>" + json[i]['cid'] + "</td>"
                                                 htmlStr += "<td>" + nulltoempty(json[i]['name']) + "</td>"
                                                 htmlStr += "<td>" + nulltoempty(json[i]['contactPhone']) + "</td>"
                                                 htmlStr += "</tr>";
@@ -104,8 +104,8 @@
                     htmlStr += "<th>CC卡号</th><th>店名</th><th>联系电话</th>";
                     htmlStr += "</thead><tbody>";
                     for (var i = 1, l = json.length; i < l; i++) {
-                        htmlStr += "<tr shh='" + json[i]['id'] +"' sh='"+json[i]['openid']+"'>";
-                        htmlStr += "<td>" + json[i]['id'] + "</td>"
+                        htmlStr += "<tr shh='" + json[i]['cid'] +"' sh='"+json[i]['openid']+"'>";
+                        htmlStr += "<td>" + (json[i]['cid']) + "</td>"
                         htmlStr += "<td>" + nulltoempty(json[i]['name']) + "</td>"
                         htmlStr += "<td>" + nulltoempty(json[i]['contactPhone']) + "</td>"
                         htmlStr += "</tr>";

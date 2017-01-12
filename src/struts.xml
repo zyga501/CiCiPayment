@@ -58,6 +58,7 @@
             <result name="mpindex"  >mpindex.jsp</result>
             <result name="mplist" type="redirect" >mplist.jsp</result>
             <result name="agentinfo" type="redirect" >agentreg.jsp</result>
+            <result name="registermodfiy"   >./register/registerallmod.jsp</result>
         </action>
         <action name="Register!*" class="cc.action.RegisterAction" method="{1}">
             <result name="loginPage">./login.jsp</result>

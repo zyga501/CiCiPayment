@@ -62,6 +62,7 @@
           $("#contentdiv").html(json.errorMessage);
         }
         else {
+          $("#contentdiv").html("");
           laypage({
             cont: 'navigatediv',
            // pages: json[0].pagecount,

@@ -49,6 +49,29 @@
                 <img  class="img" style="width: 100px;height: 80px"src="Register!checkInfo?picname=yhk&cid=${reginfo.cid}" onclick="openBrowse('fyhk')"><p>银行卡</p></td>
         </tr>
         <tr >
+            <td colspan="2"><input type="checkbox" value="自有资质" id="chkzyzz" name='chkzyzz' onchange="zyzzchange()"><label for="chkzyzz">自有资质</label>
+                <div id="zyzzContent" style="display: none">
+                    <table class="table table-bordered" >
+                        <tr><td><input type="file" class="infile" name="fyyzz" id="fyyzz" style="display:none">
+                            <img  class="img" style="width: 100px;height: 80px"src="Register!checkInfo?picname=yyzz&cid=${reginfo.cid}" onclick="openBrowse('fyyzz')"><p>营业执照</p></td>
+                            <td><input type="file" class="infile" name="fswdjzp" id="fswdjzp" style="display:none">
+                            <img  class="img" style="width: 100px;height: 80px"src="Register!checkInfo?picname=swdjzp&cid=${reginfo.cid}" onclick="openBrowse('fswdjzp')"><p>税务登记照片</p></td></tr>
+                        <tr><td><input type="file" class="infile" name="fzzjgdmz" id="fzzjgdmz" style="display:none">
+                            <img  class="img" style="width: 100px;height: 80px"src="Register!checkInfo?picname=zzjgdmz&cid=${reginfo.cid}" onclick="openBrowse('fzzjgdmz')"><p>组织机构代码证照片</p></td>
+                            <td><input type="file" class="infile" name="ffrsfzz" id="ffrsfzz" style="display:none">
+                            <img  class="img" style="width: 100px;height: 80px"src="Register!checkInfo?picname=frsfzz&cid=${reginfo.cid}" onclick="openBrowse('ffrsfzz')"><p>法人身份证照片正面</p></td></tr>
+                        <tr><td><input type="file" class="infile" name="ffrsfzf" id="ffrsfzf" style="display:none">
+                            <img  class="img" style="width: 100px;height: 80px"src="Register!checkInfo?picname=frsfzf&cid=${reginfo.cid}" onclick="openBrowse('ffrsfzf')"><p>法人身份证照片反面</p></td>
+                            <td><input type="file" class="infile" name="fshsyt" id="fshsyt" style="display:none">
+                            <img  class="img" style="width: 100px;height: 80px"src="Register!checkInfo?picname=shsyt&cid=${reginfo.cid}" onclick="openBrowse('fshsyt')"><p>商户收银台照片</p></td></tr>
+                        <tr><td><input type="file" class="infile" name="fshmtz" id="fshmtz" style="display:none">
+                            <img  class="img" style="width: 100px;height: 80px"src="Register!checkInfo?picname=shmtz&cid=${reginfo.cid}" onclick="openBrowse('fshmtz')"><p>商户门头照片</p></td>
+                            <td><input type="file" class="infile" name="fdncs" id="fdncs" style="display:none">
+                            <img  class="img" style="width: 100px;height: 80px"src="Register!checkInfo?picname=dncs&cid=${reginfo.cid}" onclick="openBrowse('fdncs')"><p>店内陈饰照片</p></td></tr>
+                    </table>
+                </div></td>
+        </tr>
+        <tr >
             <td colspan="2">
                 <div class="form-group">
                     <div  >
@@ -100,7 +123,7 @@
         $.ajaxFileUpload({
             url: "Register!uploadIDCard",
             secureuri: false,
-            fileElementId: ['fsfzf','fsfzz','fscsfz','fyhk'],
+            fileElementId: ['fsfzf','fsfzz','fscsfz','fyhk','fyyzz','fswdjzp','fzzjgdmz','ffrsfzz','ffrsfzf','fshsyt','fshmtz','fdncs'],
             dataType: 'multipart/form-data',
             data: $("form").serializeObject(),
             type: 'POST',
@@ -124,6 +147,12 @@
                 alert(e);
             }
         });
+    }
+
+    function zyzzchange(){
+        if ($("input[type='checkbox']").is(':checked')) {
+            $("#zyzzContent").css("display","block");
+        }else $("#zyzzContent").css("display","none");
     }
 </script>
 </body>

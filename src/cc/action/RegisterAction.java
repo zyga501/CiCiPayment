@@ -228,6 +228,7 @@ public class RegisterAction extends AjaxActionSupport {
     }
 
     public String registerPrepare() {
+        //setParameter("openid","oBhD-wj1zMF5-FET_9dwK8rI2nt0");
         getRequest().getSession().removeAttribute("ErrorMsg");
         if (StringUtils.convertNullableString(getParameter("openid")).length() == 0) {
             setParameter("redirect_url","Register!registerPrepare?cid=" + getParameter("cid").toString());
@@ -294,44 +295,225 @@ public class RegisterAction extends AjaxActionSupport {
         return "registerStep3";
     }
 
+    public String modIDCard(){
+        String ErrorMsg = "";
+        try {
+            long cid = IdConvert.DecryptionId(Long.parseLong(getParameter("cid").toString()));
+            MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(cid);
+            if (merchantInfo==null)
+                return AjaxActionComplete(false);
+            PendingMerchant pendingMerchant =new PendingMerchant();
+            pendingMerchant.setName(merchantInfo.getName());
+            pendingMerchant.setBankCity(merchantInfo.getBankCity());
+            pendingMerchant.setAccountName(merchantInfo.getAccountName());
+            pendingMerchant.setAccountNo(merchantInfo.getAccountNo());
+            pendingMerchant.setBankName(merchantInfo.getBankName());
+            pendingMerchant.setBankCode(merchantInfo.getBankCode());
+            pendingMerchant.setCid(merchantInfo.getCid());
+            pendingMerchant.setId(merchantInfo.getId());
+            pendingMerchant.setAccountPhone(merchantInfo.getAccountName());
+            pendingMerchant.setAddress(merchantInfo.getAddress());
+            pendingMerchant.setAliRate(merchantInfo.getAliRate());
+            pendingMerchant.setAliStatus(merchantInfo.getAliStatus());
+            pendingMerchant.setWxRate(merchantInfo.getWxRate());
+            pendingMerchant.setWxStatus(merchantInfo.getWxStatus());
+            pendingMerchant.setJdRate(merchantInfo.getJdRate());
+            pendingMerchant.setJdStatus(merchantInfo.getJdStatus());
+            pendingMerchant.setBestRate(merchantInfo.getBestRate());
+            pendingMerchant.setBestStatus(merchantInfo.getBestStatus());
+            pendingMerchant.setBankGeneralName(merchantInfo.getBankGeneralName());
+            pendingMerchant.setContactName(merchantInfo.getContactName());
+            pendingMerchant.setIdCard(merchantInfo.getIdCard());
+            pendingMerchant.setOpenid(merchantInfo.getOpenid());
+            pendingMerchant.setPayMethodAliId(merchantInfo.getPayMethodAliId());
+            pendingMerchant.setPayMethodBestId(merchantInfo.getPayMethodBestId());
+            pendingMerchant.setPayMethodWeixinId(merchantInfo.getPayMethodWeixinId());
+            pendingMerchant.setPayMethodJDId(merchantInfo.getPayMethodJDId());
+            pendingMerchant.setRegisterDate(merchantInfo.getRegisterDate());
+            pendingMerchant.setContactPhone(merchantInfo.getContactPhone());
+
+            pendingMerchant.setName(getParameter("name").toString());
+            pendingMerchant.setBankCity(getParameter("bankCity").toString());
+            pendingMerchant.setAccountName(getParameter("accountName").toString());
+            pendingMerchant.setAccountNo(getParameter("accountNo").toString());
+            pendingMerchant.setBankName(getParameter("bankName").toString());
+            pendingMerchant.setBankCode(getParameter("bankCode").toString());
+            pendingMerchant.setPaymentStatus(false);
+            if (!PendingMerchant.insertPendingMerchant(pendingMerchant)){
+                ErrorMsg = "请检查输入的信息是否正确";
+                getResponse().setContentType("text/html");
+                Map map = new HashMap<>();
+                map.put("ErrorMsg", ErrorMsg);
+                return AjaxActionComplete(true,map);
+            }
+
+            File ff = (File) getParameter("fyhk");
+            File fm = new File(ProjectSettings.getCachePath() + String.valueOf(cid)
+                    + getRequest().getSession().getAttribute("openid") + "yhk.jpg");
+            if (null != ff && ff.length() > 1000) {
+                {
+                    PublicFunc.copyFile(ff.getAbsolutePath(), fm.getAbsolutePath(), true);
+                }
+            } else if (null == ff || fm.length() < 1000)
+                ErrorMsg = "银行卡正面照文件不对";
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            getResponse().setContentType("text/html");
+            Map map = new HashMap<>();
+            map.put("ErrorMsg", ErrorMsg);
+            return AjaxActionComplete(true,map);
+        }
+    }
+
     public String uploadIDCard() {
         String ErrorMsg="";
         try {
+            File ff;
+            File fm;
             String cid = String.valueOf(IdConvert.DecryptionId(Long.parseLong(getParameter("cid").toString())));
-            File ff = (File) getParameter("fsfzz");//fdphy,fyhkf,fyhkz,fsfzf,fsfzz
-            File fm = new File(ProjectSettings.getCachePath() +cid
+            ff = (File) getParameter("fsfzz");
+            fm = new File(ProjectSettings.getCachePath() +cid
                     + getRequest().getSession().getAttribute("openid") + "sfzz.jpg");
             if (null != ff && ff.length() > 1000) {
                 PublicFunc.copyFile(ff.getAbsolutePath(), fm.getAbsolutePath(), true);
-            } else if (null == ff || fm.length()<100)
+            } else if (null == ff || fm.length()<100) {
                 ErrorMsg = "身份证正面照文件不对";
-            ff = (File) getParameter("fsfzf");//fdphy,fyhkf,fyhkz,fsfzf,fsfzz
+                return "";
+            }
+            ff = (File) getParameter("fsfzf");
             fm = new File(ProjectSettings.getCachePath() +cid
                     + getRequest().getSession().getAttribute("openid") + "sfzf.jpg");
             if (null != ff && ff.length() > 1000) {
                 {
                     PublicFunc.copyFile(ff.getAbsolutePath(), fm.getAbsolutePath(), true);
                 }
-            } else  if (null == ff || fm.length()<100)
+            } else  if (null == ff || fm.length()<100){
                 ErrorMsg = "身份证反面照文件不对";
-            ff = (File) getParameter("fscsfz");//fdphy,fyhkf,fyhkz,fsfzf,fsfzz
+                return "";
+            }
+            ff = (File) getParameter("fscsfz");
             fm = new File(ProjectSettings.getCachePath() +cid
                     + getRequest().getSession().getAttribute("openid") + "scsfz.jpg");
             if (null != ff && ff.length() > 1000) {
                 {
                     PublicFunc.copyFile(ff.getAbsolutePath(), fm.getAbsolutePath(), true);
                 }
-            } else  if (null == ff || fm.length()<1000)
+            } else  if (null == ff || fm.length()<1000){
                 ErrorMsg = "手持身份证照文件不对";
-            ff = (File) getParameter("fyhk");//fdphy,fyhkf,fyhkz,fsfzf,fsfzz
+                return "";
+            }
+            ff = (File) getParameter("fyhk");
             fm = new File(ProjectSettings.getCachePath() +cid
                     + getRequest().getSession().getAttribute("openid") + "yhk.jpg");
             if (null != ff && ff.length() > 1000) {
                 {
                     PublicFunc.copyFile(ff.getAbsolutePath(), fm.getAbsolutePath(), true);
                 }
-            } else if (null == ff || fm.length()<1000)
+            } else if (null == ff || fm.length()<1000){
                 ErrorMsg = "银行卡正面照文件不对";
+                return "";
+            }
+            /*自有资质*/
+            if (getParameter("chkzyzz")!=null){
+                ff = (File) getParameter("fyyzz");
+                fm = new File(ProjectSettings.getCachePath() +cid
+                        + getRequest().getSession().getAttribute("openid") + "yyzz.jpg");
+                if (null != ff && ff.length() > 1000) {
+                    {
+                        PublicFunc.copyFile(ff.getAbsolutePath(), fm.getAbsolutePath(), true);
+                    }
+                } else if (null == ff || fm.length()<1000){
+                    ErrorMsg = "营业执照文件不对";
+                    return "";
+                }
+
+                ff = (File) getParameter("fswdjzp");
+                fm = new File(ProjectSettings.getCachePath() +cid
+                        + getRequest().getSession().getAttribute("openid") + "swdjzp.jpg");
+                if (null != ff && ff.length() > 1000) {
+                    {
+                        PublicFunc.copyFile(ff.getAbsolutePath(), fm.getAbsolutePath(), true);
+                    }
+                } else if (null == ff || fm.length()<1000){
+                    ErrorMsg = "税务登记照片文件不对";
+                    return "";
+                }
+
+                ff = (File) getParameter("fzzjgdmz");
+                fm = new File(ProjectSettings.getCachePath() +cid
+                        + getRequest().getSession().getAttribute("openid") + "zzjgdmz.jpg");
+                if (null != ff && ff.length() > 1000) {
+                    {
+                        PublicFunc.copyFile(ff.getAbsolutePath(), fm.getAbsolutePath(), true);
+                    }
+                } else if (null == ff || fm.length()<1000){
+                    ErrorMsg = "组织机构代码证文件不对";
+                    return "";
+                }
+
+                ff = (File) getParameter("ffrsfzz");
+                fm = new File(ProjectSettings.getCachePath() +cid
+                        + getRequest().getSession().getAttribute("openid") + "frsfzz.jpg");
+                if (null != ff && ff.length() > 1000) {
+                    {
+                        PublicFunc.copyFile(ff.getAbsolutePath(), fm.getAbsolutePath(), true);
+                    }
+                } else if (null == ff || fm.length()<1000){
+                    ErrorMsg = "法人身份证照片正面文件不对";
+                    return "";
+                }
+
+                ff = (File) getParameter("ffrsfzf");
+                fm = new File(ProjectSettings.getCachePath() +cid
+                        + getRequest().getSession().getAttribute("openid") + "frsfzf.jpg");
+                if (null != ff && ff.length() > 1000) {
+                    {
+                        PublicFunc.copyFile(ff.getAbsolutePath(), fm.getAbsolutePath(), true);
+                    }
+                } else if (null == ff || fm.length()<1000){
+                    ErrorMsg = "法人身份证照片反面文件不对";
+                    return "";
+                }
+
+                ff = (File) getParameter("fshsyt");
+                fm = new File(ProjectSettings.getCachePath() +cid
+                        + getRequest().getSession().getAttribute("openid") + "shsyt.jpg");
+                if (null != ff && ff.length() > 1000) {
+                    {
+                        PublicFunc.copyFile(ff.getAbsolutePath(), fm.getAbsolutePath(), true);
+                    }
+                } else if (null == ff || fm.length()<1000){
+                    ErrorMsg = "商户收银台照片文件不对";
+                    return "";
+                }
+
+                ff = (File) getParameter("fshmtz");
+                fm = new File(ProjectSettings.getCachePath() +cid
+                        + getRequest().getSession().getAttribute("openid") + "shmtz.jpg");
+                if (null != ff && ff.length() > 1000) {
+                    {
+                        PublicFunc.copyFile(ff.getAbsolutePath(), fm.getAbsolutePath(), true);
+                    }
+                } else if (null == ff || fm.length()<1000){
+                    ErrorMsg = "商户门头照片文件不对";
+                    return "";
+                }
+
+                ff = (File) getParameter("fdncs");
+                fm = new File(ProjectSettings.getCachePath() +cid
+                        + getRequest().getSession().getAttribute("openid") + "dncs.jpg");
+                if (null != ff && ff.length() > 1000) {
+                    {
+                        PublicFunc.copyFile(ff.getAbsolutePath(), fm.getAbsolutePath(), true);
+                    }
+                } else if (null == ff || fm.length()<1000){
+                    ErrorMsg = "店内陈饰照片文件不对";
+                    return "";
+                }
+            }
         }
         catch (Exception e){
             e.printStackTrace();
@@ -356,13 +538,18 @@ public class RegisterAction extends AjaxActionSupport {
             String cardidstr = getParameter("cid").toString();
             String openidstr = null== getRequest().getSession().getAttribute("openid")?getParameter("openid").toString():getRequest().getSession().getAttribute("openid").toString();
             byte[] bt = null;
-            File fm = new File(ProjectSettings.getCachePath() + String.valueOf(cardidstr)
+            File fm = new File(ProjectSettings.getCachePath() + String.valueOf(IdConvert.DecryptionId(Long.parseLong(cardidstr)))
                     +openidstr + picname+".jpg");
             System.out.println("picname:"+picname);
             if (!fm.exists()) {
                 fm = new File(getRequest()
                         .getServletContext().getRealPath("/")
                         + "img/"+picname+".jpg");
+                if (!fm.exists()) {
+                    fm = new File(getRequest()
+                            .getServletContext().getRealPath("/")
+                            + "img/nopic.jpg");
+                }
             }
             if (!fm.exists()) {
                 return ;
@@ -456,7 +643,7 @@ public class RegisterAction extends AjaxActionSupport {
         try {
             Map map = new HashMap<>();
             map.put("openid", getParameter("openid"));
-            map.put("cid", getParameter("cid"));
+            map.put("cid", IdConvert.DecryptionId(Long.parseLong(getParameter("cid").toString())));
             List<Map> lm =  PendingMerchant.getPendingMerchant(map);
             Map mapp = new HashMap<>();
             getRequest().setAttribute("reginfo",lm.get(0));
@@ -486,7 +673,7 @@ public class RegisterAction extends AjaxActionSupport {
     }
     public String checkOne() {
         try {
-            PendingMerchant pendingMerchant =  PendingMerchant.getPendingMerchantById(Long.parseLong(getParameter("cid").toString()), getParameter("openid").toString());
+            PendingMerchant pendingMerchant =  PendingMerchant.getPendingMerchantById(IdConvert.DecryptionId(Long.parseLong(getParameter("cid").toString())), getParameter("openid").toString());
             if (pendingMerchant==null){
                 pendingMerchant = new PendingMerchant();
                 pendingMerchant.setCid(IdConvert.DecryptionId(Long.parseLong(getParameter("cid").toString())));
@@ -526,7 +713,10 @@ public class RegisterAction extends AjaxActionSupport {
             }
             if (PendingMerchant.updatePendingMerchant(pendingMerchant)){
                 PendingMerchant.deletePendingMerchant(pendingMerchant);
-                return AjaxActionComplete(MerchantInfo.insertMerchantInfo(pendingMerchant));
+                if (MerchantInfo.getMerchantInfoById(pendingMerchant.getId())!=null)
+                    return AjaxActionComplete(MerchantInfo.updateMerchantPayBycheck(pendingMerchant));
+                else
+                    return AjaxActionComplete(MerchantInfo.insertMerchantInfo(pendingMerchant));
             }
             else{
                 return AjaxActionComplete(MerchantInfo.updateMerchantPayBycheck(pendingMerchant));

@@ -42,7 +42,7 @@
     <div class="clear"></div>
     <div class="list_border">
     	<div class="list_title">
-            到账卡号：${qcode}   商户：${merchantname} <br>
+           ${accountno}（${bankname}）  商户：${merchantname} <br>
 			服务专员：${agentinfo}
         </div>
         <div class="clear"></div>
@@ -144,9 +144,9 @@
                     for (var i = 0; i < json.length; i++) {
                         htmlstr += "<tr>";
                         htmlstr += "<td>" + json[i].tradeTime + "</td>";
-                        htmlstr += "<td>" + json[i].tradeAmount + "</td>";
+                        htmlstr += "<td>" + json[i].tradeAmount/100.00 + "</td>";
                         htmlstr += "<td>" + json[i].tradeType + "</td>";
-                        htmlstr += "<td>" + json[i].paid + "</td>";
+                        htmlstr += "<td>" + json[i].Pt + "</td>";
                         htmlstr += "</tr>";
                     }
                     $("#tbody").html(htmlstr);
