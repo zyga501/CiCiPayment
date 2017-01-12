@@ -39,6 +39,8 @@ public class PayAction extends AjaxActionSupport {
                     return "registerPrepare";
                 }
 
+                setAttribute("merchantname",merchantInfo.getName());
+                setAttribute("merchanttel",merchantInfo.getContactPhone());
                 return "payPage";
             } while (false);
         }

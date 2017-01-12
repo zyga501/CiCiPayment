@@ -3,7 +3,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-    <title>企盟支付</title>
+    <title>企盟CiCi卡特别商户</title>
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <style type="text/css">
         <!--
@@ -118,7 +118,13 @@
     </style>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/qrcode.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jskeyboard.js"></script>
     <script language="javascript">
+        $().ready(function(){
+            $('#numinput').on('numsubmit', function() {
+                $("form").submit();
+            });
+        });
         function amount(th) {
             var regStrs = [
                 ['^0(\\d+)$', '$1'],
@@ -170,19 +176,28 @@
         }
     </script>
 </head>
-
+`
 <body>
 <input type="hidden" name="hideparam" id="hideparam" value=""/>
 
 <form action="<%=request.getContextPath()%>/Pay!jsPay" method="post">
     <input type="hidden" value=<%=request.getParameter("cid")%> name="cid" id="cid"/>
     <input type="hidden" value="" name="total_amount" id="total_amount"/>
+     <table   border="0">
+        <tr>
+            <td rowspan="2"><img src="img/pay.png"></td>
+            <td><span style="font-size: medium">${merchantname}</span></td>
+        </tr>
+        <tr>
+            <td><span style="font-size: small;color: #8c8c8c">${merchanttel}</span></td>
+        </tr>
+    </table>
     <div class="Layer1">
         <div class="dv1">
-	<span class="STYLE7">
+	<span class="STYLE7" >
   	  <label>消费总额: </label>
   	</span>
-            <input type="text" name="paynum" class="amount" maxlength=10 onkeyup="amount(this)" onpaste="return false;"
+            <input type="text" name="paynum" id='numinput' class="amount" maxlength=10 readonly onclick="new KeyBoard(this);"   onkeyup="amount(this)" onpaste="return false;"
                    autocomplete="off" placeholder="询问服务员后输入"/>
         </div>
     </div>
@@ -192,8 +207,8 @@
   	  <label>实付金额: </label>
   	</span>
             <label id="paynum" class="paynum"></label><br><br>
-            <input type="submit" class="but" id="jspay"  disabled="disabled" value="支付"/>
-            <input type="button" class="but" id="scanpay" disabled="disabled" value="扫码支付" />
+            <input type="hidden" class="but" id="jspay"  disabled="disabled" value="支付"/>
+            <input type="hidden" class="but" id="scanpay" disabled="disabled" value="扫码支付" />
             <tr>
                 <td>
                     <div  id="QRCode">
