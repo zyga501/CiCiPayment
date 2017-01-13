@@ -197,7 +197,7 @@
 	<span class="STYLE7" >
   	  <label>消费总额: </label>
   	</span>
-            <input type="text" name="paynum" id='numinput' class="amount" maxlength=10 readonly onclick="new KeyBoard(this);"   onkeyup="amount(this)" onpaste="return false;"
+            <input type="text" name="paynum" id='numinput' class="amount" maxlength=10 readonly onclick="new KeyBoard(this);"   onchange="amount(this)" onpaste="return false;"
                    autocomplete="off" placeholder="询问服务员后输入"/>
         </div>
     </div>
