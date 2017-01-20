@@ -352,7 +352,7 @@
     function openBrowse(obj){
         $("#"+obj).click();
     }
-    $(function() { alert("${reginfo.bankName}");
+    $(function() {
         $("#bankName").val("${reginfo.bankName}");
         $(".infile").on("change",function() {
             var srcs = getObjectURL(this.files[0]); //获取路径

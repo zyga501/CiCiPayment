@@ -47,6 +47,17 @@
         #{openid},#{payMethodWeixinId},#{payMethodAliId},#{payMethodJDId},#{payMethodBestId},#{externInfo})
     </insert>
 
+    <insert id="insertCopyMerchantInfo" parameterType="cc.database.merchant.MerchantInfo">
+        INSERT INTO merchantinfo(id,name,address,contactName,contactPhone,idCard,
+        paymentStatus,wxStatus,wxRate,aliStatus,aliRate,jdStatus,jdRate,bestStatus,bestRate,
+        bankCity,bankName,bankGeneralName,bankCode,accountNo,accountName,accountPhone,
+        openid,payMethodWeixinId,payMethodAliId,payMethodJDId,payMethodBestId,externInfo)
+        select #{id},name,address,contactName,contactPhone,idCard,
+        paymentStatus,wxStatus,wxRate,aliStatus,aliRate,jdStatus,jdRate,bestStatus,bestRate,
+        bankCity,bankName,bankGeneralName,bankCode,accountNo,accountName,accountPhone,
+        #{openid},payMethodWeixinId,payMethodAliId,payMethodJDId,payMethodBestId,externInfo from merchantinfo where openid=#{openid} limit 1
+    </insert>
+
     <resultMap type="cc.database.merchant.MerchantInfo" id="merchantInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="name" column="name" jdbcType="VARCHAR" />

@@ -68,6 +68,7 @@
             <result name="registerall">./register/registerall.jsp</result>
             <result name="merchantquery">./register/merchantquery.jsp</result>
             <result name="merchantlist">./register/merchantlist.jsp</result>
+            <result name="multcodes">./register/multcodes.jsp</result>
         </action>
         <action name="Flow!*" class="cc.action.FlowAction" method="{1}">
             <result name="ccmakeorder">ccmakeorder.jsp</result>

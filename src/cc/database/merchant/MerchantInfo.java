@@ -43,6 +43,10 @@ public class MerchantInfo {
         String statement = "cc.database.merchant.mapping.merchantInfo.insertMerchantInfo";
         return Database.Instance().insert(statement, merchantInfo)==1;
     }
+    public static boolean insertCopyMerchantInfo(MerchantInfo merchantInfo) {
+        String statement = "cc.database.merchant.mapping.merchantInfo.insertCopyMerchantInfo";
+        return Database.Instance().insert(statement, merchantInfo)==1;
+    }
     public static boolean DeleteMerchantInfo(MerchantInfo merchantInfo) {
         String statement = "cc.database.merchant.mapping.merchantInfo.DeleteMerchantInfo";
         return Database.Instance().insert(statement, merchantInfo)==1;

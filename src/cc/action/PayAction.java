@@ -53,6 +53,7 @@ public class PayAction extends AjaxActionSupport {
     public void jsPay() throws Exception {
         PayMethod payMethod = choosePayMethod(Long.parseLong(getParameter("cid").toString()));
         if (payMethod == null) {
+            getResponse().sendRedirect("page404.jsp");
             return;
         }
 

@@ -10,12 +10,16 @@ import cc.utils.IdConvert;
 import cc.utils.PublicFunc;
 import QimCommon.struts.AjaxActionSupport;
 import QimCommon.utils.StringUtils;
+import cc.utils.VerifyCodeUtils;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpSession;
+import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.text.DateFormat;
 import java.util.*;
+import java.util.List;
 
 public class RegisterAction extends AjaxActionSupport {
 
@@ -733,5 +737,94 @@ public class RegisterAction extends AjaxActionSupport {
     }
     public String goMerchantQuery(){
         return "merchantquery";
+    }
+    public String  addCCCard(){
+        if (StringUtils.convertNullableString(getAttribute("openid")).equals("") && (StringUtils.convertNullableString(getParameter("openid")).length() == 0)) {
+            setParameter("redirect_url", "Register!addCCCard?abc=1");
+            return "fetchWxCode";
+        }
+        if (StringUtils.convertNullableString(getAttribute("openid")).equals(""))
+            getRequest().getSession().setAttribute("openid", getParameter("openid").toString());
+
+        Map map = new HashMap<>();
+        map.put("openid",getAttribute("openid"));
+        List<MerchantInfo> lm = MerchantInfo.getMerchantInfoByMap(map);
+        if (lm.size()<1) {
+            return "page404";
+        }
+        return "multcodes";
+    }
+    private Color getRandColor(int s, int e){
+        Random random=new Random ();
+        if(s>255) s=255;
+        if(e>255) e=255;
+        int r,g,b;
+        r=s+random.nextInt(e-s);    //随机生成RGB颜色中的r值
+        g=s+random.nextInt(e-s);    //随机生成RGB颜色中的g值
+        b=s+random.nextInt(e-s);    //随机生成RGB颜色中的b值
+        return new Color(r,g,b);
+    }
+
+    public void randCheckimg() throws Exception {
+        getResponse().setHeader("Pragma", "No-cache");
+        getResponse().setHeader("Cache-Control", "No-cache");
+        getResponse().setDateHeader("Expires", 0);
+        getResponse().setContentType("image/jpeg");
+
+        String verifyCode = VerifyCodeUtils.generateVerifyCode(4);
+        //存入会话session
+        HttpSession session = getRequest().getSession(true);
+        session.setAttribute("randvalidate", verifyCode.toLowerCase());
+        //生成图片
+        int w = 200, h = 80;
+        VerifyCodeUtils.outputImage(w, h, getResponse().getOutputStream(), verifyCode);
+    }
+
+    public String chkrandval(){
+        try {
+            return AjaxActionComplete(getAttribute("randvalidate").toString().contentEquals(getParameter("randval").toString()));
+        }
+        catch (Exception e){
+            return  AjaxActionComplete(false);
+        }
+    }
+
+    public String addmultcode(){
+        Boolean rt;
+        Map map =new HashMap<>();
+        try {
+            rt = getAttribute("randvalidate").toString().contentEquals(getParameter("randval").toString());
+            if (!rt) {
+                map.put("errormsg", "验证码不对");
+                return AjaxActionComplete(rt, map);
+            }
+            setParameter("openid","oX2yrxK7iPmdKodGIMYAcDEdQtKc");
+            setAttribute("openid","oX2yrxK7iPmdKodGIMYAcDEdQtKc");
+            getRequest().getSession().removeAttribute("ErrorMsg");
+            if (StringUtils.convertNullableString(getParameter("openid")).length() == 0) {
+                setParameter("redirect_url","Register!addmultcode?cid=" + getParameter("cid").toString()+"&randvalidate="+ getParameter("randval").toString());
+                return "fetchWxCode";
+            }
+
+            long merchantId = IdConvert.DecryptionId(Long.parseLong(getParameter("cid").toString()));
+            CardInfo cardInfo = CardInfo.getCardInfoById(merchantId);
+            if (cardInfo == null) {
+                map.put("errormsg", "CiCi码不对");
+                return AjaxActionComplete(false, map);
+            }
+
+            MerchantInfo merchantInfo = new MerchantInfo();
+            merchantInfo.setId(merchantId);
+            merchantInfo.setOpenid(getAttribute("openid"));
+            rt = MerchantInfo.insertCopyMerchantInfo(merchantInfo);
+            if (!rt) {
+                map.put("errormsg", "商户不对，请走注册！");
+                return AjaxActionComplete(false, map);
+            }
+            return AjaxActionComplete(rt,map);
+        }
+        catch (Exception e){
+            return  AjaxActionComplete(false,map);
+        }
     }
 }
