@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cc.database.merchant.mapping.merchantInfo">
+    <select id="getNowAllPayID"  resultMap="merchantInfoResult">
+        SELECT max(paymethodweixinid) paymethodweixinid ,max(paymethodaliid) paymethodaliid,max(paymethodjdid) paymethodjdid,max(paymethodbestid) paymethodbestid FROM merchantInfo
+    </select>
+
     <select id="getMerchantInfoByMap" parameterType="java.util.HashMap" resultMap="merchantInfoResult">
         SELECT * FROM merchantInfo  <where><if test="null!=id">id=#{id}</if><if test="null!=openid"> and openid=#{openid}</if>
         <if test="null!=idlist"> and id in
@@ -25,8 +29,13 @@
 
     <update id="updateMerchantPayMethodId" parameterType="java.util.HashMap">
         UPDATE merchantinfo
-        SET payMethodWeixinId=#{payMethodWeixinId},payMethodAliId=#{payMethodAliId},payMethodJDId=#{payMethodJDId},payMethodBestId=#{payMethodBestId}
-        where id = #{id}
+        <trim prefix="set" suffixOverrides=",">
+            <if test="null!=payMethodWeixinId"> payMethodWeixinId=#{payMethodWeixinId},</if>
+            <if test="null!=payMethodAliId"> payMethodAliId=#{payMethodAliId},</if>
+            <if test="null!=payMethodJDId">  payMethodJDId=#{payMethodJDId},</if>
+            <if test="null!=payMethodBestId"> payMethodBestId=#{payMethodBestId}</if>
+        </trim>
+        <where> <if test="null!=id">id = #{id}</if></where>
     </update>
 
     <update id="updateMerchantPayBycheck" parameterType="java.util.HashMap">
@@ -35,6 +44,7 @@
         jdStatus=#{jdStatus},jdRate=#{jdRate},bestStatus=#{bestStatus},bestRate=#{bestRate}
         where id = #{id}
     </update>
+
 
     <insert id="insertMerchantInfo" parameterType="cc.database.merchant.MerchantInfo">
         INSERT INTO merchantinfo(id,name,address,contactName,contactPhone,idCard,

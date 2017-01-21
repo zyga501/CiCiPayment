@@ -482,6 +482,29 @@ public class UserAction extends AjaxActionSupport {
         return "registermodfiy";
     }
 
+    public String fetchNowPaytype() {
+        MerchantInfo merchantInfo=MerchantInfo.getNowAllPayID();
+        List<MerchantInfo> lm = new ArrayList<>();
+        lm.add(merchantInfo);
+        return AjaxActionComplete(lm);
+    }
+
+    public String fetchAllPaytype(){
+        List<PayMethod> lp = PayMethod.getAllPayMethod();
+        return AjaxActionComplete(lp);
+    }
+
+    public void changPayWay() throws IOException {
+       if (MerchantInfo.updateMerchantPayMethodId(0,Long.parseLong(StringUtils.convertNullableString(getParameter("weixinway"),"0")),
+                Long.parseLong(StringUtils.convertNullableString(getParameter("aliway"),"0")),Long.parseLong(StringUtils.convertNullableString(getParameter("jdway"),"0")),
+                        Long.parseLong(StringUtils.convertNullableString(getParameter("bestway"),"0")))) {
+           getResponse().sendRedirect("changepayway.jsp");
+       }
+        else {
+           getResponse().sendRedirect("page404.jsp");
+       }
+    }
+
     public void setCid(String cid) {
         this.cid = cid;
     }

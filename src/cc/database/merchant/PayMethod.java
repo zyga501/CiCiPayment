@@ -1,11 +1,12 @@
 package cc.database.merchant;
 
-public class PayMethod {
-    public static void main(String[] args) throws Exception {
-        PayMethod payMethod = PayMethod.getPayMethodById(2);
-        System.out.print("");
-    }
+import java.util.List;
 
+public class PayMethod {
+    public static List<PayMethod> getAllPayMethod() {
+        String statement = "cc.database.merchant.mapping.payMethod.getAllPayMethod";
+        return Database.Instance().selectList(statement);
+    }
     public static PayMethod getPayMethodById(int id) {
         String statement = "cc.database.merchant.mapping.payMethod.getPayMethodById";
         return Database.Instance().selectOne(statement, id);

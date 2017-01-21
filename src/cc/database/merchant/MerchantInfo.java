@@ -15,11 +15,15 @@ public class MerchantInfo {
         return Database.Instance().selectList(statement, map);
     }
 
+    public static MerchantInfo getNowAllPayID() {
+        String statement = "cc.database.merchant.mapping.merchantInfo.getNowAllPayID";
+        return Database.Instance().selectOne(statement);
+    }
+
     public static MerchantInfo getMerchantInfoById(long id) {
         String statement = "cc.database.merchant.mapping.merchantInfo.getMerchantInfoById";
         return Database.Instance().selectOne(statement, id);
     }
-
     public static List<Map> getMerchantInfoByQuery(Map map) {
         String statement = "cc.database.merchant.mapping.merchantInfo.getMerchantInfoByQuery";
         return Database.Instance().selectList(statement, map);
@@ -27,11 +31,14 @@ public class MerchantInfo {
 
     public static boolean updateMerchantPayMethodId(long id, long payMethodWeixinId, long payMethodAliId, long payMethodJDId, long payMethodBestId) {
         String statement = "cc.database.merchant.mapping.merchantInfo.updateMerchantPayMethodId";
-        return Database.Instance().update(statement, new HashMap<String, Object>(){{put("id", id);
-            put("payMethodWeixinId", payMethodWeixinId);
-            put("payMethodAliId", payMethodAliId);
-            put("payMethodJDId", payMethodJDId);
-            put("payMethodBestId", payMethodBestId);}}) == 1;
+        Map map =new HashMap<String, Object>();
+        if (id>0)
+            map.put("id", id);
+        map.put("payMethodWeixinId", payMethodWeixinId);
+        map.put("payMethodAliId", payMethodAliId);
+        map.put("payMethodJDId", payMethodJDId);
+        map.put("payMethodBestId", payMethodBestId);
+        return Database.Instance().update(statement,map) >0;
     }
 
     public static boolean updateMerchantPayBycheck(MerchantInfo merchantInfo) {
