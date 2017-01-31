@@ -10,6 +10,9 @@ import cc.utils.IdConvert;
 import cc.weixin.api.OpenId;
 import QimCommon.struts.AjaxActionSupport;
 import net.sf.json.JSONArray;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -503,6 +506,22 @@ public class UserAction extends AjaxActionSupport {
         else {
            getResponse().sendRedirect("page404.jsp");
        }
+    }
+
+    public String getSettleInfo(){
+        Map map = new HashMap<>();
+        map.put("settleMethod", ProjectSettings.getData("SettleMethod"));
+        map.put("settleLimit",ProjectSettings.getData("SettleLimit"));
+        return AjaxActionComplete(true,map);
+    }
+
+    public void editSettle(){
+        try {
+            ProjectSettings.setData("SettleMethod",(getParameter("settleMethod").toString().contentEquals("1"))?"1":"0");
+            ProjectSettings.setData("SettleLimit",String.valueOf(Long.parseLong(getParameter("settleLimit").toString())));
+            getResponse().sendRedirect("settlemodal.jsp");
+        } catch (Exception e) {
+        }
     }
 
     public void setCid(String cid) {

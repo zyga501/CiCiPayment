@@ -1,8 +1,13 @@
 package cc;
 
 import QimCommon.utils.PathUtils;
+import QimCommon.utils.XMLDo;
 import QimCommon.utils.XMLParser;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import java.io.IOException;
 import java.util.Map;
 
 public class ProjectSettings {
@@ -114,6 +119,10 @@ public class ProjectSettings {
         }
 
         return  null;
+    }
+
+    public static void setData(String tagName,String val) throws ParserConfigurationException, SAXException, IOException, TransformerException {
+        XMLDo.setElementValue(PathUtils.getProjectPath() + "project.xml",tagName,val);
     }
 
     public static Map<String, Object> getMapData(String key) {
