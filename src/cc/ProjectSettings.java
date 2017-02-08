@@ -1,7 +1,7 @@
 package cc;
 
 import QimCommon.utils.PathUtils;
-import QimCommon.utils.XMLDo;
+import cc.utils.XMLDo;
 import QimCommon.utils.XMLParser;
 import org.xml.sax.SAXException;
 

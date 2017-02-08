@@ -27,14 +27,14 @@
     </select>
 
     <select id="getPayAndChanAsc" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-        <![CDATA[ select * from (select distinct a.*,case c.merchantId when 1999999999999999 then 'T0' else 'T1' end as Pt from  payorderinfo a,
+        <![CDATA[ select * from (select distinct a.*,case c.privateQualification when 0 then 'T0' else 'T1' end as Pt from  payorderinfo a,
           cicimerchant.merchantinfo b,cicimerchant.paymethod c where a.merchantid=b.id and
               (c.id = b.payMethodAliId or c.id=b.payMethodWeixinId or c.id=b.payMethodBestId or c.id=b.payMethodJdId )
               and a.merchantid=#{merchantid} and a.id > ${id} order by id limit ${pagecontent}) t order by id desc ]]>
     </select>
 
     <select id="getPayAndChanDesc" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-        <![CDATA[select distinct a.*,case c.merchantId when 1999999999999999 then 'T0' else 'T1' end as Pt from  payorderinfo a,cicimerchant.merchantinfo b,cicimerchant.paymethod c where a.merchantid=b.id and
+        <![CDATA[select distinct a.*,case c.privateQualification when 0 then 'T0' else 'T1' end as Pt from  payorderinfo a,cicimerchant.merchantinfo b,cicimerchant.paymethod c where a.merchantid=b.id and
         (c.id = b.payMethodAliId or c.id=b.payMethodWeixinId or c.id=b.payMethodBestId or c.id=b.payMethodJdId ) and a.merchantid=#{merchantid}
           and a.id<${id} order by id desc  limit ${pagecontent}]]>
     </select>
